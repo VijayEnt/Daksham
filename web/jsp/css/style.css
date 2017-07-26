@@ -953,7 +953,8 @@ ul.nofitications-dropdown {
     left: -90px;
 }
 span.prfil-img i.fa.fa-user {
-    color: #ffffff;
+    width:60px;text-align:center;vertical-align:middle;font-size:18px;padding:.7em 0;
+/*    color: #ffffff;
     background: #00bcd4;
     height: 41px;
     width: 41px;
@@ -963,7 +964,7 @@ span.prfil-img i.fa.fa-user {
     -webkit-border-radius: 50%;
     -ms-border-radius: 50%;
     -moz-border-radius: 50%;
-    -o-border-radius: 50%;
+    -o-border-radius: 50%;*/
 }
 ul.dropdown-menu.drp-mnu li {
     list-style-type: none;
@@ -3264,7 +3265,7 @@ code {
 .bottom .form-group {
     margin-bottom: 0;
 }
-.form-group.has-feedback {
+.form-group.fa-feedback {
     margin-bottom: 15px !important;
 }
 .form-group.has-error {

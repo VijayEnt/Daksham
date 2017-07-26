@@ -68,86 +68,115 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<a href="javascript:;">
 				<i class="fa fa-cogs" aria-hidden="true"></i>
 				<span class="nav-text">
-					UI Components
+					Settings
 				</span>
 				<i class="icon-angle-right"></i><i class="icon-angle-down"></i>
 				</a>
 				<ul>
 					<li>
-					<a class="subnav-text" href="buttons.html">
-					Buttons
+					<a class="subnav-text" href="#">
+					Code Register
 					</a>
 					</li>
 					<li>
-					<a class="subnav-text" href="grids.html">
-					Grids
+					<a class="subnav-text" href="#">
+					Group Register
+					</a>
+					</li>
+                                        <li>
+					<a class="subnav-text" href="#">
+					State Register
+					</a>
+					</li>
+                                        <li>
+					<a class="subnav-text" href="#">
+					City Register
 					</a>
 					</li>
 				</ul>
 			</li>
 			<li class="has-subnav">
 				<a href="javascript:;">
-				<i class="fa fa-check-square-o nav_icon"></i>
+                                    <i class="fa fa-user nav_icon" style="width:60px;text-align:center;vertical-align:middle;font-size:18px;padding:.7em 0;"></i>
 				<span class="nav-text">
-				Forms
+				Users
 				</span>
 				<i class="icon-angle-right"></i><i class="icon-angle-down"></i>
 				</a>
 				<ul>
 					<li>
-						<a class="subnav-text" href="inputs.html">Inputs</a>
+						<a class="subnav-text" href="#">User Enrollment</a>
 					</li>
 					<li>
-						<a class="subnav-text" href="validation.html">Form Validation</a>
+						<a class="subnav-text" href="#">User Details</a>
 					</li>
 				</ul>
 			</li>
 			<li class="has-subnav">
 				<a href="javascript:;">
-					<i class="fa fa-file-text-o nav_icon"></i>
-						<span class="nav-text">Pages</span>
+					<i class="fa fa-group nav_icon" style="position:relative;display:table-cell;
+			width:60px;text-align:center;vertical-align:middle;font-size:18px;padding:.7em 0;"></i>
+						<span class="nav-text">Party Setup</span>
 					<i class="icon-angle-right"></i><i class="icon-angle-down"></i>
 				</a>
 				<ul>
 					<li>
-						<a class="subnav-text" href="gallery.html">
-							Image Gallery
+						<a class="subnav-text" href="#">
+							Party Enrollment 
 						</a>
 					</li>
 					<li>
-						<a class="subnav-text" href="calendar.html">
-							Calendar
+						<a class="subnav-text" href="#">
+							Party Details
+						</a>
+					</li>					
+				</ul>
+			</li>
+			<li class="has-subnav">
+				<a href="javascript:;">
+					<i class="fa fa-truck nav_icon" style="position:relative;display:table-cell;
+			width:60px;text-align:center;vertical-align:middle;font-size:18px;padding:.7em 0;"></i>
+					<span class="nav-text">
+						Transport Setup
+					</span>
+                                        <i class="icon-angle-right"></i><i class="icon-angle-down"></i>
+				</a>
+                            <ul>
+					<li>
+						<a class="subnav-text" href="#">
+							Tarnsport Enrollment 
 						</a>
 					</li>
 					<li>
-						<a class="subnav-text" href="signup.html">
-							Sign Up Page
-						</a>
-					</li>
-					<li>
-						<a class="subnav-text" href="login.html">
-							Login Page
+						<a class="subnav-text" href="#">
+							Transport Details
 						</a>
 					</li>
 				</ul>
 			</li>
-			<li>
-				<a href="charts.html">
-					<i class="fa fa-bar-chart nav_icon"></i>
+                        <li class="has-subnav">
+				<a href="javascript:;">
+					<i class="fa fa-pencil-square-o nav_icon" style="position:relative;display:table-cell;
+			width:60px;text-align:center;vertical-align:middle;font-size:18px;padding:.7em 0;"></i>
 					<span class="nav-text">
-						Charts
+					Items Setup
 					</span>
+                                        <i class="icon-angle-right"></i><i class="icon-angle-down"></i>
 				</a>
+                             <ul>
+					<li>
+						<a class="subnav-text" href="#">
+							Items Enrollment 
+						</a>
+					</li>
+					<li>
+						<a class="subnav-text" href="#">
+							Items Details
+						</a>
+					</li>
+				</ul>
 			</li>
-			<li>
-				<a href="typography.html">
-					<i class="icon-font nav-icon"></i>
-					<span class="nav-text">
-					Typography
-					</span>
-				</a>
-			</li>
-			<li>
+<!--			<li>
 				<a href="tables.html">
 					<i class="icon-table nav-icon"></i>
 					<span class="nav-text">
@@ -185,11 +214,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<a class="subnav-text" href="blank.html">Blank Page</a>
 					</li>
 				</ul>
-			</li>
+			</li>-->
 		</ul>
 		<ul class="logout">
 			<li>
-			<a href="login.html">
+			<a href="home.html">
 			<i class="icon-off nav-icon"></i>
 			<span class="nav-text">
 			Logout

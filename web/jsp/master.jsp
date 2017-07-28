@@ -105,7 +105,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</a>
 				<ul>
 					<li>
-						<a class="subnav-text" href="#">User Enrollment</a>
+						<a class="subnav-text" href="Registration.jsp">User Enrollment</a>
 					</li>
 					<li>
 						<a class="subnav-text" href="#">User Details</a>

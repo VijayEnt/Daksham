@@ -1,6 +1,6 @@
 <%-- 
-    Document   : Registration
-    Created on : 26 Jul, 2017, 5:43:43 PM
+    Document   : partyreg
+    Created on : 4 Aug, 2017, 10:04:21 PM
     Author     : Parth
 --%>
 
@@ -227,49 +227,20 @@
 			</li>
 		</ul>
 	</nav>
-        <!----------start sign_up----------->
-		<div class="sign_up">
-			<!----------start form----------->
-			<form class="sign" action="#">
-				<div class="formtitle">User Registration</div>
-				<!----------start top_section----------->
-				<div class="top_section">
-					<div class="section">
-						<div class="input username">
-                                                    <input type="text" name="uname"  placeholder="User Name"  required/>
-							
-						</div>
-						<div class="input password">
-							<input type="password" name="pass"  placeholder="Password" required/>
-						</div>
-						<div class="clear"> </div>
+        <!----------start member-login----------->
+		<div class="member-login">
+			<!----------star form----------->
+                        <form class="login"  action="#" method="post" style="width: 500px;">
+	
+					<div class="formtitle">Party Register</div>
+					<div class="input">
+						<input type="text" name="cid" placeholder="Party Code"  required/> 
+						
 					</div>
-					<div class="section">
-						<div class="input-sign email">
-                                                    <input type="tel" name="cno" placeholder="Mobile Number" style="border: none;padding:2%"  required /> 
-						</div>
-						<div class="input-sign re-email">
-							<input type="email" name="email" placeholder="Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Please enter your email';}"required />
-						</div>
-						<div class="clear"> </div>
-					</div>
-				</div>
-				<!----------end top_section----------->
-				<!----------start personal Details----------->
-				<!----------start bottom-section----------->
-				<div class="bottom-section">
-					<div class="title">Personal Details</div>
-					<!----------start name section----------->
-					<div class="section">
-						<div class="input-sign details">
-							<input type="text" name="fname" placeholder="First Name" required/>
-						</div>
-						<div class="input-sign details1">
-							<input type="text" name="lname"  placeholder="Last Name" required/>
-						</div>
-						<div class="clear"> </div>
-					</div>
-					<!----------start Address section----------->
+					<div class="input">
+                                            <input type="text" name="cname"  placeholder="Party Name" required/>
+                                        </div>
+                                        <!----------start Address section----------->
 					<div class="section">
 						<div class="input-sign details">
                                                     <input type="text" name="add1" placeholder="Address Line 1" required/> 
@@ -558,7 +529,7 @@
 		            <option value="ZM">Zambia</option>
 		            <option value="ZW">Zimbabwe</option>
 		         </select>
-					</div>
+                                            </div>
                                         <div class="section">
                                             <div class="input-sign details">
 							<input type="text" name="landmark" placeholder="Landmark" required/> 
@@ -567,29 +538,36 @@
                                                 <input type="text" name="pincode"  placeholder="Pincode" required/>                                                        
 						</div>              
                                         </div>
-                                        <div class="section-country">
-                                          <select id="party" name="party" onchange="change_party(this.value)" class="frm-field required">
-                                                            <option value="null">Party Name </option>
-                                                        </select>  
+                                        <div class="input">
+                                            <input type="text" name="ptype"  placeholder="Party Type" required/>
+                                        </div>                                        
+                                        <div class="input">
+                                            <input type="text" name="pabb"  placeholder="Party Abbreviatioin"/>
+                                        </div>  
+                                        <div class="input">
+                                            <input type="text" name="pgst"  placeholder="Party GSTCODE" required/>
+                                        </div> 
+                                        <div class="section">
+                                            <div class="input-sign details">
+                                                <input type="text" name="cno1" placeholder="Mobile" required/> 
+						</div>
+                                            <div class="input-sign details1">
+                                                <input type="text" name="cno2"  placeholder="Contact Number" />                                                        
+						</div>              
                                         </div>
-                                        <!------------------Security questions section---------------->
-                                        <div class="section-country">
-                                            <select id="sq" name="sq" onchange="change_sq(this.value)" class="frm-field required">
-                                                <option value="null">Security Question</option>
-                                            </select>
-                                        </div>
-                                        <div class="section-country input-sign">
-                                            <input type="text" name="response" placeholder="Response Answer" required="" width="auto">
-                                        </div>
-                                        <br>
-					<div class="submit">
-						<input class="bluebutton submitbotton" type="submit" value="Sign up" />
-                                                <input class="bluebutton submitbotton" type="reset" value="Reset" />
+                                        <div class=" input email">
+                                            <input type="email" name="pemail" placeholder="Email" style="border: none;padding:2%;"/>
+                                        </div> 
+					<div class="submit">						
+                                            <input class="bluebutton submitbotton" name="ssave" type="submit" value="Save" />
+                                            <input class="bluebutton submitbotton" type="reset" value="Reset" />
+                                            <input class="bluebutton submitbotton" name="slook" type="submit" value="Group Lookup" />
+						<div class="clear"> </div>
 					</div>
-				</div>
-				<!----------end bottom-section----------->
-			</form>
-			<!----------end form----------->
+		
+				</form>
+				<!----------end form----------->
 		</div>
+		<!----------end member-login----------->
     </body>
 </html>

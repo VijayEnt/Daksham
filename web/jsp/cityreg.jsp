@@ -1,6 +1,6 @@
 <%-- 
-    Document   : master
-    Created on : 24 Jul, 2017, 2:34:28 PM
+    Document   : cityreg
+    Created on : 2 Aug, 2017, 11:51:41 PM
     Author     : Parth
 --%>
 
@@ -19,6 +19,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- //bootstrap-css -->
 <!-- Custom CSS -->
 <link href="css/style.css" rel='stylesheet' type='text/css' />
+<link href="css/registration.css" rel="stylesheet" type="text/css" media="all" />
 <!-- font CSS -->
 <link href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
 <!-- font-awesome icons -->
@@ -227,5 +228,34 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			</li>
 		</ul>
 	</nav>
+        <!----------start member-login----------->
+		<div class="member-login">
+			<!----------star form----------->
+                        <form class="login"  action="#" method="post" style="width: 500px;">
+	
+					<div class="formtitle">City Register</div>
+					<div class="input">
+						<input type="text" name="cname" placeholder="City Name"  required/> 
+						
+					</div>
+					<div class="input">
+                                            <input type="text" name="cabb"  placeholder="City Abbrevation" required/>
+                                        </div>
+                                        <div class="section-country">
+                                            <select id="city" name="state" onchange="change_state(this.value)" class="frm-field required">
+                                                <option value="null">State</option>
+                                            </select>
+                                        </div>
+					<div class="submit">						
+                                            <input class="bluebutton submitbotton" name="ssave" type="submit" value="Save" />
+                                            <input class="bluebutton submitbotton" type="reset" value="Reset" />
+                                            <input class="bluebutton submitbotton" name="slook" type="submit" value="City Lookup" />
+						<div class="clear"> </div>
+					</div>
+		
+				</form>
+				<!----------end form----------->
+		</div>
+		<!----------end member-login----------->
     </body>
 </html>

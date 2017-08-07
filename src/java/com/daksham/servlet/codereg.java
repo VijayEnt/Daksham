@@ -70,7 +70,13 @@ public class codereg extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.setContentType("text/html");
+        try{
+            String codeid=request.getParameter("cid");
+        }
+        catch(Exception ex){
+            
+        }
     }
 
     /**

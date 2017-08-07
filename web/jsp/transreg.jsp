@@ -1,6 +1,6 @@
 <%-- 
-    Document   : Registration
-    Created on : 26 Jul, 2017, 5:43:43 PM
+    Document   : transreg
+    Created on : 5 Aug, 2017, 11:28:31 PM
     Author     : Parth
 --%>
 
@@ -227,49 +227,20 @@
 			</li>
 		</ul>
 	</nav>
-        <!----------start sign_up----------->
-		<div class="sign_up">
-			<!----------start form----------->
-			<form class="sign" action="#">
-				<div class="formtitle">User Enrollment</div>
-				<!----------start top_section----------->
-				<div class="top_section">
-					<div class="section">
-						<div class="input username">
-                                                    <input type="text" name="uname"  placeholder="User Name"  required/>
-							
-						</div>
-						<div class="input password">
-							<input type="password" name="pass"  placeholder="Password" required/>
-						</div>
-						<div class="clear"> </div>
+        <!----------start member-login----------->
+		<div class="member-login">
+			<!----------star form----------->
+                        <form class="login"  action="#" method="post" style="width: 500px;">
+	
+					<div class="formtitle">Transport Enrollment</div>
+					<div class="input">
+						<input type="text" name="tid" placeholder="Transport Code"  required/> 
+						
 					</div>
-					<div class="section">
-						<div class="input-sign email">
-                                                    <input type="tel" name="cno" placeholder="Mobile Number" style="border: none;padding:2%"  required /> 
-						</div>
-						<div class="input-sign re-email">
-							<input type="email" name="email" placeholder="Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Please enter your email';}"required />
-						</div>
-						<div class="clear"> </div>
-					</div>
-				</div>
-				<!----------end top_section----------->
-				<!----------start personal Details----------->
-				<!----------start bottom-section----------->
-				<div class="bottom-section">
-					<div class="title">Personal Details</div>
-					<!----------start name section----------->
-					<div class="section">
-						<div class="input-sign details">
-							<input type="text" name="fname" placeholder="First Name" required/>
-						</div>
-						<div class="input-sign details1">
-							<input type="text" name="lname"  placeholder="Last Name" required/>
-						</div>
-						<div class="clear"> </div>
-					</div>
-					<!----------start Address section----------->
+					<div class="input">
+                                            <input type="text" name="tname"  placeholder="Transport Name" required/>
+                                        </div>
+                                        <!----------start Address section----------->
 					<div class="section">
 						<div class="input-sign details">
                                                     <input type="text" name="add1" placeholder="Address Line 1" required/> 
@@ -558,7 +529,7 @@
 		            <option value="ZM">Zambia</option>
 		            <option value="ZW">Zimbabwe</option>
 		         </select>
-					</div>
+                                            </div>
                                         <div class="section">
                                             <div class="input-sign details">
 							<input type="text" name="landmark" placeholder="Landmark" required/> 
@@ -567,37 +538,34 @@
                                                 <input type="text" name="pincode"  placeholder="Pincode" required/>                                                        
 						</div>              
                                         </div>
-                                        <div class="section-country details">
-                                          <select id="party" name="party" onchange="change_party(this.value)" class="frm-field required">
-                                                            <option value="null">Party Name </option>
-                                                        </select>  
-                                        </div>
-                                        <div class="section-country details1">
-                                          <select id="party" name="readonly" onchange="change_read(this.value)" class="frm-field required">
-                                              <option value="N">Read Only User </option>
-                                                            <option value="Y">Yes </option>
-                                                            <option value="N">No </option>
-                                                        </select>  
-                                        </div>
-                                        <!------------------Security questions section---------------->
-                                        <div class="section-country">
-                                            <select id="sq" name="sq" onchange="change_sq(this.value)" class="frm-field required">
-                                                <option value="null">Security Question</option>
-                                            </select>
-                                        </div>
-                                        <div class="section-country input-sign">
-                                            <input type="text" name="response" placeholder="Response Answer" required="" width="auto">
-                                        </div>
-                                        <br>
-					<div class="submit">
-						<input class="bluebutton submitbotton" type="submit" name="ssave" value="Sign up" />
-                                                <input class="bluebutton submitbotton" type="reset" value="Reset" />
-                                                <input class="bluebutton submitbotton" type="submit" name="slook" value="User Lookup" />
+                                        <div class="input">
+                                            <input type="text" name="tloc"  placeholder="Transport Location" required/>
+                                        </div>                                        
+                                        <div class="input">
+                                            <input type="text" name="pabb"  placeholder="Transport Abbreviatioin"/>
+                                        </div>  
+                                        <div class="input">
+                                            <input type="text" name="pgst"  placeholder="Transport GSTCODE" required/>
+                                        </div> 
+                                        <div class="section">
+                                            <div class="input-sign details">
+                                                <input type="text" name="cno1" placeholder="Mobile" required/> 
+						</div>
+                                            <div class="input-sign details1">
+                                                <input type="text" name="cno2"  placeholder="Contact Number" />                                                        
+						</div>   
+                                            <div class="clear"> </div>
+                                        </div>                                        
+					<div class="submit">						
+                                            <input class="bluebutton submitbotton" name="ssave" type="submit" value="Save" />
+                                            <input class="bluebutton submitbotton" type="reset" value="Reset" />
+                                            <input class="bluebutton submitbotton" name="slook" type="submit" value="Transport Lookup" />
+						<div class="clear"> </div>
 					</div>
-				</div>
-				<!----------end bottom-section----------->
-			</form>
-			<!----------end form----------->
+		
+				</form>
+				<!----------end form----------->
 		</div>
+		<!----------end member-login----------->
     </body>
 </html>

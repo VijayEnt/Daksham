@@ -121,7 +121,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</a>
 				<ul>
 					<li>
-						<a class="subnav-text" href="#">
+						<a class="subnav-text" href="partyreg.jsp">
 							Party Enrollment 
 						</a>
 					</li>
@@ -143,7 +143,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</a>
                             <ul>
 					<li>
-						<a class="subnav-text" href="#">
+						<a class="subnav-text" href="transreg.jsp">
 							Tarnsport Enrollment 
 						</a>
 					</li>

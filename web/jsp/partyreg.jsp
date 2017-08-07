@@ -121,7 +121,7 @@
 				</a>
 				<ul>
 					<li>
-						<a class="subnav-text" href="#">
+						<a class="subnav-text" href="partyreg.jsp">
 							Party Enrollment 
 						</a>
 					</li>
@@ -143,7 +143,7 @@
 				</a>
                             <ul>
 					<li>
-						<a class="subnav-text" href="#">
+						<a class="subnav-text" href="transreg.jsp">
 							Tarnsport Enrollment 
 						</a>
 					</li>
@@ -232,7 +232,7 @@
 			<!----------star form----------->
                         <form class="login"  action="#" method="post" style="width: 500px;">
 	
-					<div class="formtitle">Party Register</div>
+					<div class="formtitle">Party Enrollment</div>
 					<div class="input">
 						<input type="text" name="cid" placeholder="Party Code"  required/> 
 						
@@ -553,15 +553,41 @@
 						</div>
                                             <div class="input-sign details1">
                                                 <input type="text" name="cno2"  placeholder="Contact Number" />                                                        
-						</div>              
+						</div>   
+                                            <div class="clear"> </div>
                                         </div>
-                                        <div class=" input email">
-                                            <input type="email" name="pemail" placeholder="Email" style="border: none;padding:2%;"/>
+                                        <div class="input">
+                                            <input type="email" name="pemail" placeholder="Email" style="border: none;padding:2%;width: 100%"/>
                                         </div> 
+                                          <div class="input">
+                                              <input type="date" name="pdoi"  placeholder="DOI" style="border: none;padding:2%;width: 100%;" required/>
+                                        </div> 
+                                        <div class="section">
+                                         <div class="input-sign details input">
+                                             <input type="number" name="pobal"  placeholder="Opening Balance" style="border: none;padding:2%;width: 100%;"/>
+                                        </div> 
+                                        <div class="input-sign details1 input">
+                                            <input type="number" name="pcbal" placeholder="Closing Balance" style="border: none;padding:2%;width: 100%;"/>
+                                        </div>
+                                            </div>
+                                            <div class="section">
+                                        <div class="section-country details">
+                                            <select id="State" name="transport" onchange="change_transport(this.value)" class="frm-field">
+                                                <option value="null">Transport</option>
+                                            </select> 
+                                        </div>
+                                        <div class=" section section-country details1">
+                                            <select id="State" name="entity" onchange="change_entity(this.value)" class="frm-field">
+                                                <option value="null">Entity</option>
+                                                <option value="Y">Yes</option>
+                                                <option value="N">No</option>
+                                            </select> 
+                                            </div>
+                                        </div><br><br><br>
 					<div class="submit">						
                                             <input class="bluebutton submitbotton" name="ssave" type="submit" value="Save" />
                                             <input class="bluebutton submitbotton" type="reset" value="Reset" />
-                                            <input class="bluebutton submitbotton" name="slook" type="submit" value="Group Lookup" />
+                                            <input class="bluebutton submitbotton" name="slook" type="submit" value="Party Lookup" />
 						<div class="clear"> </div>
 					</div>
 		

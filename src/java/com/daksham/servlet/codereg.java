@@ -7,6 +7,8 @@ package com.daksham.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -72,7 +74,12 @@ public class codereg extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html");
         try{
+            Connection connect = com.daksham.connection.connection.setConnection();
             String codeid=request.getParameter("cid");
+            String codename=request.getParameter("cname");
+            String codekey=request.getParameter("ckey");
+            String codeval =request.getParameter("cval");
+            PreparedStatement ps = connect.prepareStatement("insert into mstcoderegister (Codename,CodeID,CodeKey,CodeValue,CodeSeqNo,CreationDate,ActionDate,ActionUserID) values (?,?,?,?)")
         }
         catch(Exception ex){
             

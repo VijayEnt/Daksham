@@ -246,7 +246,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                         </div>
                                         <div class="input">
                                             <input type="text" name="cval"  placeholder="Code Value" required/>
-                                        </div>
+                                        </div>                                        
 					<div class="submit">						
                                             <input class="bluebutton submitbotton" name="ssave" type="submit" value="Save" />
                                             <input class="bluebutton submitbotton" type="reset" value="Reset" />

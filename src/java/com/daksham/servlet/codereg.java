@@ -73,16 +73,31 @@ public class codereg extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html");
-        try{
+            PrintWriter out = response.getWriter();
+            try{
             Connection connect = com.daksham.connection.connection.setConnection();
             String codeid=request.getParameter("cid");
             String codename=request.getParameter("cname");
             String codekey=request.getParameter("ckey");
             String codeval =request.getParameter("cval");
-            PreparedStatement ps = connect.prepareStatement("insert into mstcoderegister (Codename,CodeID,CodeKey,CodeValue,CodeSeqNo,CreationDate,ActionDate,ActionUserID) values (?,?,?,?)")
+            PreparedStatement ps = connect.prepareStatement("insert into mstcoderegister (Codename,CodeID,CodeKey,CodeValue,CodeSeqNo,CreationDate,ActionDate,ActionUserID) values (?,?,?,?,?,now(),now(),'Superuser')");
+            ps.setString(1, codename);
+            ps.setString(2, codeid);
+            ps.setString(3, codekey);
+            ps.setString(4, codeval);
+            ps.setString(5, codeval);
+            ps.executeUpdate();
+            ps.close();
+            out.println("<script type=\"text/javascript\">");
+            out.println("alert('"+codename+"' Successfully Created!')");
+            out.println("location='Codereg.jsp';");
+            out.println("</script>");
         }
         catch(Exception ex){
-            
+            out.println("<script type=\"text/javascript\">");
+            out.println("alert('"+ex+"'!')");
+            out.println("location='Codereg.jsp';");
+            out.println("</script>"); 
         }
     }
 

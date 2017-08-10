@@ -31,8 +31,18 @@ public class connection {
             connect=DriverManager.getConnection(url,username,pass);
             System.out.println("Loading Connection please wait "+connect);
         }
-        catch (Exception ex){
-            ex.printStackTrace();
+        catch (SQLException ex){
+//            ex.printStackTrace();
+            System.out.println("<script type=\"text/javascript\">");
+            System.out.println("alert('"+ex.getSQLState()+"!');");
+            System.out.println("location='Codereg.jsp';");
+            System.out.println("</script>"); 
+        }
+        catch(Exception e){
+            System.out.println("<script type=\"text/javascript\">");
+            System.out.println("alert('"+e.getMessage()+"!');");
+            System.out.println("location='Codereg.jsp';");
+            System.out.println("</script>"); 
         }
         return connect;
     }    

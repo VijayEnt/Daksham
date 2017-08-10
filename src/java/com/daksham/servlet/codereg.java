@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -74,8 +75,16 @@ public class codereg extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html");
             PrintWriter out = response.getWriter();
-            try{
             Connection connect = com.daksham.connection.connection.setConnection();
+            if(connect == null){
+            out.println("<script type=\"text/javascript\">");            
+            out.println("alert('Please Check Database Connection!');");
+            out.println("location='Codereg.jsp';");
+            out.println("</script>");
+            }
+            else
+            {
+            try{               
             String codeid=request.getParameter("cid");
             String codename=request.getParameter("cname");
             String codekey=request.getParameter("ckey");
@@ -93,13 +102,20 @@ public class codereg extends HttpServlet {
             out.println("location='Codereg.jsp';");
             out.println("</script>");
         }
-        catch(Exception ex){
+        catch(SQLException ex){
             out.println("<script type=\"text/javascript\">");
-            out.println("alert('"+ex+"'!')");
+            out.println("alert('"+ex.getMessage()+"'!');");
+            out.println("location='Codereg.jsp';");
+            out.println("</script>"); 
+        }
+        catch ( Exception e){
+            out.println("<script type=\"text/javascript\">");
+            out.println("alert('"+e.getMessage()+"'!');");
             out.println("location='Codereg.jsp';");
             out.println("</script>"); 
         }
     }
+}
 
     /**
      * Returns a short description of the servlet.

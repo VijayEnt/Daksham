@@ -231,7 +231,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <!----------start member-login----------->
 		<div class="member-login">
 			<!----------star form----------->
-                        <form class="login"  action="codereg" method="post" style="width: 500px;">
+                        <form class="login"  method="post" style="width: 500px;">
 	
 					<div class="formtitle">Code Register</div>
 					<div class="input">
@@ -251,7 +251,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                             <input type="number" name="cseq"  placeholder="Code Sequence"  style="border: none;padding:2%;width: 100%" required/>
                                         </div>  
 					<div class="submit">						
-                                            <input class="bluebutton submitbotton" name="ssave" type="submit" value="Save" formmethod="post" />
+                                            <input class="bluebutton submitbotton" name="ssave" type="submit" value="Save" formaction="codereg" formmethod="post" />
                                             <input class="bluebutton submitbotton" type="reset" value="Reset" />
                                             <input class="bluebutton submitbotton" name="slook" type="submit" value="Code Lookup" />
 						<div class="clear"> </div>

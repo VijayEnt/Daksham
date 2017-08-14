@@ -17,9 +17,9 @@ import java.sql.Connection;
 public class connection {
     public static Connection setConnection(){
         Connection connect = null;
-        String url="jdbc:mysql://localhost:3306/daksham";
+        String url="jdbc:mysql://localhost:3306/dfs";
         String username="root";
-        String pass="Admin@123";
+        String pass="12345";
         try{
             try{
                 Class.forName("com.mysql.jdbc.Driver");

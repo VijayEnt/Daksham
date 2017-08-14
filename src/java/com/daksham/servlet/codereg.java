@@ -89,30 +89,33 @@ public class codereg extends HttpServlet {
             String codename=request.getParameter("cname");
             String codekey=request.getParameter("ckey");
             String codeval =request.getParameter("cval");
-            PreparedStatement ps = connect.prepareStatement("insert into mstcoderegister (Codename,CodeID,CodeKey,CodeValue,CodeSeqNo,CreationDate,ActionDate,ActionUserID) values (?,?,?,?,?,now(),now(),'Superuser')");
+            String codeseq=request.getParameter("cseq");
+            PreparedStatement ps = connect.prepareStatement("insert into mstcoderegister (Codename,CodeID,CodeKey,CodeValue,CodeSeqNo,CreationDate,ActionDate,ActionUserID) values (?,?,?,?,?,now(),now(),'1')");
             ps.setString(1, codename);
             ps.setString(2, codeid);
             ps.setString(3, codekey);
             ps.setString(4, codeval);
-            ps.setString(5, codeval);
-            ps.executeUpdate();
-            ps.close();
+            ps.setString(5, codeseq);
+            ps.executeUpdate();            
             out.println("<script type=\"text/javascript\">");
-            out.println("alert('"+codename+"' Successfully Created!')");
+            out.println("alert('Successfully enrolled with value "+codeval+"!');");
+            //out.println("alert('Enrolled Successfully!');");
             out.println("location='Codereg.jsp';");
             out.println("</script>");
+            ps.close();
         }
-        catch(SQLException ex){
-            out.println("<script type=\"text/javascript\">");
-            out.println("alert('"+ex.getMessage()+"'!');");
-            out.println("location='Codereg.jsp';");
-            out.println("</script>"); 
-        }
+//        catch(SQLException  ex){
+//            out.println("<script type=\"text/javascript\">");
+//            out.println("alert('"+ex+"');");
+//            out.println("location='Codereg.jsp';");
+//            out.println("</script>"); 
+//        }
         catch ( Exception e){
-            out.println("<script type=\"text/javascript\">");
-            out.println("alert('"+e.getMessage()+"'!');");
-            out.println("location='Codereg.jsp';");
-            out.println("</script>"); 
+            e.printStackTrace(out);
+//            out.println("<script type=\"text/javascript\">");
+//            out.println("alert('Error "+e.printStackTrace(out)+"!');");
+//            out.println("location='Codereg.jsp';");
+//            out.println("</script>"); 
         }
     }
 }

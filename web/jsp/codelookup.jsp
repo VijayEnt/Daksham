@@ -4,6 +4,7 @@
     Author     : Parth
 --%>
 
+<%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -267,15 +268,14 @@
 			<div class="w3l_search">
 				<form action="#" method="post">
 					<input type="text" name="search" value="Search" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}" required="">
-					<button class="btn btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+					<button class="btn btn-default" name="sb" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
 				</form>
 			</div>			
 			<div class="clearfix"> </div>
 		</section>
         <div class="main-grid" style="margin-left: 20px;">
 			<div class="agile-grids">	
-				<!-- tables -->
-				
+				<!-- tables -->				
 				<div class="table-heading">
 					<h2>Code Enrollment Data</h2>
 				</div>
@@ -289,7 +289,7 @@
 							<th>Key Value</th>
 							<th>Value</th>
 							<th>Sequence Order</th>
-<!--							<th>Action</th>-->
+							<th>Action</th>
 						  </tr>
 						</thead>
 						<tbody>
@@ -298,20 +298,103 @@
                                                         try{
                                                             String sv= request.getParameter("search");
                                                             Connection connection = com.daksham.connection.connection.setConnection();
-                                                            if(sv==null){
-                                                                PreparedStatement ptst = new PreparedStatement("")
+                                                            if(connection==null){
+                                                                out.println("<script type=\"text/javascript\">");            
+                                                                out.println("alert('Please Check Database Connection!');");
+                                                                out.println("location='codelookup.jsp';");
+                                                                out.println("</script>");
                                                             }
-                                                            
+                                                            else{
+                                                                if(request.getParameter("sb")==null){
+                                                                PreparedStatement ptst = connection.prepareStatement("select recid,codeid,codename,codekey,codevalue,codeseqno from mstcoderegister order by codeseqno asc");
+                                                                ResultSet rs = ptst.executeQuery();
+                                                                while(rs.next()){
+                                                                    String recid = rs.getString("recid");
+                                                                    String codeid =rs.getString("codeid");
+                                                                    String codename= rs.getString("codename");
+                                                                    String codekey = rs.getString("codekey");
+                                                                    String codevalue = rs.getString("codevalue");
+                                                                    String seqno = rs.getString("codeseqno");
+                                                                    %>
+                                                                    <td>
+                                                                        <%=codeid%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=codename%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=codekey%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=codevalue%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=seqno%>
+                                                                    </td>
+                                                                    <td>                            
+                                                                    <form action="" method="post">
+                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update code" style="border:none;background: transparent;" ><br>
+                                                                    <!--<input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate Doctor" style="border:none;background: transparent;" formaction="" formmethod="post">-->
+                                                                    <input type="hidden" name="dname" value="<%=recid%>">
+                                                                    </form>
+                                                                    </td>  
+                                                                    </tr>
+                                                                    <%
+                                                                }
+                                                            }
+                                                            else if(request.getParameter("sb")!=null){
+                                                                PreparedStatement ptst = connection.prepareStatement("select recid,codeid,codename,codekey,codevalue,codeseqno from mstcoderegister where codename like'%"+sv+"%' order by codeseqno asc");
+                                                                ResultSet rs = ptst.executeQuery();
+                                                                while(rs.next()){
+                                                                    String recid = rs.getString("recid");
+                                                                    String codeid =rs.getString("codeid");
+                                                                    String codename= rs.getString("codename");
+                                                                    String codekey = rs.getString("codekey");
+                                                                    String codevalue = rs.getString("codevalue");
+                                                                    String seqno = rs.getString("codeseqno");
+                                                                %>
+<!--                                                                <tr>-->
+                                                                <td>
+                                                                    <%=codeid%>
+                                                                </td>
+                                                                <td>
+                                                                    <%=codename%>
+                                                                </td>
+                                                                <td>
+                                                                    <%=codekey%>
+                                                                </td>
+                                                                <td>
+                                                                    <%=codevalue%>
+                                                                </td>
+                                                                <td>
+                                                                    <%=seqno%>
+                                                                </td>
+                                                                <td>
+                                                                <form action="" method="post">
+                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update code" style="border:none;background: transparent;" ><br>
+                                                                    <!--<input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate Doctor" style="border:none;background: transparent;" formaction="" formmethod="post">-->
+                                                                    <input type="hidden" name="dname" value="<%=recid%>">
+                                                                    </form>
+                                                                    </td>  
+                                                                    </tr>
+                                                                    <%
+                                                                        }
+//                                                                        else{
+//                                                                                out.println("<script type=\"text/javascript\">");
+//                                                                                out.println("alert('Code with "+sv+" not found please try again!');");
+//                                                                                out.println("location='codelookup.jsp';");
+//                                                                                out.println("</script>");
+//                                                                                }                                                            
+                                                            }
                                                         }
+                                                    }
                                                         catch(Exception ex){
                                                             out.println("<script type=\"text/javascript\">");
-                                                            out.println("alert('"+ex.getStackTrace()+"');");
+                                                            out.println("alert('"+ex.getMessage()+"');");
                                                             out.println("location='doctorv.jsp';");
                                                             out.println("</script>");
                                                         }
                                                       %>
-						  </tr>
-						
 						</tbody>
 					  </table>
 					</div>				  

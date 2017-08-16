@@ -74,7 +74,11 @@ public class codereg extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html");
-            PrintWriter out = response.getWriter();
+        PrintWriter out = response.getWriter();
+            if(request.getParameter("slook")!=null){
+                response.sendRedirect("codelookup.jsp");
+                    }
+            else if(request.getParameter("ssave")!=null){            
             Connection connect = com.daksham.connection.connection.setConnection();
             if(connect == null){
             out.println("<script type=\"text/javascript\">");            
@@ -117,8 +121,10 @@ public class codereg extends HttpServlet {
 //            out.println("location='Codereg.jsp';");
 //            out.println("</script>"); 
         }
+            
     }
 }
+    }
 
     /**
      * Returns a short description of the servlet.

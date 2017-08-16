@@ -231,7 +231,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <!----------start member-login----------->
 		<div class="member-login">
 			<!----------star form----------->
-                        <form class="login"  method="post" style="width: 500px;">
+                        <form class="login" action="codereg"  method="post" style="width: 500px;">
 	
 					<div class="formtitle">Code Register</div>
 					<div class="input">

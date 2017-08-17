@@ -1,7 +1,7 @@
 <%-- 
-    Document   : codelookup
-    Created on : 14 Aug, 2017, 10:19:19 PM
-    Author     : Parth
+    Document   : grouplook
+    Created on : 17 Aug, 2017, 5:30:15 PM
+    Author     : ParthBheda
 --%>
 
 <%@page import="java.sql.ResultSet"%>
@@ -278,18 +278,18 @@
 			<div class="agile-grids">	
 				<!-- tables -->				
 				<div class="table-heading">
-                                    <h2>Code Enrollment Data</h2>                                     
+                                    <h2>Group Enrollment </h2>                                     
 				</div>                                
 				<div class="agile-tables">                                   
 					<div class="w3l-table-info">
                                         <table id="table">
 						<thead>
 						  <tr>
-                                                        <th>Code ID</th>
-							<th>Code Name</th>							
-							<th>Key Value</th>
-							<th>Value</th>
-							<th>Sequence Order</th>
+                                                        <th>Group Code</th>
+							<th>Group Name</th>							
+							<th>Group Type</th>
+							<th>Status</th>
+<!--							<th>Sequence Order</th>-->
 							<th>Action</th>
 						  </tr>
 						</thead>
@@ -302,41 +302,37 @@
                                                             if(connection==null){
                                                                 out.println("<script type=\"text/javascript\">");            
                                                                 out.println("alert('Please Check Database Connection!');");
-                                                                out.println("location='codelookup.jsp';");
+                                                                out.println("location='grouplookup.jsp';");
                                                                 out.println("</script>");
                                                             }
                                                             else{
                                                                 if(request.getParameter("sb")==null){
-                                                                PreparedStatement ptst = connection.prepareStatement("select recid,codeid,codename,codekey,codevalue,codeseqno from mstcoderegister order by codeseqno asc");
+                                                                PreparedStatement ptst = connection.prepareStatement("select `groupID`, `groupCode`, `groupName`, `groupType`, `isActive` from mstgroup;");
                                                                 ResultSet rs = ptst.executeQuery();
                                                                 while(rs.next()){
-                                                                    String recid = rs.getString("recid");
-                                                                    String codeid =rs.getString("codeid");
-                                                                    String codename= rs.getString("codename");
-                                                                    String codekey = rs.getString("codekey");
-                                                                    String codevalue = rs.getString("codevalue");
-                                                                    String seqno = rs.getString("codeseqno");
+                                                                    String grpid = rs.getString("groupID");
+                                                                    String grpcode =rs.getString("groupCode");
+                                                                    String grpname= rs.getString("groupName");
+                                                                    String grptype = rs.getString("groupType");
+                                                                    String grpstatus = rs.getString("isActive");                                                                    
                                                                     %>
                                                                     <td>
-                                                                        <%=codeid%>
+                                                                        <%=grpcode%>
                                                                     </td>
                                                                     <td>
-                                                                        <%=codename%>
+                                                                        <%=grpname%>
                                                                     </td>
                                                                     <td>
-                                                                        <%=codekey%>
+                                                                        <%=grptype%>
                                                                     </td>
                                                                     <td>
-                                                                        <%=codevalue%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%=seqno%>
-                                                                    </td>
+                                                                        <%=grpstatus%>
+                                                                    </td>                                                                    
                                                                     <td>                            
                                                                     <form action="" method="post">
                                                                     <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update code" style="border:none;background: transparent;" ><br>
-                                                                    <!--<input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate Doctor" style="border:none;background: transparent;" formaction="" formmethod="post">-->
-                                                                    <input type="hidden" name="dname" value="<%=recid%>">
+                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate Doctor" style="border:none;background: transparent;" formaction="" formmethod="post">
+                                                                    <input type="hidden" name="dname" value="<%=grpid%>">
                                                                     </form>
                                                                     </td>  
                                                                     </tr>
@@ -344,37 +340,33 @@
                                                                 }
                                                             }
                                                             else if(request.getParameter("sb")!=null){
-                                                                PreparedStatement ptst = connection.prepareStatement("select recid,codeid,codename,codekey,codevalue,codeseqno from mstcoderegister where codename like'%"+sv+"%' order by codeseqno asc");
+                                                                PreparedStatement ptst = connection.prepareStatement("select `groupID`, `groupCode`, `groupName`, `groupType`, `isActive` from mstgroup where groupName like '%"+sv+"%';");
                                                                 ResultSet rs = ptst.executeQuery();
                                                                 while(rs.next()){
-                                                                    String recid = rs.getString("recid");
-                                                                    String codeid =rs.getString("codeid");
-                                                                    String codename= rs.getString("codename");
-                                                                    String codekey = rs.getString("codekey");
-                                                                    String codevalue = rs.getString("codevalue");
-                                                                    String seqno = rs.getString("codeseqno");
+                                                                    String grpid = rs.getString("groupID");
+                                                                    String grpcode =rs.getString("groupCode");
+                                                                    String grpname= rs.getString("groupName");
+                                                                    String grptype = rs.getString("groupType");
+                                                                    String grpstatus = rs.getString("isActive");
                                                                 %>
                                                                 <tr>
                                                                 <td>
-                                                                    <%=codeid%>
-                                                                </td>
-                                                                <td>
-                                                                    <%=codename%>
-                                                                </td>
-                                                                <td>
-                                                                    <%=codekey%>
-                                                                </td>
-                                                                <td>
-                                                                    <%=codevalue%>
-                                                                </td>
-                                                                <td>
-                                                                    <%=seqno%>
-                                                                </td>
-                                                                <td>
-                                                                <form action="" method="post">
+                                                                        <%=grpcode%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=grpname%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=grptype%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=grpstatus%>
+                                                                    </td>                                                                    
+                                                                    <td>                            
+                                                                    <form action="" method="post">
                                                                     <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update code" style="border:none;background: transparent;" ><br>
-                                                                    <!--<input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate Doctor" style="border:none;background: transparent;" formaction="" formmethod="post">-->
-                                                                    <input type="hidden" name="dname" value="<%=recid%>">
+                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate Doctor" style="border:none;background: transparent;" formaction="" formmethod="post">
+                                                                    <input type="hidden" name="dname" value="<%=grpid%>">
                                                                     </form>
                                                                     </td>  
                                                                     </tr>
@@ -388,37 +380,33 @@
 //                                                                                }                                                            
                                                             }
                                                                 else if(request.getParameter("refresh")!=null){
-                                                                PreparedStatement ptst = connection.prepareStatement("select recid,codeid,codename,codekey,codevalue,codeseqno from mstcoderegister order by codeseqno asc");
+                                                                PreparedStatement ptst = connection.prepareStatement("select `groupID`, `groupCode`, `groupName`, `groupType`, `isActive` from mstgroup;");
                                                                 ResultSet rs = ptst.executeQuery();
                                                                 while(rs.next()){
-                                                                    String recid = rs.getString("recid");
-                                                                    String codeid =rs.getString("codeid");
-                                                                    String codename= rs.getString("codename");
-                                                                    String codekey = rs.getString("codekey");
-                                                                    String codevalue = rs.getString("codevalue");
-                                                                    String seqno = rs.getString("codeseqno");
+                                                                    String grpid = rs.getString("groupID");
+                                                                    String grpcode =rs.getString("groupCode");
+                                                                    String grpname= rs.getString("groupName");
+                                                                    String grptype = rs.getString("groupType");
+                                                                    String grpstatus = rs.getString("isActive");
                                                                     %>
                                                                     <tr>
-                                                                    <td>
-                                                                        <%=codeid%>
+                                                                <td>
+                                                                        <%=grpcode%>
                                                                     </td>
                                                                     <td>
-                                                                        <%=codename%>
+                                                                        <%=grpname%>
                                                                     </td>
                                                                     <td>
-                                                                        <%=codekey%>
+                                                                        <%=grptype%>
                                                                     </td>
                                                                     <td>
-                                                                        <%=codevalue%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%=seqno%>
-                                                                    </td>
+                                                                        <%=grpstatus%>
+                                                                    </td>                                                                    
                                                                     <td>                            
                                                                     <form action="" method="post">
                                                                     <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update code" style="border:none;background: transparent;" ><br>
-                                                                    <!--<input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate Doctor" style="border:none;background: transparent;" formaction="" formmethod="post">-->
-                                                                    <input type="hidden" name="dname" value="<%=recid%>">
+                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate Doctor" style="border:none;background: transparent;" formaction="" formmethod="post">
+                                                                    <input type="hidden" name="dname" value="<%=grpid%>">
                                                                     </form>
                                                                     </td>  
                                                                     </tr>

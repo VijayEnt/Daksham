@@ -94,31 +94,31 @@ public class codereg extends HttpServlet {
             String codekey=request.getParameter("ckey");
             String codeval =request.getParameter("cval");
             String codeseq=request.getParameter("cseq");
-            if(codeid==""){
+            if(codeid.equals("")){
             out.println("<script type=\"text/javascript\">");            
             out.println("alert('Code-ID could not be blank!');");
             out.println("location='Codereg.jsp';");
             out.println("</script>");
             }
-            else if(codename==""){
+            else if(codename.equals("")){
             out.println("<script type=\"text/javascript\">");            
             out.println("alert('Code-Name could not be blank!');");
             out.println("location='Codereg.jsp';");
             out.println("</script>");
             }
-            else if(codekey==""){
+            else if(codekey.equals("")){
             out.println("<script type=\"text/javascript\">");            
             out.println("alert('Code-Key value could not be blank!');");
             out.println("location='Codereg.jsp';");
             out.println("</script>");
             }
-            else if(codeval==""){
+            else if(codeval.equals("")){
             out.println("<script type=\"text/javascript\">");            
             out.println("alert('Code-Value could not be blank!');");
             out.println("location='Codereg.jsp';");
             out.println("</script>");  
             }
-            else if(codeseq==""){
+            else if(codeseq.equals("")){
             out.println("<script type=\"text/javascript\">");            
             out.println("alert('Code-Sequence could not be blank!');");
             out.println("location='Codereg.jsp';");
@@ -134,7 +134,6 @@ public class codereg extends HttpServlet {
             ps.executeUpdate();            
             out.println("<script type=\"text/javascript\">");
             out.println("alert('Successfully enrolled with value "+codeval+"!');");
-            //out.println("alert('Enrolled Successfully!');");
             out.println("location='Codereg.jsp';");
             out.println("</script>");
             ps.close();

@@ -235,19 +235,19 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	
 					<div class="formtitle">Group Register</div>
 					<div class="input">
-						<input type="text" name="cid" placeholder="Group Code"  required/> 
+						<input type="text" name="cid" placeholder="Group Code"/> 
 						
 					</div>
 					<div class="input">
-                                            <input type="text" name="cname"  placeholder="Group Name" required/>
+                                            <input type="text" name="cname"  placeholder="Group Name"/>
                                         </div>
                                         <div class="input">
-                                            <input type="text" name="ckey"  placeholder="Group Type" required/>
+                                            <input type="text" name="ckey"  placeholder="Group Type"/>
                                         </div>                                        
 					<div class="submit">						
-                                            <input class="bluebutton submitbotton" name="ssave" type="submit" value="Save" />
+                                            <input class="bluebutton submitbotton" name="ssave" type="submit" value="Save" formaction="groupreg" formmethod="post" />
                                             <input class="bluebutton submitbotton" type="reset" value="Reset" />
-                                            <input class="bluebutton submitbotton" name="slook" type="submit" value="Group Lookup" />
+                                            <input class="bluebutton submitbotton" name="slook" type="submit" value="Group Lookup" formaction="groupreg" formmethod="post" />
 						<div class="clear"> </div>
 					</div>
 		

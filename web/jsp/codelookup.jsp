@@ -266,10 +266,11 @@
 	</nav>
        <section class="title-bar">						
 			<div class="w3l_search">
-				<form action="#" method="post">
-					<input type="text" name="search" value="Search" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}" required="">
-					<button class="btn btn-default" name="sb" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-				</form>
+                            <form action="#" method="post">
+					<input type="text" name="search" value="Search by code-id" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}" required="">
+                                        <button class="btn btn-default" name="sb" type="submit" title="Search Code"><i class="fa fa-search" aria-hidden="true"></i></button> <br><br>
+                                        <button class="btn btn-default" name="refresh" type="submit" style="margin-left: 50px;" title="Refresh Data"><i class="fa fa-refresh" aria-hidden="true"></i></button>                              
+				</form>            
 			</div>			
 			<div class="clearfix"> </div>
 		</section>
@@ -277,9 +278,9 @@
 			<div class="agile-grids">	
 				<!-- tables -->				
 				<div class="table-heading">
-					<h2>Code Enrollment Data</h2>
-				</div>
-				<div class="agile-tables">
+                                    <h2>Code Enrollment Data</h2>                                     
+				</div>                                
+				<div class="agile-tables">                                   
 					<div class="w3l-table-info">
                                         <table id="table">
 						<thead>
@@ -385,6 +386,44 @@
 //                                                                                out.println("location='codelookup.jsp';");
 //                                                                                out.println("</script>");
 //                                                                                }                                                            
+                                                            }
+                                                                else if(request.getParameter("refresh")!=null){
+                                                                PreparedStatement ptst = connection.prepareStatement("select recid,codeid,codename,codekey,codevalue,codeseqno from mstcoderegister order by codeseqno asc");
+                                                                ResultSet rs = ptst.executeQuery();
+                                                                while(rs.next()){
+                                                                    String recid = rs.getString("recid");
+                                                                    String codeid =rs.getString("codeid");
+                                                                    String codename= rs.getString("codename");
+                                                                    String codekey = rs.getString("codekey");
+                                                                    String codevalue = rs.getString("codevalue");
+                                                                    String seqno = rs.getString("codeseqno");
+                                                                    %>
+                                                                    <tr>
+                                                                    <td>
+                                                                        <%=codeid%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=codename%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=codekey%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=codevalue%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=seqno%>
+                                                                    </td>
+                                                                    <td>                            
+                                                                    <form action="" method="post">
+                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update code" style="border:none;background: transparent;" ><br>
+                                                                    <!--<input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate Doctor" style="border:none;background: transparent;" formaction="" formmethod="post">-->
+                                                                    <input type="hidden" name="dname" value="<%=recid%>">
+                                                                    </form>
+                                                                    </td>  
+                                                                    </tr>
+                                                                    <%
+                                                                        }
                                                             }
                                                         }
                                                     }

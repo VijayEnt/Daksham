@@ -94,6 +94,37 @@ public class codereg extends HttpServlet {
             String codekey=request.getParameter("ckey");
             String codeval =request.getParameter("cval");
             String codeseq=request.getParameter("cseq");
+            if(codeid==""){
+            out.println("<script type=\"text/javascript\">");            
+            out.println("alert('Code-ID could not be blank!');");
+            out.println("location='Codereg.jsp';");
+            out.println("</script>");
+            }
+            else if(codename==""){
+            out.println("<script type=\"text/javascript\">");            
+            out.println("alert('Code-Name could not be blank!');");
+            out.println("location='Codereg.jsp';");
+            out.println("</script>");
+            }
+            else if(codekey==""){
+            out.println("<script type=\"text/javascript\">");            
+            out.println("alert('Code-Key value could not be blank!');");
+            out.println("location='Codereg.jsp';");
+            out.println("</script>");
+            }
+            else if(codeval==""){
+            out.println("<script type=\"text/javascript\">");            
+            out.println("alert('Code-Value could not be blank!');");
+            out.println("location='Codereg.jsp';");
+            out.println("</script>");  
+            }
+            else if(codeseq==""){
+            out.println("<script type=\"text/javascript\">");            
+            out.println("alert('Code-Sequence could not be blank!');");
+            out.println("location='Codereg.jsp';");
+            out.println("</script>");
+            }
+            else{
             PreparedStatement ps = connect.prepareStatement("insert into mstcoderegister (Codename,CodeID,CodeKey,CodeValue,CodeSeqNo,CreationDate,ActionDate,ActionUserID) values (?,?,?,?,?,now(),now(),'1')");
             ps.setString(1, codename);
             ps.setString(2, codeid);
@@ -108,6 +139,7 @@ public class codereg extends HttpServlet {
             out.println("</script>");
             ps.close();
         }
+    }
 //        catch(SQLException  ex){
 //            out.println("<script type=\"text/javascript\">");
 //            out.println("alert('"+ex+"');");

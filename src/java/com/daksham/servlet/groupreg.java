@@ -132,7 +132,7 @@ public class groupreg extends HttpServlet {
                 String gcode = request.getParameter("cid");
                 String gname = request.getParameter("cname");
                 String gtype = request.getParameter("ckey");
-                String grpid = request.getParameter("grpid");
+                String grpid = request.getParameter("gid");
                 if(gcode.equals("")){
                 out.println("<script type=\"text/javascript\">");            
                 out.println("alert('Group Code could not be blank!');");
@@ -152,7 +152,7 @@ public class groupreg extends HttpServlet {
                 out.println("</script>");    
                 }
                 else{
-                    PreparedStatement ptst = connection.prepareStatement("update mstgroup set groupCode = '',groupName='',groupType='',isActive='Y',actionDate=now(),actionUserID=1 where groupid ='"+grpid+"'");
+                    PreparedStatement ptst = connection.prepareStatement("update mstgroup set groupCode = '"+gcode+"',groupName='"+gname+"',groupType='"+gtype+"',isActive='Y',actionDate=now(),actionUserID=1 where groupid ='"+grpid+"'");
                     ptst.executeUpdate();
                     out.println("<script type=\"text/javascript\">");
                     out.println("alert('Group Information Updated!');");
@@ -167,7 +167,7 @@ public class groupreg extends HttpServlet {
         }
         else if(request.getParameter("btndeactive")!=null){
             String grpid = request.getParameter("dname");
-            String grpname = request.getParameter("grpname");
+            String grpname = request.getParameter("gname");
             try{            
             PreparedStatement ptst = connection.prepareStatement("update mstgroup set isActive = 'N',actionDate=now(),actionUserID=1 where groupID = '"+grpid+"'");
             ptst.executeUpdate();

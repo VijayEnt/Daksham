@@ -253,6 +253,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                                         String grpstatus = rs.getString("isActive");   
                                                     //}
                                                     %>
+                                                    <input type="hidden" name="gid" value="<%=grpid%>">
                                                     <div class="input">
                                                         <input type="text" name="cid" placeholder="Group Code" value="<%= grpcode%>"/> 						
 					</div>

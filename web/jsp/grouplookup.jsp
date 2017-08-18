@@ -267,7 +267,7 @@
        <section class="title-bar">						
 			<div class="w3l_search">
                             <form action="#" method="post">
-					<input type="text" name="search" value="Search by code-id" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}" required="">
+					<input type="text" name="search" value="Search by Group Name" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}" required="">
                                         <button class="btn btn-default" name="sb" type="submit" title="Search Code"><i class="fa fa-search" aria-hidden="true"></i></button> <br><br>
                                         <button class="btn btn-default" name="refresh" type="submit" style="margin-left: 50px;" title="Refresh Data"><i class="fa fa-refresh" aria-hidden="true"></i></button>                              
 				</form>            
@@ -316,16 +316,16 @@
                                                                     String grptype = rs.getString("groupType");
                                                                     String grpstatus = rs.getString("isActive");                                                                    
                                                                     %>
-                                                                    <td>
+                                                                    <td name="grpcode">
                                                                         <%=grpcode%>
                                                                     </td>
-                                                                    <td>
+                                                                    <td name="gname">
                                                                         <%=grpname%>
                                                                     </td>
-                                                                    <td>
+                                                                    <td name="grptype">
                                                                         <%=grptype%>
                                                                     </td>
-                                                                    <td>
+                                                                    <td name="grpstatus">
                                                                         <%=grpstatus%>
                                                                     </td>                                                                    
                                                                     <td>                            
@@ -333,6 +333,7 @@
                                                                         <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update code" style="border:none;background: transparent;" formaction="groupreg.jsp" formmethod="post" ><br>
                                                                     <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate Doctor" style="border:none;background: transparent;" formaction="groupreg" formmethod="post">
                                                                     <input type="hidden" name="dname" value="<%=grpid%>">
+                                                                    <input type="hidden" name="gname" value="<%=grpname%>">
                                                                     </form>
                                                                     </td>  
                                                                     </tr>
@@ -350,16 +351,16 @@
                                                                     String grpstatus = rs.getString("isActive");
                                                                 %>
                                                                 <tr>
-                                                                <td>
+                                                                <td name="grpcode">
                                                                         <%=grpcode%>
                                                                     </td>
-                                                                    <td>
+                                                                    <td name="gname">
                                                                         <%=grpname%>
                                                                     </td>
-                                                                    <td>
+                                                                    <td name="grptype">
                                                                         <%=grptype%>
                                                                     </td>
-                                                                    <td>
+                                                                    <td name="grpstatus">
                                                                         <%=grpstatus%>
                                                                     </td>                                                                    
                                                                     <td>                            
@@ -390,24 +391,23 @@
                                                                     String grpstatus = rs.getString("isActive");
                                                                     %>
                                                                     <tr>
-                                                                <td>
+                                                                <td name="grpcode">
                                                                         <%=grpcode%>
                                                                     </td>
-                                                                    <td>
+                                                                    <td name="gname">
                                                                         <%=grpname%>
                                                                     </td>
-                                                                    <td>
+                                                                    <td name="grptype">
                                                                         <%=grptype%>
                                                                     </td>
-                                                                    <td>
+                                                                    <td name="grpstatus">
                                                                         <%=grpstatus%>
                                                                     </td>                                                                    
                                                                     <td>                            
                                                                     <form action="" method="post">
                                                                     <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update code" style="border:none;background: transparent;" ><br>
                                                                     <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate Doctor" style="border:none;background: transparent;" formaction="" formmethod="post">
-                                                                    <input type="hidden" name="dname" value="<%=grpid%>">
-                                                                    <input type="hidden" name="grpname" value="<%=grpname%>">
+                                                                    <input type="hidden" name="dname" value="<%=grpid%>">                                                                    
                                                                     </form>
                                                                     </td>  
                                                                     </tr>

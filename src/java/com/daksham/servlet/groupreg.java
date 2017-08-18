@@ -74,11 +74,11 @@ public class groupreg extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html");
         PrintWriter out =response.getWriter();
+        Connection connection = com.daksham.connection.connection.setConnection();
         if(request.getParameter("slook")!=null){
                 response.sendRedirect("grouplookup.jsp");
             }
-        else if(request.getParameter("ssave")!=null){
-            Connection connection = com.daksham.connection.connection.setConnection();
+        else if(request.getParameter("ssave")!=null){            
             if(connection==null){
                 out.println("<script type=\"text/javascript\">");            
                 out.println("alert('Please Check Database Connection!');");
@@ -127,6 +127,59 @@ public class groupreg extends HttpServlet {
                 }
         }
     }
+        else if(request.getParameter("supdate")!=null){
+            try{
+                String gcode = request.getParameter("cid");
+                String gname = request.getParameter("cname");
+                String gtype = request.getParameter("ckey");
+                String grpid = request.getParameter("grpid");
+                if(gcode.equals("")){
+                out.println("<script type=\"text/javascript\">");            
+                out.println("alert('Group Code could not be blank!');");
+                out.println("location='groupreg.jsp';");
+                out.println("</script>");    
+                }
+                else if(gname.equals("")){
+                out.println("<script type=\"text/javascript\">");            
+                out.println("alert('Group Name could not be blank!');");
+                out.println("location='groupreg.jsp';");
+                out.println("</script>");        
+                }
+                else if(gtype.equals("")){
+                out.println("<script type=\"text/javascript\">");            
+                out.println("alert('Group Type could not be blank!');");
+                out.println("location='groupreg.jsp';");
+                out.println("</script>");    
+                }
+                else{
+                    PreparedStatement ptst = connection.prepareStatement("update mstgroup set groupCode = '',groupName='',groupType='',isActive='Y',actionDate=now(),actionUserID=1 where groupid ='"+grpid+"'");
+                    ptst.executeUpdate();
+                    out.println("<script type=\"text/javascript\">");
+                    out.println("alert('Group Information Updated!');");
+                    out.println("location='groupreg.jsp';");
+                    out.println("</script>");
+                }
+                    
+            }
+            catch(Exception ex){
+                ex.printStackTrace(out);
+            }
+        }
+        else if(request.getParameter("btndeactive")!=null){
+            String grpid = request.getParameter("dname");
+            String grpname = request.getParameter("grpname");
+            try{            
+            PreparedStatement ptst = connection.prepareStatement("update mstgroup set isActive = 'N',actionDate=now(),actionUserID=1 where groupID = '"+grpid+"'");
+            ptst.executeUpdate();
+            out.println("<script type=\"text/javascript\">");
+            out.println("alert('Group "+grpname+" Deactivated!');");
+            out.println("location='groupreg.jsp';");
+            out.println("</script>");
+        }
+            catch(Exception ex){
+                    ex.printStackTrace(out);
+            }
+        }
     }
     /**
      * Returns a short description of the servlet.

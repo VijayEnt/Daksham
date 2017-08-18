@@ -4,6 +4,7 @@
     Author     : Parth
 --%>
 
+<%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="com.daksham.connection.connection"%>
@@ -242,17 +243,44 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                             if(grpid!=null){
                                                 try{
                                                     Connection connection = com.daksham.connection.connection.setConnection();
-                                                    PreparedStatement ptst = connection.prepareStatement("select * from mstgroup")
+                                                    PreparedStatement ptst = connection.prepareStatement("select * from mstgroup where groupID='"+grpid+"'");
+                                                    ResultSet rs = ptst.executeQuery();
+                                                    if(rs.next()){
+//                                                        String grpid = rs.getString("groupID");
+                                                        String grpcode =rs.getString("groupCode");
+                                                        String grpname= rs.getString("groupName");
+                                                        String grptype = rs.getString("groupType");
+                                                        String grpstatus = rs.getString("isActive");   
+                                                    //}
+                                                    %>
+                                                    <div class="input">
+                                                        <input type="text" name="cid" placeholder="Group Code" value="<%= grpcode%>"/> 						
+					</div>
+					<div class="input">
+                                            <input type="text" name="cname"  placeholder="Group Name" value="<%=grpname%>"/>
+                                        </div>
+                                        <div class="input">
+                                            <input type="text" name="ckey"  placeholder="Group Type" value="<%=grptype%>"/>
+                                        </div>                                        
+					<div class="submit">						
+                                            <input class="bluebutton submitbotton" name="supdate" type="submit" value="Save" formaction="groupreg" formmethod="post" />
+                                            <input class="bluebutton submitbotton" name="back" type="submit" value="Group Lookup" formaction="groupreg" formmethod="post" />
+                                            	<div class="clear"> </div>
+					</div>
+                                                    <%
                                                 }
+                                        }
                                                 catch(Exception ex){
                                                         out.println("<script type=\"text/javascript\">");
                                                         out.println("alert('"+ex.getMessage()+"');");
                                                         out.println("location='groupreg.jsp';");
                                                         out.println("</script>");
+//}
 
                                                 }
                                             }
-                                            %>
+else{
+%>
                                         <div class="input">
                                             <input type="text" name="cid" placeholder="Group Code"/> 						
 					</div>
@@ -268,6 +296,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                             <input class="bluebutton submitbotton" name="slook" type="submit" value="Group Lookup" formaction="groupreg" formmethod="post" />
 						<div class="clear"> </div>
 					</div>
+<%
+}
+                                            %>
 		
 				</form>
 				<!----------end form----------->

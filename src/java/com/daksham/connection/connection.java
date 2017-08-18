@@ -17,9 +17,12 @@ import java.sql.Connection;
 public class connection {
     public static Connection setConnection(){
         Connection connect = null;
-        String url="jdbc:mysql://localhost:3306/dfs";
-        String username="root";
-        String pass="12345";
+        //String url="jdbc:mysql://localhost:3306/dfs";
+        String url="jdbc:mysql://sql36.main-hosting.eu/u536039389_dfs";
+        //String username="root";
+        String username="u536039389_dfs";
+        //String pass="12345";
+        String pass = "dfs@12345";
         try{
             try{
                 Class.forName("com.mysql.jdbc.Driver");

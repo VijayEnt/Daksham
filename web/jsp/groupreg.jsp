@@ -4,6 +4,9 @@
     Author     : Parth
 --%>
 
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="com.daksham.connection.connection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -234,9 +237,24 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <form class="login"  action="#" method="post" style="width: 500px;">
 	
 					<div class="formtitle">Group Register</div>
-					<div class="input">
-						<input type="text" name="cid" placeholder="Group Code"/> 
-						
+                                        <% 
+                                            String grpid = request.getParameter("dname");
+                                            if(grpid!=null){
+                                                try{
+                                                    Connection connection = com.daksham.connection.connection.setConnection();
+                                                    PreparedStatement ptst = connection.prepareStatement("select * from mstgroup")
+                                                }
+                                                catch(Exception ex){
+                                                        out.println("<script type=\"text/javascript\">");
+                                                        out.println("alert('"+ex.getMessage()+"');");
+                                                        out.println("location='groupreg.jsp';");
+                                                        out.println("</script>");
+
+                                                }
+                                            }
+                                            %>
+                                        <div class="input">
+                                            <input type="text" name="cid" placeholder="Group Code"/> 						
 					</div>
 					<div class="input">
                                             <input type="text" name="cname"  placeholder="Group Name"/>

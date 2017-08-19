@@ -237,7 +237,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <form class="login" action="#"  method="post" style="width: 500px;">
 	
 					<div class="formtitle">Code Register</div>
-                                        <%
+                                        <%                                            
                                             String recid = request.getParameter("dname");
                                             if(recid !=null){
                                                PreparedStatement ptst = connection.setConnection().prepareStatement("select * from mstcoderegister where recid = '"+recid+"'");
@@ -247,11 +247,36 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                                     String codename = rs.getString("codeName");
                                                     String codeid = rs.getString("codeid");
                                                     String codekey = rs.getString("codekey");
-                                                    String codevalue = rs.getString("codeval");
-                                                    String codeseq = rs.getString("codeseq")
+                                                    String codevalue = rs.getString("codevalue");
+                                                    String codeseq = rs.getString("codeseqno");
+                                                    %>
+                                        <div class="input">
+                                            <input type="text" name="cid" placeholder="Code ID" value="<%=codeid%>"/> 						
+                                        </div>
+					<div class="input">
+                                            <input type="text" name="cname"  placeholder="Code Name" value="<%=codename%>"/>
+                                        </div>
+                                        <div class="input">
+                                            <input type="text" name="ckey"  placeholder="Code Key" value="<%=codekey%>"/>
+                                        </div>
+                                        <div class="input">
+                                            <input type="text" name="cval"  placeholder="Code Value" value="<%=codevalue%>"/>
+                                        </div>  
+                                        <div class="input input-sign">
+                                            <input type="number" name="cseq"  placeholder="Code Sequence" value="<%=codeseq%>" style="border: none;padding:2%;width: 100%"/>
+                                        </div>  
+					<div class="submit">						
+                                            <input class="bluebutton submitbotton" name="supdate" type="submit" value="Save" formaction="codereg" formmethod="post" />                                            
+                                            <input class="bluebutton submitbotton" name="slook" type="submit" value="Code Lookup" formaction="codereg" formmethod="post" />
+                                            <input type="hidden" name="frecid" value="<%=recid%>">
+						<div class="clear"> </div>
+					</div> 
+                                        <%
                                                 }
                                             }
-                                            %>
+
+else{
+%>
 					<div class="input">
 						<input type="text" name="cid" placeholder="Code ID"/> 
 						
@@ -274,7 +299,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                             <input class="bluebutton submitbotton" name="slook" type="submit" value="Code Lookup" formaction="codereg" formmethod="post" />
 						<div class="clear"> </div>
 					</div>
-		
+		<%
+                    }
+%>
 				</form>
 				<!----------end form----------->
 		</div>

@@ -75,11 +75,11 @@ public class codereg extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
+        Connection connect = com.daksham.connection.connection.setConnection();
             if(request.getParameter("slook")!=null){
                 response.sendRedirect("codelookup.jsp");
                     }
             else if(request.getParameter("ssave")!=null){            
-            Connection connect = com.daksham.connection.connection.setConnection();
             if(connect == null){
             out.println("<script type=\"text/javascript\">");            
             out.println("alert('Please Check Database Connection!');");
@@ -155,8 +155,58 @@ public class codereg extends HttpServlet {
             
     }
 }
+            else if(request.getParameter("supdate")!=null){
+                try{
+            String recid=request.getParameter("frecid");
+            String codeid=request.getParameter("cid");
+            String codename=request.getParameter("cname");
+            String codekey=request.getParameter("ckey");
+            String codeval =request.getParameter("cval");
+            String codeseq=request.getParameter("cseq");
+            if(codeid.equals("")){
+            out.println("<script type=\"text/javascript\">");            
+            out.println("alert('Code-ID could not be blank!');");
+            out.println("location='Codereg.jsp';");
+            out.println("</script>");
+            }
+            else if(codename.equals("")){
+            out.println("<script type=\"text/javascript\">");            
+            out.println("alert('Code-Name could not be blank!');");
+            out.println("location='Codereg.jsp';");
+            out.println("</script>");
+            }
+            else if(codekey.equals("")){
+            out.println("<script type=\"text/javascript\">");            
+            out.println("alert('Code-Key value could not be blank!');");
+            out.println("location='Codereg.jsp';");
+            out.println("</script>");
+            }
+            else if(codeval.equals("")){
+            out.println("<script type=\"text/javascript\">");            
+            out.println("alert('Code-Value could not be blank!');");
+            out.println("location='Codereg.jsp';");
+            out.println("</script>");  
+            }
+            else if(codeseq.equals("")){
+            out.println("<script type=\"text/javascript\">");            
+            out.println("alert('Code-Sequence could not be blank!');");
+            out.println("location='Codereg.jsp';");
+            out.println("</script>");
+            }
+                    else{
+            PreparedStatement ptst = connect.prepareStatement("update mstcoderegister set codename='"+codename+"',codeid='"+codeid+"',codekey='"+codekey+"',codevalue='"+codeval+"',codeseqno='"+codeseq+"',actionDate=now(),actionUserID=1 where recid='"+recid+"'");
+            ptst.executeUpdate();
+            out.println("<script type=\"text/javascript\">");
+            out.println("alert('Code Information Updated!');");
+            out.println("location='Codereg.jsp';");
+            out.println("</script>");
+                }
+            }
+                catch(Exception ex){
+                    ex.printStackTrace(out);
+                }
     }
-
+}
     /**
      * Returns a short description of the servlet.
      *

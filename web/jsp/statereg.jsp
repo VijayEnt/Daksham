@@ -231,15 +231,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <!----------start member-login----------->
 		<div class="member-login">
 			<!----------star form----------->
-                        <form class="login"  action="#" method="post" style="width: 500px;">
+                        <form class="login"  action="statereg" method="post" style="width: 500px;">
 	
 					<div class="formtitle">State Register</div>
 					<div class="input">
-						<input type="text" name="sname" placeholder="State Name"  required/> 
+						<input type="text" name="sname" placeholder="State Name" /> 
 						
 					</div>
 					<div class="input">
-                                            <input type="text" name="sabb"  placeholder="Sate Abbrevation" required/>
+                                            <input type="text" name="sabb"  placeholder="Sate Abbrevation"/>
                                         </div>
 					<div class="submit">						
                                             <input class="bluebutton submitbotton" name="ssave" type="submit" value="Save" />

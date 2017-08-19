@@ -1,7 +1,7 @@
 <%-- 
-    Document   : codelookup
-    Created on : 14 Aug, 2017, 10:19:19 PM
-    Author     : Parth
+    Document   : statelookup
+    Created on : 19 Aug, 2017, 3:32:59 PM
+    Author     : ParthBheda
 --%>
 
 <%@page import="java.sql.ResultSet"%>
@@ -84,6 +84,7 @@
 <!--Paging Script Test-->
 <script type="text/javascript" src="js/paging.js"></script>
 <!--paging script test end-->
+
 </head>
     <body class="dashboard-page">
 	<script>
@@ -269,7 +270,7 @@
        <section class="title-bar">						
 			<div class="w3l_search">
                             <form action="#" method="post">
-					<input type="text" name="search" value="Search by code-id" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}" required="">
+					<input type="text" name="search" value="Search by State Name" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}" required="">
                                         <button class="btn btn-default" name="sb" type="submit" title="Search Code"><i class="fa fa-search" aria-hidden="true"></i></button> <br><br>
                                         <button class="btn btn-default" name="refresh" type="submit" style="margin-left: 50px;" title="Refresh Data"><i class="fa fa-refresh" aria-hidden="true"></i></button>                              
 				</form>            
@@ -280,18 +281,17 @@
 			<div class="agile-grids">	
 				<!-- tables -->				
 				<div class="table-heading">
-                                    <h2>Code Enrollment Data</h2>                                     
+                                    <h2>Group Enrollment </h2>                                     
 				</div>                                
 				<div class="agile-tables">                                   
 					<div class="w3l-table-info">
                                         <table id="table">
 						<thead>
 						  <tr>
-                                                        <th>Code ID</th>
-							<th>Code Name</th>							
-							<th>Key Value</th>
-							<th>Value</th>
-							<th>Sequence Order</th>
+							<th>Sate</th>							
+							<th>State Abbreviation</th>
+							<th>Status</th>
+<!--							<th>Sequence Order</th>-->
 							<th>Action</th>
 						  </tr>
 						</thead>
@@ -304,41 +304,34 @@
                                                             if(connection==null){
                                                                 out.println("<script type=\"text/javascript\">");            
                                                                 out.println("alert('Please Check Database Connection!');");
-                                                                out.println("location='codelookup.jsp';");
+                                                                out.println("location='grouplookup.jsp';");
                                                                 out.println("</script>");
                                                             }
                                                             else{
                                                                 if(request.getParameter("sb")==null){
-                                                                PreparedStatement ptst = connection.prepareStatement("select recid,codeid,codename,codekey,codevalue,codeseqno from mstcoderegister order by codeseqno asc");
+                                                                PreparedStatement ptst = connection.prepareStatement("select stateCode,stateName,stateAbb,isActive from mststate;");
                                                                 ResultSet rs = ptst.executeQuery();
-                                                                while(rs.next()){
-                                                                    String recid = rs.getString("recid");
-                                                                    String codeid =rs.getString("codeid");
-                                                                    String codename= rs.getString("codename");
-                                                                    String codekey = rs.getString("codekey");
-                                                                    String codevalue = rs.getString("codevalue");
-                                                                    String seqno = rs.getString("codeseqno");
+                                                                while(rs.next()){                                                                    
+                                                                    String stcode =rs.getString("stateCode");
+                                                                    String stname= rs.getString("stateName");
+                                                                    String stabb = rs.getString("stateAbb");
+                                                                    String ststatus = rs.getString("isActive");                                                                    
                                                                     %>
                                                                     <td>
-                                                                        <%=codeid%>
+                                                                        <%=stname%>
                                                                     </td>
                                                                     <td>
-                                                                        <%=codename%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%=codekey%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%=codevalue%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%=seqno%>
-                                                                    </td>
+                                                                        <%=stabb%>
+                                                                    </td>                                                                    
+                                                                    <td name="grpstatus">
+                                                                        <%=ststatus%>
+                                                                    </td>                                                                    
                                                                     <td>                            
                                                                     <form action="" method="post">
-                                                                        <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update code" style="border:none;background: transparent;" formaction="Codereg.jsp" formmethod="post" ><br>
-                                                                    <!--<input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate Doctor" style="border:none;background: transparent;" formaction="" formmethod="post">-->
-                                                                    <input type="hidden" name="dname" value="<%=recid%>">
+                                                                        <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update code" style="border:none;background: transparent;" formaction="groupreg.jsp" formmethod="post" ><br>
+                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate Doctor" style="border:none;background: transparent;" formaction="groupreg" formmethod="post">
+                                                                    <input type="hidden" name="dname" value="<%=stcode%>">
+                                                                    <input type="hidden" name="gname" value="<%=stname%>">
                                                                     </form>
                                                                     </td>  
                                                                     </tr>
@@ -346,88 +339,59 @@
                                                                 }
                                                             }
                                                             else if(request.getParameter("sb")!=null){
-                                                                PreparedStatement ptst = connection.prepareStatement("select recid,codeid,codename,codekey,codevalue,codeseqno from mstcoderegister where codename like'%"+sv+"%' order by codeseqno asc");
+                                                                PreparedStatement ptst = connection.prepareStatement("select stateCode,stateName,stateAbb,isActive from mststate where stateName = '"+sv+"'");
                                                                 ResultSet rs = ptst.executeQuery();
-                                                                if(!rs.next()){
-                                                                out.println("<script type=\"text/javascript\">");
-                                                                out.println("alert('Code with "+sv+" not found please try again!');");
-                                                                out.println("location='codelookup.jsp';");
-                                                                out.println("</script>");
-                                                                }
-//(rs.next())
-                                                                else{
-                                                                    String recid = rs.getString("recid");
-                                                                    String codeid =rs.getString("codeid");
-                                                                    String codename= rs.getString("codename");
-                                                                    String codekey = rs.getString("codekey");
-                                                                    String codevalue = rs.getString("codevalue");
-                                                                    String seqno = rs.getString("codeseqno");
+                                                                while(rs.next()){
+                                                                    String stcode =rs.getString("stateCode");
+                                                                    String stname= rs.getString("stateName");
+                                                                    String stabb = rs.getString("stateAbb");
+                                                                    String ststatus = rs.getString("isActive");      
                                                                 %>
-                                                                <tr>
-                                                                <td>
-                                                                    <%=codeid%>
-                                                                </td>
-                                                                <td>
-                                                                    <%=codename%>
-                                                                </td>
-                                                                <td>
-                                                                    <%=codekey%>
-                                                                </td>
-                                                                <td>
-                                                                    <%=codevalue%>
-                                                                </td>
-                                                                <td>
-                                                                    <%=seqno%>
-                                                                </td>
-                                                                <td>
-                                                                <form action="" method="post">
+                                                                <tr>                                                                
+                                                                    <td name="gname">
+                                                                        <%=stname%>
+                                                                    </td>
+                                                                    <td name="grptype">
+                                                                        <%=stabb%>
+                                                                    </td>
+                                                                    <td name="grpstatus">
+                                                                        <%=ststatus%>
+                                                                    </td>                                                                    
+                                                                    <td>                            
+                                                                    <form action="" method="post">
                                                                     <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update code" style="border:none;background: transparent;" ><br>
-                                                                    <!--<input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate Doctor" style="border:none;background: transparent;" formaction="" formmethod="post">-->
-                                                                    <input type="hidden" name="dname" value="<%=recid%>">
+                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate Doctor" style="border:none;background: transparent;" formaction="" formmethod="post">
+                                                                    <input type="hidden" name="dname" value="<%=stcode%>">
                                                                     </form>
                                                                     </td>  
                                                                     </tr>
                                                                     <%
                                                                         }
-//                                                                        else{
-//                                                                                out.println("<script type=\"text/javascript\">");
-//                                                                                out.println("alert('Code with "+sv+" not found please try again!');");
-//                                                                                out.println("location='codelookup.jsp';");
-//                                                                                out.println("</script>");
-//                                                                                }                                                            
                                                             }
                                                                 else if(request.getParameter("refresh")!=null){
-                                                                PreparedStatement ptst = connection.prepareStatement("select recid,codeid,codename,codekey,codevalue,codeseqno from mstcoderegister order by codeseqno asc");
+                                                                PreparedStatement ptst = connection.prepareStatement("select stateCode,stateName,stateAbb,isActive from mststate;");
                                                                 ResultSet rs = ptst.executeQuery();
                                                                 while(rs.next()){
-                                                                    String recid = rs.getString("recid");
-                                                                    String codeid =rs.getString("codeid");
-                                                                    String codename= rs.getString("codename");
-                                                                    String codekey = rs.getString("codekey");
-                                                                    String codevalue = rs.getString("codevalue");
-                                                                    String seqno = rs.getString("codeseqno");
+                                                                    String stcode =rs.getString("stateCode");
+                                                                    String stname= rs.getString("stateName");
+                                                                    String stabb = rs.getString("stateAbb");
+                                                                    String ststatus = rs.getString("isActive");      
                                                                     %>
                                                                     <tr>
-                                                                    <td>
-                                                                        <%=codeid%>
+                                                                    <td name="gname">
+                                                                        <%=stname%>
                                                                     </td>
-                                                                    <td>
-                                                                        <%=codename%>
+                                                                    <td name="grptype">
+                                                                        <%=stabb%>
                                                                     </td>
-                                                                    <td>
-                                                                        <%=codekey%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%=codevalue%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%=seqno%>
-                                                                    </td>
+                                                                    <td name="grpstatus">
+                                                                        <%=ststatus%>
+                                                                    </td>                                                                    
                                                                     <td>                            
                                                                     <form action="" method="post">
-                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update code" style="border:none;background: transparent;" ><br>
-                                                                    <!--<input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate Doctor" style="border:none;background: transparent;" formaction="" formmethod="post">-->
-                                                                    <input type="hidden" name="dname" value="<%=recid%>">
+                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" ><br>
+                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="" formmethod="post">
+                                                                    <input type="hidden" name="dname" value="<%=stcode%>">                                                                    
                                                                     </form>
                                                                     </td>  
                                                                     </tr>
@@ -444,7 +408,7 @@
                                                         }
                                                       %>
 						</tbody>
-					  </table>
+					  </table>                                                
                                                 <div id="pageNavPosition" class="col-sm-7 text-right text-center-xs" style="cursor: pointer;">
                                                     <ul class="pagination pagination-sm m-t-none m-b-none">
                                                         <li><a href=""><i class="fa fa-chevron-left"></i></a></li>
@@ -459,7 +423,7 @@
                                                         </li>
                                                         <li><a href=""><i class="fa fa-chevron-right"></i></a></li>
                                                     </ul>
-                                                </div>
+                                                </div>                                                
 					</div>				  
 				</div>
 				<!-- //tables -->

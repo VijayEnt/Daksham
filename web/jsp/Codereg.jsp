@@ -4,6 +4,9 @@
     Author     : Parth
 --%>
 
+<%@page import="java.sql.ResultSet"%>
+<%@page import="com.daksham.connection.connection"%>
+<%@page import="java.sql.PreparedStatement"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -234,6 +237,21 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <form class="login" action="#"  method="post" style="width: 500px;">
 	
 					<div class="formtitle">Code Register</div>
+                                        <%
+                                            String recid = request.getParameter("dname");
+                                            if(recid !=null){
+                                               PreparedStatement ptst = connection.setConnection().prepareStatement("select * from mstcoderegister where recid = '"+recid+"'");
+                                                ResultSet rs = ptst.executeQuery();
+                                                if(rs.next()){
+                                                    //String cid=rs.getString("recid");
+                                                    String codename = rs.getString("codeName");
+                                                    String codeid = rs.getString("codeid");
+                                                    String codekey = rs.getString("codekey");
+                                                    String codevalue = rs.getString("codeval");
+                                                    String codeseq = rs.getString("codeseq")
+                                                }
+                                            }
+                                            %>
 					<div class="input">
 						<input type="text" name="cid" placeholder="Code ID"/> 
 						

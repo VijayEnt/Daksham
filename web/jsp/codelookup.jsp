@@ -81,7 +81,9 @@
     });
 </script>
 <!-- //tables -->
-
+<!--Paging Script Test-->
+<script type="text/javascript" src="js/paging.js"></script>
+<!--paging script test end-->
 </head>
     <body class="dashboard-page">
 	<script>
@@ -436,6 +438,21 @@
                                                       %>
 						</tbody>
 					  </table>
+                                                <div id="pageNavPosition" class="col-sm-7 text-right text-center-xs" style="cursor: pointer;">
+                                                    <ul class="pagination pagination-sm m-t-none m-b-none">
+                                                        <li><a href=""><i class="fa fa-chevron-left"></i></a></li>
+                                                        <li><a>
+                                                            <script type="text/javascript">
+                                                            var pager = new Pager('table', 5);
+                                                            pager.init();
+                                                            pager.showPageNav('pager', 'pageNavPosition');
+                                                            pager.showPage(1);
+                                                            </script>
+                                                            </a>
+                                                        </li>
+                                                        <li><a href=""><i class="fa fa-chevron-right"></i></a></li>
+                                                    </ul>
+                                                </div>
 					</div>				  
 				</div>
 				<!-- //tables -->

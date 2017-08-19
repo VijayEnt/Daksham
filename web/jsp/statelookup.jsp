@@ -281,7 +281,7 @@
 			<div class="agile-grids">	
 				<!-- tables -->				
 				<div class="table-heading">
-                                    <h2>Group Enrollment </h2>                                     
+                                    <h2>State Enrollment </h2>                                     
 				</div>                                
 				<div class="agile-tables">                                   
 					<div class="w3l-table-info">
@@ -315,7 +315,7 @@
                                                                     String stcode =rs.getString("stateCode");
                                                                     String stname= rs.getString("stateName");
                                                                     String stabb = rs.getString("stateAbb");
-                                                                    String ststatus = rs.getString("isActive");                                                                    
+                                                                    String status = rs.getString("isActive");                                                                    
                                                                     %>
                                                                     <td>
                                                                         <%=stname%>
@@ -324,14 +324,14 @@
                                                                         <%=stabb%>
                                                                     </td>                                                                    
                                                                     <td name="grpstatus">
-                                                                        <%=ststatus%>
+                                                                        <%=status%>
                                                                     </td>                                                                    
                                                                     <td>                            
                                                                     <form action="" method="post">
-                                                                        <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update code" style="border:none;background: transparent;" formaction="groupreg.jsp" formmethod="post" ><br>
-                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate Doctor" style="border:none;background: transparent;" formaction="groupreg" formmethod="post">
+                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="statereg.jsp" formmethod="post" ><br>
+                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="statereg" formmethod="post">
                                                                     <input type="hidden" name="dname" value="<%=stcode%>">
-                                                                    <input type="hidden" name="gname" value="<%=stname%>">
+                                                                    <input type="hidden" name="sname" value="<%=stname%>">
                                                                     </form>
                                                                     </td>  
                                                                     </tr>
@@ -359,9 +359,10 @@
                                                                     </td>                                                                    
                                                                     <td>                            
                                                                     <form action="" method="post">
-                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update code" style="border:none;background: transparent;" ><br>
-                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate Doctor" style="border:none;background: transparent;" formaction="" formmethod="post">
+                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="statereg.jsp" formmethod="post" ><br>
+                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="statereg" formmethod="post">
                                                                     <input type="hidden" name="dname" value="<%=stcode%>">
+                                                                    <input type="hidden" name="sname" value="<%=stname%>">
                                                                     </form>
                                                                     </td>  
                                                                     </tr>
@@ -389,9 +390,10 @@
                                                                     </td>                                                                    
                                                                     <td>                            
                                                                     <form action="" method="post">
-                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" ><br>
-                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="" formmethod="post">
-                                                                    <input type="hidden" name="dname" value="<%=stcode%>">                                                                    
+                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="statereg.jsp" formmethod="post" ><br>
+                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="statereg" formmethod="post">
+                                                                    <input type="hidden" name="dname" value="<%=stcode%>"> 
+                                                                    <input type="hidden" name="sname" value="<%=stname%>">
                                                                     </form>
                                                                     </td>  
                                                                     </tr>

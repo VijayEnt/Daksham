@@ -4,6 +4,9 @@
     Author     : Parth
 --%>
 
+<%@page import="java.sql.ResultSet"%>
+<%@page import="com.daksham.connection.connection"%>
+<%@page import="java.sql.PreparedStatement"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -234,7 +237,33 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <form class="login"  action="statereg" method="post" style="width: 500px;">
 	
 					<div class="formtitle">State Register</div>
+                                        <%
+                                            String scode= request.getParameter("dname");
+                                            if(scode!=null){                                                
+                                                 PreparedStatement ptst = connection.setConnection().prepareStatement("select * from mststate where statecode='"+scode+"'");
+                                                 ResultSet rs = ptst.executeQuery();
+                                                 if(rs.next()){
+                                                     String sname=rs.getString("stateName");
+                                                     String sabb=rs.getString("stateAbb");
+                                                     %>
+                                        <div class="input">
+                                            <input type="text" name="sname" placeholder="State Name" value="<%=sname%>" /> 						
+					</div>
 					<div class="input">
+                                            <input type="text" name="sabb"  placeholder="Sate Abbrevation" value="<%=sabb%>"/>
+                                        </div>
+					<div class="submit">						
+                                            <input class="bluebutton submitbotton" name="supdate" type="submit" value="Save" />                                            
+                                            <input class="bluebutton submitbotton" name="slook" type="submit" value="State Lookup" />
+                                            <input type="hidden" name="scode" value="<%=scode%>">
+						<div class="clear"> </div>
+					</div>
+                                        <%                                           
+                                               }
+}
+else{
+%>
+                                        <div class="input">
 						<input type="text" name="sname" placeholder="State Name" /> 
 						
 					</div>
@@ -247,6 +276,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                             <input class="bluebutton submitbotton" name="slook" type="submit" value="State Lookup" />
 						<div class="clear"> </div>
 					</div>
+<%
+    }
+                                            
+                                            %>
+
 		
 				</form>
 				<!----------end form----------->

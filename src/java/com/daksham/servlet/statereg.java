@@ -93,11 +93,40 @@ public class statereg extends HttpServlet {
             }
             catch(Exception ex){
                 ex.printStackTrace(out);
-            }
-            
+            }            
         }
+        else if(request.getParameter("supdate")!=null){
+            try{
+            String statename = request.getParameter("sname");
+            String stateabb = request.getParameter("sabb");
+            String scode=request.getParameter("scode");
+            PreparedStatement ptst = connection.prepareStatement("update mststate set stateName='"+statename+"',stateAbb='"+stateabb+"',isActive='Y',actionDate=now(),actionUserID=1 where statecode='"+scode+"'");
+            ptst.executeUpdate();
+            out.println("<script type=\"text/javascript\">");
+            out.println("alert('State information with "+statename+" Updated!');");
+            out.println("location='statereg.jsp';");
+            out.println("</script>");
+        }
+            catch(Exception ex){
+                ex.printStackTrace(out);
+            }
     }
-
+        else if(request.getParameter("btndeactive")!=null){
+            try{
+           String scode=request.getParameter("dname");
+           String statename = request.getParameter("sname");
+           PreparedStatement ptst = connection.prepareStatement("update mststate set isActive = 'N',actiondate=now(),actionuserid=1 where stateCode='"+scode+"'");
+           ptst.executeUpdate();
+           out.println("<script type=\"text/javascript\">");
+           out.println("alert('"+statename+" Deactivated!');");
+           out.println("location='statereg.jsp';");
+           out.println("</script>");
+        }
+            catch(Exception ex){
+                ex.printStackTrace(out);
+            }
+        }
+}
     /**
      * Returns a short description of the servlet.
      *

@@ -4,6 +4,9 @@
     Author     : Parth
 --%>
 
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.Connection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -243,7 +246,24 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                         </div>
                                         <div class="section-country">
                                             <select id="city" name="state" onchange="change_state(this.value)" class="frm-field required">
-                                                <option value="null">State</option>
+                                                <option value="-1">Select State</option>
+                                                <% 
+                                                try{
+                                                    Connection connection =com.daksham.connection.connection.setConnection();
+                                                    PreparedStatement ptst = connection.prepareStatement(" select statecode,stateName from mststate where isactive='Y'");
+                                                    ResultSet rs= ptst.executeQuery();
+                                                    while(rs.next()){
+                                                        out.println("<option value="+"\""+rs.getString("statecode")+"\""+">"+rs.getString("stateName")+"</option>");
+                                                        //out.println("<option value="+"\""+rs.getString("id")+"\""+">"+rs.getString("deptname")+"</option>");
+                                                    }
+                                                }
+                                                catch(Exception ex){
+                                                    out.println("<script type=\"text/javascript\">");
+                                                    out.println("alert('"+ex.getMessage()+"');");
+                                                    out.println("location='cityreg.jsp';");
+                                                    out.println("</script>");
+                                                }
+                                                %>
                                             </select>
                                         </div>
 					<div class="submit">						

@@ -12,6 +12,10 @@
         <servlet-name>state</servlet-name>
         <servlet-class>com.daksham.servlet.statereg</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>cityreg</servlet-name>
+        <servlet-class>com.daksham.servlet.cityreg</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>codereg</servlet-name>
         <url-pattern>/jsp/codereg</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>state</servlet-name>
         <url-pattern>/jsp/statereg</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>cityreg</servlet-name>
+        <url-pattern>/jsp/cityreg</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -16,6 +16,10 @@
         <servlet-name>cityreg</servlet-name>
         <servlet-class>com.daksham.servlet.cityreg</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>register</servlet-name>
+        <servlet-class>com.daksham.servlet.register</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>codereg</servlet-name>
         <url-pattern>/jsp/codereg</url-pattern>
@@ -31,6 +35,10 @@
     <servlet-mapping>
         <servlet-name>cityreg</servlet-name>
         <url-pattern>/jsp/cityreg</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>register</servlet-name>
+        <url-pattern>/jsp/register</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

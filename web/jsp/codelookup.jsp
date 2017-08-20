@@ -425,7 +425,7 @@
                                                                     </td>
                                                                     <td>                            
                                                                     <form action="" method="post">
-                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="Codereg.jsp" formmethod="post" ><br>
+                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="city.jsp" formmethod="post" ><br>
                                                                     <!--<input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate Doctor" style="border:none;background: transparent;" formaction="" formmethod="post">-->
                                                                     <input type="hidden" name="dname" value="<%=recid%>">
                                                                     </form>
@@ -439,7 +439,7 @@
                                                         catch(Exception ex){
                                                             out.println("<script type=\"text/javascript\">");
                                                             out.println("alert('"+ex.getMessage()+"');");
-                                                            out.println("location='doctorv.jsp';");
+                                                            out.println("location='cityreg.jsp';");
                                                             out.println("</script>");
                                                         }
                                                       %>

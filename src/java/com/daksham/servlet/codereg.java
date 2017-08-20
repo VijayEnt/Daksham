@@ -75,6 +75,7 @@ public class codereg extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
+        try{
         Connection connect = com.daksham.connection.connection.setConnection();
             if(request.getParameter("slook")!=null){
                 response.sendRedirect("codelookup.jsp");
@@ -206,6 +207,11 @@ public class codereg extends HttpServlet {
                     ex.printStackTrace(out);
                 }
     }
+            connect.close();
+        }
+        catch (Exception ex){
+            ex.printStackTrace(out);
+        }
 }
     /**
      * Returns a short description of the servlet.

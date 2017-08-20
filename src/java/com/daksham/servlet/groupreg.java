@@ -74,6 +74,7 @@ public class groupreg extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html");
         PrintWriter out =response.getWriter();
+        try{
         Connection connection = com.daksham.connection.connection.setConnection();
         if(request.getParameter("slook")!=null){
                 response.sendRedirect("grouplookup.jsp");
@@ -179,6 +180,11 @@ public class groupreg extends HttpServlet {
             catch(Exception ex){
                     ex.printStackTrace(out);
             }
+        }
+        connection.close();
+        }
+        catch(Exception ex){
+            ex.printStackTrace(out);
         }
     }
     /**

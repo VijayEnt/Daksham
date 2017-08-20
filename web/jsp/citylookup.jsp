@@ -1,7 +1,7 @@
 <%-- 
-    Document   : statelookup
-    Created on : 19 Aug, 2017, 3:32:59 PM
-    Author     : ParthBheda
+    Document   : citylookup
+    Created on : 20 Aug, 2017, 7:29:56 AM
+    Author     : Parth
 --%>
 
 <%@page import="java.sql.ResultSet"%>
@@ -270,7 +270,7 @@
        <section class="title-bar">						
 			<div class="w3l_search">
                             <form action="#" method="post">
-					<input type="text" name="search" value="Search by State Name" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}" required="">
+					<input type="text" name="search" value="Search by City Name" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}" required="">
                                         <button class="btn btn-default" name="sb" type="submit" title="Search Code"><i class="fa fa-search" aria-hidden="true"></i></button> <br><br>
                                         <button class="btn btn-default" name="refresh" type="submit" style="margin-left: 50px;" title="Refresh Data"><i class="fa fa-refresh" aria-hidden="true"></i></button>                              
 				</form>            
@@ -281,17 +281,17 @@
 			<div class="agile-grids">	
 				<!-- tables -->				
 				<div class="table-heading">
-                                    <h2>State Enrollment </h2>                                     
+                                    <h2>City Enrollment </h2>                                     
 				</div>                                
 				<div class="agile-tables">                                   
 					<div class="w3l-table-info">
                                         <table id="table">
 						<thead>
 						  <tr>
-							<th>Sate</th>							
-							<th>State Abbreviation</th>
+							<th>City</th>							
+							<th>City Abbreviation</th>
+							<th>State Name</th>
 							<th>Status</th>
-<!--							<th>Sequence Order</th>-->
 							<th>Action</th>
 						  </tr>
 						</thead>
@@ -304,34 +304,38 @@
                                                             if(connection==null){
                                                                 out.println("<script type=\"text/javascript\">");            
                                                                 out.println("alert('Please Check Database Connection!');");
-                                                                out.println("location='statelookup.jsp';");
+                                                                out.println("location='citylookup.jsp';");
                                                                 out.println("</script>");
                                                             }
                                                             else{
                                                                 if(request.getParameter("sb")==null){
-                                                                PreparedStatement ptst = connection.prepareStatement("select stateCode,stateName,stateAbb,isActive from mststate;");
+                                                                PreparedStatement ptst = connection.prepareStatement("select citycode,cityname,cityabb,statename,mstcity.isActive from mstcity inner join mststate on mstcity.statecode=mststate.stateCode order by citycode;");
                                                                 ResultSet rs = ptst.executeQuery();
                                                                 while(rs.next()){                                                                    
-                                                                    String stcode =rs.getString("stateCode");
+                                                                    String ctcode =rs.getString("citycode");
+                                                                    String ctname= rs.getString("cityname");
+                                                                    String ctabb = rs.getString("cityabb");
                                                                     String stname= rs.getString("stateName");
-                                                                    String stabb = rs.getString("stateAbb");
-                                                                    String status = rs.getString("isActive");                                                                    
+                                                                    String ctstatus = rs.getString("isActive");                                                                    
                                                                     %>
+                                                                    <td>
+                                                                        <%=ctname%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=ctabb%>
+                                                                    </td>
                                                                     <td>
                                                                         <%=stname%>
                                                                     </td>
-                                                                    <td>
-                                                                        <%=stabb%>
-                                                                    </td>                                                                    
                                                                     <td name="grpstatus">
-                                                                        <%=status%>
+                                                                        <%=ctstatus%>
                                                                     </td>                                                                    
                                                                     <td>                            
                                                                     <form action="" method="post">
-                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="statereg.jsp" formmethod="post" ><br>
-                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="statereg" formmethod="post">
-                                                                    <input type="hidden" name="dname" value="<%=stcode%>">
-                                                                    <input type="hidden" name="sname" value="<%=stname%>">
+                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="cityreg.jsp" formmethod="post" ><br>
+                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="cityreg" formmethod="post">
+                                                                    <input type="hidden" name="dname" value="<%=ctcode%>">
+                                                                    <input type="hidden" name="sname" value="<%=ctname%>">
                                                                     </form>
                                                                     </td>  
                                                                     </tr>
@@ -339,30 +343,33 @@
                                                                 }
                                                             }
                                                             else if(request.getParameter("sb")!=null){
-                                                                PreparedStatement ptst = connection.prepareStatement("select stateCode,stateName,stateAbb,isActive from mststate where stateName like '%"+sv+"%'");
+                                                                PreparedStatement ptst = connection.prepareStatement("select citycode,cityname,cityabb,statename,mstcity.isActive from mstcity inner join mststate on mstcity.statecode=mststate.stateCode where cityName like '%"+sv+"%' order by citycode;");
                                                                 ResultSet rs = ptst.executeQuery();
-                                                                while(rs.next()){
-                                                                    String stcode =rs.getString("stateCode");
+                                                                while(rs.next()){                                                                    
+                                                                    String ctcode =rs.getString("citycode");
+                                                                    String ctname= rs.getString("cityname");
+                                                                    String ctabb = rs.getString("cityabb");
                                                                     String stname= rs.getString("stateName");
-                                                                    String stabb = rs.getString("stateAbb");
-                                                                    String ststatus = rs.getString("isActive");      
-                                                                %>
-                                                                <tr>                                                                
-                                                                    <td name="gname">
+                                                                    String ctstatus = rs.getString("isActive");                                                                    
+                                                                    %>
+                                                                    <td>
+                                                                        <%=ctname%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=ctabb%>
+                                                                    </td>
+                                                                    <td>
                                                                         <%=stname%>
                                                                     </td>
-                                                                    <td name="grptype">
-                                                                        <%=stabb%>
-                                                                    </td>
-                                                                    <td name="grpstatus">
-                                                                        <%=ststatus%>
+                                                                    <td>
+                                                                        <%=ctstatus%>
                                                                     </td>                                                                    
                                                                     <td>                            
                                                                     <form action="" method="post">
-                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="statereg.jsp" formmethod="post" ><br>
-                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="statereg" formmethod="post">
-                                                                    <input type="hidden" name="dname" value="<%=stcode%>">
-                                                                    <input type="hidden" name="sname" value="<%=stname%>">
+                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="cityreg.jsp" formmethod="post" ><br>
+                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="cityreg" formmethod="post">
+                                                                    <input type="hidden" name="dname" value="<%=ctcode%>">
+                                                                    <input type="hidden" name="sname" value="<%=ctname%>">
                                                                     </form>
                                                                     </td>  
                                                                     </tr>
@@ -370,30 +377,33 @@
                                                                         }
                                                             }
                                                                 else if(request.getParameter("refresh")!=null){
-                                                                PreparedStatement ptst = connection.prepareStatement("select stateCode,stateName,stateAbb,isActive from mststate;");
+                                                                PreparedStatement ptst = connection.prepareStatement("select citycode,cityname,cityabb,statename,mstcity.isActive from mstcity inner join mststate on mstcity.statecode=mststate.stateCode order by citycode;");
                                                                 ResultSet rs = ptst.executeQuery();
-                                                                while(rs.next()){
-                                                                    String stcode =rs.getString("stateCode");
+                                                                while(rs.next()){                                                                    
+                                                                    String ctcode =rs.getString("citycode");
+                                                                    String ctname= rs.getString("cityname");
+                                                                    String ctabb = rs.getString("cityabb");
                                                                     String stname= rs.getString("stateName");
-                                                                    String stabb = rs.getString("stateAbb");
-                                                                    String ststatus = rs.getString("isActive");      
+                                                                    String ctstatus = rs.getString("isActive");                                                                    
                                                                     %>
-                                                                    <tr>
-                                                                    <td name="gname">
+                                                                    <td>
+                                                                        <%=ctname%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=ctabb%>
+                                                                    </td>    
+                                                                    <td>
                                                                         <%=stname%>
                                                                     </td>
-                                                                    <td name="grptype">
-                                                                        <%=stabb%>
-                                                                    </td>
                                                                     <td name="grpstatus">
-                                                                        <%=ststatus%>
+                                                                        <%=ctstatus%>
                                                                     </td>                                                                    
                                                                     <td>                            
                                                                     <form action="" method="post">
-                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="statereg.jsp" formmethod="post" ><br>
-                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="statereg" formmethod="post">
-                                                                    <input type="hidden" name="dname" value="<%=stcode%>"> 
-                                                                    <input type="hidden" name="sname" value="<%=stname%>">
+                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="cityreg.jsp" formmethod="post" ><br>
+                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="cityreg" formmethod="post">
+                                                                    <input type="hidden" name="dname" value="<%=ctcode%>">
+                                                                    <input type="hidden" name="sname" value="<%=ctname%>">
                                                                     </form>
                                                                     </td>  
                                                                     </tr>
@@ -405,7 +415,7 @@
                                                         catch(Exception ex){
                                                             out.println("<script type=\"text/javascript\">");
                                                             out.println("alert('"+ex.getMessage()+"');");
-                                                            out.println("location='doctorv.jsp';");
+                                                            out.println("location='citylookup.jsp';");
                                                             out.println("</script>");
                                                         }
                                                       %>

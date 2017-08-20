@@ -4,6 +4,7 @@
     Author     : Parth
 --%>
 
+<%@page import="com.daksham.connection.connection"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>
@@ -234,19 +235,29 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <!----------start member-login----------->
 		<div class="member-login">
 			<!----------star form----------->
-                        <form class="login"  action="#" method="post" style="width: 500px;">
+                        <form class="login"  action="cityreg" method="post" style="width: 500px;">
 	
 					<div class="formtitle">City Register</div>
-					<div class="input">
-						<input type="text" name="cname" placeholder="City Name"  required/> 
-						
+                                        <%
+                                            String ctcode = request.getParameter("dname");
+                                            if(ctcode!=null){
+                                                PreparedStatement ptstm = connection.setConnection().prepareStatement("select citycode,cityname,cityabb,statename,mststate.statecode from mstcity inner join mststate on mstcity.statecode=mststate.stateCode where citycode='"+ctcode+"';");
+                                                ResultSet rsm = ptstm.executeQuery();
+                                                if(rsm.next()){                                                    
+                                                    String ctname = rsm.getString("cityName");
+                                                    String ctabb = rsm.getString("cityabb");
+                                                    String state = rsm.getString("StateName");
+                                                    String stcode = rsm.getString("stateCode");
+                                                    %>
+                                        <div class="input">
+                                            <input type="text" name="cname" placeholder="City Name" value="<%=ctname%>" /> 	
 					</div>
 					<div class="input">
-                                            <input type="text" name="cabb"  placeholder="City Abbrevation" required/>
+                                            <input type="text" name="cabb"  placeholder="City Abbreviation" value="<%=ctabb%>"/>
                                         </div>
                                         <div class="section-country">
-                                            <select id="city" name="state" onchange="change_state(this.value)" class="frm-field required">
-                                                <option value="-1">Select State</option>
+                                            <select id="city" name="state" onmousedown="if(this.options.length>5){this.size=5;}"  onchange="this.value()" onblur="this.size=0" class="frm-field required">
+                                                <option value="<%=stcode%>"><%=state%></option>
                                                 <% 
                                                 try{
                                                     Connection connection =com.daksham.connection.connection.setConnection();
@@ -267,12 +278,56 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                             </select>
                                         </div>
 					<div class="submit">						
+                                            <input class="bluebutton submitbotton" name="supdate" type="submit" value="Save" />                                            
+                                            <input class="bluebutton submitbotton" name="slook" type="submit" value="City Lookup" />
+                                            <input type="hidden" value="<%=ctcode%>" name="ctcode">
+						<div class="clear"> </div>
+					</div>
+
+<%                                                    
+                                                }
+                                            }
+else{
+%>
+<div class="input">
+						<input type="text" name="cname" placeholder="City Name" /> 
+						
+					</div>
+					<div class="input">
+                                            <input type="text" name="cabb"  placeholder="City Abbreviation"/>
+                                        </div>
+                                        <div class="section-country">
+                                            <select id="city" name="state" onmousedown="if(this.options.length>5){this.size=5;}"  onchange="this.blur()" onblur="this.size=0" class="frm-field required">
+                                                <option value="-1">Select State</option>
+                                                <% 
+                                                try{
+                                                    Connection connection =com.daksham.connection.connection.setConnection();
+                                                    PreparedStatement ptst = connection.prepareStatement(" select statecode,stateName from mststate where isactive='Y'");
+                                                    ResultSet rs= ptst.executeQuery();
+                                                    while(rs.next()){
+                                                        out.println("<option value="+"\""+rs.getString("statecode")+"\""+">"+rs.getString("stateName")+"</option>");
+                                                    }
+                                                }
+                                                catch(Exception ex){
+                                                    out.println("<script type=\"text/javascript\">");
+                                                    out.println("alert('"+ex.getMessage()+"');");
+                                                    out.println("location='cityreg.jsp';");
+                                                    out.println("</script>");
+                                                }
+                                                %>
+                                            </select>
+                                        </div>
+					<div class="submit">						
                                             <input class="bluebutton submitbotton" name="ssave" type="submit" value="Save" />
                                             <input class="bluebutton submitbotton" type="reset" value="Reset" />
                                             <input class="bluebutton submitbotton" name="slook" type="submit" value="City Lookup" />
 						<div class="clear"> </div>
 					</div>
-		
+
+<%
+}
+                                            %>
+							
 				</form>
 				<!----------end form----------->
 		</div>

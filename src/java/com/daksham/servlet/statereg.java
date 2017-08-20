@@ -74,6 +74,7 @@ public class statereg extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
+        try{
         Connection connection=com.daksham.connection.connection.setConnection();
         if(request.getParameter("slook")!=null){
             response.sendRedirect("statelookup.jsp");
@@ -82,6 +83,13 @@ public class statereg extends HttpServlet {
             try{
             String statename = request.getParameter("sname");
             String stateabb = request.getParameter("sabb");
+            if(statename.equals("")){
+                        out.println("<script type=\"text/javascript\">");
+                        out.println("alert('State Name should not be blank!');");
+                        out.println("location='cityreg.jsp';");
+                        out.println("</script>");
+                    }
+            else{
             PreparedStatement ptst = connection.prepareStatement("insert into mststate (stateName,stateAbb,creationDate,actionDate,actionUserID) values (?,?,now(),now(),1)");
             ptst.setString(1, statename);
             ptst.setString(2, stateabb);
@@ -90,6 +98,7 @@ public class statereg extends HttpServlet {
             out.println("alert('State "+statename+" enrolled!');");
             out.println("location='statereg.jsp';");
             out.println("</script>");
+            }
             }
             catch(Exception ex){
                 ex.printStackTrace(out);
@@ -100,6 +109,13 @@ public class statereg extends HttpServlet {
             String statename = request.getParameter("sname");
             String stateabb = request.getParameter("sabb");
             String scode=request.getParameter("scode");
+            if(statename.equals("")){
+                        out.println("<script type=\"text/javascript\">");
+                        out.println("alert('State Name should not be blank!');");
+                        out.println("location='cityreg.jsp';");
+                        out.println("</script>");
+                    }
+            else{
             PreparedStatement ptst = connection.prepareStatement("update mststate set stateName='"+statename+"',stateAbb='"+stateabb+"',isActive='Y',actionDate=now(),actionUserID=1 where statecode='"+scode+"'");
             ptst.executeUpdate();
             out.println("<script type=\"text/javascript\">");
@@ -107,6 +123,7 @@ public class statereg extends HttpServlet {
             out.println("location='statereg.jsp';");
             out.println("</script>");
         }
+            }
             catch(Exception ex){
                 ex.printStackTrace(out);
             }
@@ -126,6 +143,12 @@ public class statereg extends HttpServlet {
                 ex.printStackTrace(out);
             }
         }
+        connection.close();
+        }
+        catch(Exception ex){
+            ex.printStackTrace(out);
+        }
+        
 }
     /**
      * Returns a short description of the servlet.

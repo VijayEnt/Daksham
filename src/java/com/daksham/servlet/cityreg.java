@@ -7,6 +7,8 @@ package com.daksham.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -70,9 +72,95 @@ public class cityreg extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+        try{
+        Connection connection = com.daksham.connection.connection.setConnection();
+        if(request.getParameter("slook")!=null){
+            response.sendRedirect("citylookup.jsp");
+        }
+        else if(request.getParameter("ssave")!=null){
+            if(connection==null){                
+            out.println("<script type=\"text/javascript\">");            
+            out.println("alert('Please Check Database Connection!');");
+            out.println("location='cityreg.jsp';");
+            out.println("</script>");
+            }
+            else
+            {
+                try{
+                    String cityname = request.getParameter("cname");
+                    String cityabb = request.getParameter("cabb");
+                    String state = request.getParameter("state");
+                    if(cityname.equals("")){
+                        out.println("<script type=\"text/javascript\">");
+                        out.println("alert('City Name should not be blank!');");
+                        out.println("location='cityreg.jsp';");
+                        out.println("</script>");
+                    }
+                    else{
+                    PreparedStatement ptst = connection.prepareStatement("insert into mstcity (cityName,cityAbb,stateCode,creationDate,actionDate,actionUserID) values (?,?,?,now(),now(),1)");
+                    ptst.setString(1, cityname);
+                    ptst.setString(2, cityabb);
+                    ptst.setString(3, state);
+                    ptst.executeUpdate();
+                    out.println("<script type=\"text/javascript\">");
+                    out.println("alert('City "+cityname+" enrolled!');");
+                    out.println("location='cityreg.jsp';");
+                    out.println("</script>");
+                    }
+                    }
+                catch(Exception ex){
+                    ex.printStackTrace(out);
+                }
+            }
+        }
+        else if(request.getParameter("btndeactive")!=null){
+            try{
+                String cityname = request.getParameter("sname");
+                String cityCode =request.getParameter("dname");
+                PreparedStatement ptst = connection.prepareStatement("update mstcity set isActive='N',actiondate=now(),actionuserid=1 where cityCode='"+cityCode+"'");
+                ptst.executeUpdate();
+                out.println("<script type=\"text/javascript\">");
+                out.println("alert('"+cityname+" Deactivated!');");
+                out.println("location='cityreg.jsp';");
+                out.println("</script>");
+            }
+            catch(Exception ex){
+                ex.printStackTrace(out);
+            }
+        }
+        else if(request.getParameter("supdate")!=null){
+                    try{
+                    String cityname = request.getParameter("cname");
+                    String cityabb = request.getParameter("cabb");
+                    String state = request.getParameter("state");
+                    String citycode=request.getParameter("ctcode");
+                    if(cityname.equals("")){
+                        out.println("<script type=\"text/javascript\">");
+                        out.println("alert('City Name should not be blank!');");
+                        out.println("location='cityreg.jsp';");
+                        out.println("</script>");
+                    }
+                    else{ 
+                        PreparedStatement ptst =connection.prepareStatement("update mstcity set cityname='"+cityname+"',cityAbb='"+cityabb+"',stateCode='"+state+"',isActive='Y',actionDate=now(),actionUserID=1 where citycode='"+citycode+"';");
+                        ptst.executeUpdate();
+                        out.println("<script type=\"text/javascript\">");
+                        out.println("alert('City "+cityname+" updated!');");
+                        out.println("location='cityreg.jsp';");
+                        out.println("</script>");
+                    }
+        }
+                    catch(Exception ex){
+                        ex.printStackTrace(out);
+                    }
+        }
+        connection.close();
     }
-
+        catch(Exception ex){
+            ex.printStackTrace(out);
+        }
+    }
     /**
      * Returns a short description of the servlet.
      *

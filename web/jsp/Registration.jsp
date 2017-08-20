@@ -4,6 +4,10 @@
     Author     : Parth
 --%>
 
+<%@page import="com.daksham.connection.connection"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.Connection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -236,17 +240,17 @@
 				<div class="top_section">
 					<div class="section">
 						<div class="input username">
-                                                    <input type="text" name="uname"  placeholder="User Name"  required/>
+                                                    <input type="text" name="uname"  placeholder="User Name"  />
 							
 						</div>
 						<div class="input password">
-							<input type="password" name="pass"  placeholder="Password" required/>
+							<input type="password" name="pass"  placeholder="Password" />
 						</div>
 						<div class="clear"> </div>
 					</div>
 					<div class="section">
 						<div class="input-sign email">
-                                                    <input type="tel" name="cno" placeholder="Mobile Number" style="border: none;padding:2%"  required /> 
+                                                    <input type="tel" name="cno" placeholder="Mobile Number" style="border: none;padding:2%" /> 
 						</div>
 						<div class="input-sign re-email">
 							<input type="email" name="email" placeholder="Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Please enter your email';}"required />
@@ -262,17 +266,42 @@
 					<!----------start name section----------->
 					<div class="section">
 						<div class="input-sign details">
-							<input type="text" name="fname" placeholder="First Name" required/>
+							<input type="text" name="fname" placeholder="First Name" />
 						</div>
 						<div class="input-sign details1">
-							<input type="text" name="lname"  placeholder="Last Name" required/>
+							<input type="text" name="lname"  placeholder="Last Name" />
 						</div>
 						<div class="clear"> </div>
 					</div>
 					<!----------start Address section----------->
+                                        <div class="section">
+						<div class=" section-country">
+							<!--<input type="text"  placeholder="City" required/>--> 
+                                                        <select id="addtype" name="addtype" onmousedown="if(this.options.length>5){this.size=5}" onchange="this.value()" onblur="this.size=0" class="frm-field required">
+                                                            <option value="-1">Select Address Type </option>
+                                                            <%
+                                                                try{
+                                                                    Connection connection = com.daksham.connection.connection.setConnection();
+                                                                    PreparedStatement ptsta = connection.prepareStatement("select * from mstcoderegister where codename like '%address%'");
+                                                                    ResultSet rsa = ptsta.executeQuery();
+                                                                    while(rsa.next()){
+                                                                        out.println("<option value="+"\""+rsa.getString("recid")+"\""+">"+rsa.getString("codevalue")+"</option>");
+                                                                    }
+                                                                }
+                                                                catch(Exception ex){
+                                                                    out.println("<script type=\"text/javascript\">");
+                                                                    out.println("alert('"+ex.getMessage()+"');");
+                                                                    out.println("location='Registration.jsp';");
+                                                                    out.println("</script>");
+                                                                }
+                                                                %>
+                                                        </select>
+						</div>                                            
+						<div class="clear"> </div>
+					</div>
 					<div class="section">
 						<div class="input-sign details">
-                                                    <input type="text" name="add1" placeholder="Address Line 1" required/> 
+                                                    <input type="text" name="add1" placeholder="Address Line 1" /> 
 						</div>
 						<div class="input-sign details1">
                                                     <input type="text" name="add2" placeholder="Address Line 2"/>
@@ -281,7 +310,7 @@
 					</div>                                        
 					<div class="section">
 						<div class="input-sign details">
-                                                    <input type="text" name="add3"  placeholder="Address Line 3" required=""/> 
+                                                    <input type="text" name="add3"  placeholder="Address Line 3" /> 
 						</div>
 						<div class="input-sign details1">
                                                     <input type="text" name="add4"  placeholder="Address Line 4" /> 
@@ -292,8 +321,23 @@
 					<div class="section">
 						<div class=" section-country">
 							<!--<input type="text"  placeholder="City" required/>--> 
-                                                        <select id="city" name="city" onchange="change_city(this.value)" class="frm-field required">
-                                                            <option value="null">City </option>
+                                                        <select id="city" name="city" onmousedown="if(this.options.length>5){this.size=5}" onchange="this.value()" onblur="this.size=0" class="frm-field required">
+                                                            <option value="-1">Select City </option>
+                                                            <%
+                                                                try{
+                                                                    PreparedStatement ptstc = connection.setConnection().prepareStatement("select * from mstcity where isactive='Y'");
+                                                                    ResultSet rsc = ptstc.executeQuery();
+                                                                    while(rsc.next()){
+                                                                        out.println("<option value="+"\""+rsc.getString("citycode")+"\""+">"+rsc.getString("cityName")+"</opyion>");
+                                                                    }
+                                                                }
+                                                                catch(Exception exc){
+                                                                   out.println("<script type=\"text/javascript\">");
+                                                                   out.println("alert('"+exc.getMessage()+"');");
+                                                                   out.println("location='Registration.jsp';");
+                                                                   out.println("</script>"); 
+                                                                }
+                                                                %>
                                                         </select>
 						</div>                                            
 						<div class="clear"> </div>
@@ -301,14 +345,29 @@
 					
 <!--                                        Start State Section-->
                                         <div class="section-country">
-                                            <select id="State" name="state" onchange="change_state(this.value)" class="frm-field required">
-                                                <option value="null">State</option>
+                                            <select id="State" name="state" onmousedown="if(this.options.length>5){this.size=5}" onchange="this.value()" onblur="this.size=0" class="frm-field required">
+                                                <option value="null">Select State</option>
+                                                <%
+                                                    try{
+                                                        PreparedStatement ptsts= connection.setConnection().prepareStatement("select * from mststate where isactive='Y'");
+                                                        ResultSet rss = ptsts.executeQuery();
+                                                        while(rss.next()){
+                                                            out.println("<option value="+"\""+rss.getString("stateCode")+"\""+">"+rss.getString("stateName")+"</option>");
+                                                        }
+                                                    }
+                                                    catch(Exception exs){
+                                                                    out.println("<script type=\"text/javascript\">");
+                                                                   out.println("alert('"+exs.getMessage()+"');");
+                                                                   out.println("location='Registration.jsp';");
+                                                                   out.println("</script>"); 
+                                                    }
+                                                    %>
                                             </select> 
                                         </div>
 										
 					<!----------start country section----------->
 					<div class="section-country">
-						<select id="country" onchange="change_country(this.value)" class="frm-field required">
+						<select id="country" name="country" onmousedown="if(this.options.length>5){this.size=5}" onchange="this.value()" onblur="this.size=0" class="frm-field required">
 		            <option value="null"> Country</option>         
 		            <option value="AX">Åland Islands</option>
 		            <option value="AF">Afghanistan</option>
@@ -560,11 +619,11 @@
 		         </select>
 					</div>
                                         <div class="section">
-                                            <div class="input-sign details">
-							<input type="text" name="landmark" placeholder="Landmark" required/> 
+                                            <div class="input-sign details1">
+                                                <input type="text" name="landmark" placeholder="Landmark" /> 
 						</div>
                                             <div class="input-sign details1">
-                                                <input type="text" name="pincode"  placeholder="Pincode" required/>                                                        
+                                                <input type="text" name="pincode"  placeholder="Pincode"/>                                                        
 						</div>              
                                         </div>
                                         <div class="section-country details">
@@ -586,13 +645,13 @@
                                             </select>
                                         </div>
                                         <div class="section-country input-sign">
-                                            <input type="text" name="response" placeholder="Response Answer" required="" width="auto">
+                                            <input type="text" name="response" placeholder="Response Answer" width="auto">
                                         </div>
                                         <br>
 					<div class="submit">
 						<input class="bluebutton submitbotton" type="submit" name="ssave" value="Sign up" />
                                                 <input class="bluebutton submitbotton" type="reset" value="Reset" />
-                                                <input class="bluebutton submitbotton" type="submit" name="slook" value="User Lookup" />
+<!--                                                <input class="bluebutton submitbotton" type="submit" name="slook" value="User Lookup" />-->
 					</div>
 				</div>
 				<!----------end bottom-section----------->

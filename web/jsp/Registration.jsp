@@ -234,7 +234,7 @@
         <!----------start sign_up----------->
 		<div class="sign_up">
 			<!----------start form----------->
-			<form class="sign" action="#">
+                        <form class="sign" action="register" method="post">
 				<div class="formtitle">User Enrollment</div>
 				<!----------start top_section----------->
 				<div class="top_section">
@@ -628,7 +628,7 @@
                                         </div>
                                         <div class="section-country details">
                                           <select id="party" name="party" onchange="change_party(this.value)" class="frm-field required">
-                                                            <option value="null">Party Name </option>
+                                              <option value="-1">Party Name </option>
                                                         </select>  
                                         </div>
                                         <div class="section-country details1">
@@ -640,8 +640,15 @@
                                         </div>
                                         <!------------------Security questions section---------------->
                                         <div class="section-country">
-                                            <select id="sq" name="sq" onchange="change_sq(this.value)" class="frm-field required">
-                                                <option value="null">Security Question</option>
+                                            <select id="sq" name="secq" onchange="change_sq(this.value)" class="frm-field required">
+                                                <option value="-1">Security Question</option>
+                                                <%
+                                                    PreparedStatement ptst = connection.setConnection().prepareStatement("select * from mstcoderegister where codename like '%security%'");
+                                                    ResultSet rs = ptst.executeQuery();
+                                                    while (rs.next()){
+                                                        out.println("<option value="+"\""+rs.getString("recid")+"\""+">"+rs.getString("codevalue")+"</option>");
+                                                    }
+                                                    %>
                                             </select>
                                         </div>
                                         <div class="section-country input-sign">
@@ -649,7 +656,7 @@
                                         </div>
                                         <br>
 					<div class="submit">
-						<input class="bluebutton submitbotton" type="submit" name="ssave" value="Sign up" />
+                                            <input class="bluebutton submitbotton" type="submit" name="ssave" value="Sign up" />
                                                 <input class="bluebutton submitbotton" type="reset" value="Reset" />
 <!--                                                <input class="bluebutton submitbotton" type="submit" name="slook" value="User Lookup" />-->
 					</div>

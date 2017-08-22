@@ -233,7 +233,18 @@ public class register extends HttpServlet {
                             ptst2.setString(10, read);
                             ptst3.setString(1, encypass);
                             if(addtype.equals("-1")){
-                            ptst2.executeUpdate();
+                            PreparedStatement ptst4 = connection.prepareStatement("insert into mstuser (addressID,userName,fName,lNamel,userkeyvalue,emailID,mobileNo,partyID,secretQuestionID,secretQuestionResponse,creationDate,actionDate,actionUserID,isReadyOnlyUser) values('"+addtype+"',?,?,?,?,?,?,?,?,?,now(),now(),1,?)");
+                            ptst4.setString(1, uname);
+                            ptst4.setString(2, fname);
+                            ptst4.setString(3, lname);
+                            ptst4.setString(4, pass);
+                            ptst4.setString(5, email);
+                            ptst4.setString(6, cno);
+                            ptst4.setString(7, party);
+                            ptst4.setString(8, secq);
+                            ptst4.setString(9, secr);
+                            ptst4.setString(10, read);
+                            ptst4.executeUpdate();
                             ptst3.executeUpdate();
                             }
                             else

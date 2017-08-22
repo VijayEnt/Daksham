@@ -164,36 +164,36 @@ public class register extends HttpServlet {
                             out.println("location='Registration.jsp';");
                             out.println("</script>");
                         }
-                        else if(addtype.equals("-1")){
-                            out.println("<script type=\"text/javascript\">");            
-                            out.println("alert('Address should not be blank!');");
-                            out.println("location='Registration.jsp';");
-                            out.println("</script>");
-                        }
-                        else if(addl1.equals("")){
-                            out.println("<script type=\"text/javascript\">");            
-                            out.println("alert('Address should not be blank!');");
-                            out.println("location='Registration.jsp';");
-                            out.println("</script>");
-                        }
-                        else if(city.equals("-1")){
-                            out.println("<script type=\"text/javascript\">");            
-                            out.println("alert('City should not be blank!');");
-                            out.println("location='Registration.jsp';");
-                            out.println("</script>");
-                        }
-                        else if(state.equals("-1")){
-                            out.println("<script type=\"text/javascript\">");            
-                            out.println("alert('State should not be blank!');");
-                            out.println("location='Registration.jsp';");
-                            out.println("</script>");
-                        }
-                        else if(country.equals("-1")){
-                            out.println("<script type=\"text/javascript\">");            
-                            out.println("alert('Country should not be blank!');");
-                            out.println("location='Registration.jsp';");
-                            out.println("</script>");
-                        }
+//                        else if(addtype.equals("-1")){
+//                            out.println("<script type=\"text/javascript\">");            
+//                            out.println("alert('Address should not be blank!');");
+//                            out.println("location='Registration.jsp';");
+//                            out.println("</script>");
+//                        }
+//                        else if(addl1.equals("")){
+//                            out.println("<script type=\"text/javascript\">");            
+//                            out.println("alert('Address should not be blank!');");
+//                            out.println("location='Registration.jsp';");
+//                            out.println("</script>");
+//                        }
+//                        else if(city.equals("-1")){
+//                            out.println("<script type=\"text/javascript\">");            
+//                            out.println("alert('City should not be blank!');");
+//                            out.println("location='Registration.jsp';");
+//                            out.println("</script>");
+//                        }
+//                        else if(state.equals("-1")){
+//                            out.println("<script type=\"text/javascript\">");            
+//                            out.println("alert('State should not be blank!');");
+//                            out.println("location='Registration.jsp';");
+//                            out.println("</script>");
+//                        }
+//                        else if(country.equals("-1")){
+//                            out.println("<script type=\"text/javascript\">");            
+//                            out.println("alert('Country should not be blank!');");
+//                            out.println("location='Registration.jsp';");
+//                            out.println("</script>");
+//                        }
                         else if(secq.equals("-1")){
                             out.println("<script type=\"text/javascript\">");            
                             out.println("alert('Security Question should not be blank!');");
@@ -232,9 +232,48 @@ public class register extends HttpServlet {
                             ptst2.setString(9, secr);
                             ptst2.setString(10, read);
                             ptst3.setString(1, encypass);
+                            if(addtype.equals("-1")){
+                            ptst2.executeUpdate();
+                            ptst3.executeUpdate();
+                            }
+                            else
+                            {
+                             if(addtype.equals("-1")){
+                            out.println("<script type=\"text/javascript\">");            
+                            out.println("alert('Address should not be blank!');");
+                            out.println("location='Registration.jsp';");
+                            out.println("</script>");
+                        }
+                        else if(addl1.equals("")){
+                            out.println("<script type=\"text/javascript\">");            
+                            out.println("alert('Address should not be blank!');");
+                            out.println("location='Registration.jsp';");
+                            out.println("</script>");
+                        }
+                        else if(city.equals("-1")){
+                            out.println("<script type=\"text/javascript\">");            
+                            out.println("alert('City should not be blank!');");
+                            out.println("location='Registration.jsp';");
+                            out.println("</script>");
+                        }
+                        else if(state.equals("-1")){
+                            out.println("<script type=\"text/javascript\">");            
+                            out.println("alert('State should not be blank!');");
+                            out.println("location='Registration.jsp';");
+                            out.println("</script>");
+                        }
+                        else if(country.equals("-1")){
+                            out.println("<script type=\"text/javascript\">");            
+                            out.println("alert('Country should not be blank!');");
+                            out.println("location='Registration.jsp';");
+                            out.println("</script>");
+                        }  
+                        else{
                             ptst1.executeUpdate();
                             ptst2.executeUpdate();
                             ptst3.executeUpdate();
+                        }
+                            }
                             out.println("<script type=\"text/javascript\">");            
                             out.println("alert('"+uname+" Enrolled!');");
                             out.println("location='Registration.jsp';");

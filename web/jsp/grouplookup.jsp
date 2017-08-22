@@ -148,7 +148,7 @@
 						<a class="subnav-text" href="Registration.jsp">User Enrollment</a>
 					</li>
 					<li>
-						<a class="subnav-text" href="#">User Details</a>
+						<a class="subnav-text" href="userlookup.jsp">User Details</a>
 					</li>
 				</ul>
 			</li>

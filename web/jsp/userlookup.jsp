@@ -4,6 +4,7 @@
     Author     : Parth
 --%>
 
+<%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>
@@ -270,7 +271,7 @@
        <section class="title-bar">						
 			<div class="w3l_search">
                             <form action="#" method="post">
-					<input type="text" name="search" value="Search by Group Name" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}" required="">
+					<input type="text" name="search" value="Search by UserName" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}" required="">
                                         <button class="btn btn-default" name="sb" type="submit" title="Search Code"><i class="fa fa-search" aria-hidden="true"></i></button> <br><br>
                                         <button class="btn btn-default" name="refresh" type="submit" style="margin-left: 50px;" title="Refresh Data"><i class="fa fa-refresh" aria-hidden="true"></i></button>                              
 				</form>            
@@ -281,16 +282,19 @@
 			<div class="agile-grids">	
 				<!-- tables -->				
 				<div class="table-heading">
-                                    <h2>Group Enrollment </h2>                                     
+                                    <h2>User Enrollment </h2>                                     
 				</div>                                
 				<div class="agile-tables">                                   
 					<div class="w3l-table-info">
                                         <table id="table">
 						<thead>
 						  <tr>
-                                                        <th>Group Code</th>
-							<th>Group Name</th>							
-							<th>Group Type</th>
+                                                        <th>UserName</th>
+							<th>First Name</th>							
+							<th>Last Type</th>
+                                                        <th>Email-ID</th>
+                                                        <th>Contact Number</th>
+                                                        <th>Read Only</th>
 							<th>Status</th>
 <!--							<th>Sequence Order</th>-->
 							<th>Action</th>
@@ -305,38 +309,50 @@
                                                             if(connection==null){
                                                                 out.println("<script type=\"text/javascript\">");            
                                                                 out.println("alert('Please Check Database Connection!');");
-                                                                out.println("location='grouplookup.jsp';");
+                                                                out.println("location='userlookup.jsp';");
                                                                 out.println("</script>");
                                                             }
                                                             else{
                                                                 if(request.getParameter("sb")==null){
-                                                                PreparedStatement ptst = connection.prepareStatement("select `groupID`, `groupCode`, `groupName`, `groupType`, `isActive` from mstgroup;");
+                                                                PreparedStatement ptst = connection.prepareStatement("select userid,userName,fName,lNamel,emailID,mobileNo,isReadyOnlyUser,isActive from mstuser");
                                                                 ResultSet rs = ptst.executeQuery();
                                                                 while(rs.next()){
-                                                                    String grpid = rs.getString("groupID");
-                                                                    String grpcode =rs.getString("groupCode");
-                                                                    String grpname= rs.getString("groupName");
-                                                                    String grptype = rs.getString("groupType");
-                                                                    String grpstatus = rs.getString("isActive");                                                                    
+                                                                    String uid= rs.getString("userID");
+                                                                    String uname = rs.getString("userName");
+                                                                    String fname =rs.getString("fName");
+                                                                    String lname= rs.getString("lNamel");
+                                                                    String email = rs.getString("emailID");
+                                                                    String cno = rs.getString("mobileNo"); 
+                                                                    String readonly=rs.getString("isReadyOnlyUser");
+                                                                    String status=rs.getString("isActive");
                                                                     %>
                                                                     <td name="grpcode">
-                                                                        <%=grpcode%>
+                                                                        <%=uname%>
                                                                     </td>
                                                                     <td name="gname">
-                                                                        <%=grpname%>
+                                                                        <%=fname%>
                                                                     </td>
                                                                     <td name="grptype">
-                                                                        <%=grptype%>
+                                                                        <%=lname%>
                                                                     </td>
                                                                     <td name="grpstatus">
-                                                                        <%=grpstatus%>
-                                                                    </td>                                                                    
+                                                                        <%=email%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=cno%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=readonly%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=status%>
+                                                                    </td>
                                                                     <td>                            
                                                                     <form action="" method="post">
-                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="groupreg.jsp" formmethod="post" ><br>
-                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="groupreg" formmethod="post">
-                                                                    <input type="hidden" name="dname" value="<%=grpid%>">
-                                                                    <input type="hidden" name="gname" value="<%=grpname%>">
+                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="Regitration.jsp" formmethod="post" ><br>
+                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="register" formmethod="post">
+                                                                    <input type="hidden" name="dname" value="<%=uid%>">
+                                                                    <input type="hidden" name="gname" value="<%=uname%>">
                                                                     </form>
                                                                     </td>  
                                                                     </tr>
@@ -344,34 +360,45 @@
                                                                 }
                                                             }
                                                             else if(request.getParameter("sb")!=null){
-                                                                PreparedStatement ptst = connection.prepareStatement("select `groupID`, `groupCode`, `groupName`, `groupType`, `isActive` from mstgroup where groupName like '%"+sv+"%';");
+                                                                PreparedStatement ptst = connection.prepareStatement("select userid,userName,fName,lNamel,emailID,mobileNo,isReadyOnlyUser,isActive from mstuser where usersname ='"+sv+"'");
                                                                 ResultSet rs = ptst.executeQuery();
                                                                 while(rs.next()){
-                                                                    String grpid = rs.getString("groupID");
-                                                                    String grpcode =rs.getString("groupCode");
-                                                                    String grpname= rs.getString("groupName");
-                                                                    String grptype = rs.getString("groupType");
-                                                                    String grpstatus = rs.getString("isActive");
-                                                                %>
-                                                                <tr>
-                                                                <td name="grpcode">
-                                                                        <%=grpcode%>
+                                                                    String uid= rs.getString("userID");
+                                                                    String uname = rs.getString("userName");
+                                                                    String fname =rs.getString("fName");
+                                                                    String lname= rs.getString("lNamel");
+                                                                    String email = rs.getString("emailID");
+                                                                    String cno = rs.getString("mobileNo"); 
+                                                                    String readonly=rs.getString("isReadyOnlyUser");
+                                                                    String status=rs.getString("isActive");
+                                                                    %>
+                                                                    <td name="grpcode">
+                                                                        <%=uname%>
                                                                     </td>
                                                                     <td name="gname">
-                                                                        <%=grpname%>
+                                                                        <%=fname%>
                                                                     </td>
                                                                     <td name="grptype">
-                                                                        <%=grptype%>
+                                                                        <%=lname%>
                                                                     </td>
                                                                     <td name="grpstatus">
-                                                                        <%=grpstatus%>
-                                                                    </td>                                                                    
+                                                                        <%=email%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=cno%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=readonly%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=status%>
+                                                                    </td>
                                                                     <td>                            
                                                                     <form action="" method="post">
-                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="groupreg.jsp" formmethod="post" ><br>
-                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="groupreg" formmethod="post">
-                                                                    <input type="hidden" name="dname" value="<%=grpid%>">
-                                                                    <input type="hidden" name="gname" value="<%=grpname%>">
+                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="Regitration.jsp" formmethod="post" ><br>
+                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="register" formmethod="post">
+                                                                    <input type="hidden" name="dname" value="<%=uid%>">
+                                                                    <input type="hidden" name="gname" value="<%=uname%>">
                                                                     </form>
                                                                     </td>  
                                                                     </tr>
@@ -385,34 +412,45 @@
 //                                                                                }                                                            
                                                             }
                                                                 else if(request.getParameter("refresh")!=null){
-                                                                PreparedStatement ptst = connection.prepareStatement("select `groupID`, `groupCode`, `groupName`, `groupType`, `isActive` from mstgroup;");
+                                                                PreparedStatement ptst = connection.prepareStatement("select userid,userName,fName,lNamel,emailID,mobileNo,isReadyOnlyUser,isActive from mstuser");
                                                                 ResultSet rs = ptst.executeQuery();
                                                                 while(rs.next()){
-                                                                    String grpid = rs.getString("groupID");
-                                                                    String grpcode =rs.getString("groupCode");
-                                                                    String grpname= rs.getString("groupName");
-                                                                    String grptype = rs.getString("groupType");
-                                                                    String grpstatus = rs.getString("isActive");
+                                                                    String uid= rs.getString("userID");
+                                                                    String uname = rs.getString("userName");
+                                                                    String fname =rs.getString("fName");
+                                                                    String lname= rs.getString("lNamel");
+                                                                    String email = rs.getString("emailID");
+                                                                    String cno = rs.getString("mobileNo"); 
+                                                                    String readonly=rs.getString("isReadyOnlyUser");
+                                                                    String status=rs.getString("isActive");
                                                                     %>
-                                                                    <tr>
-                                                                <td name="grpcode">
-                                                                        <%=grpcode%>
+                                                                    <td name="grpcode">
+                                                                        <%=uname%>
                                                                     </td>
                                                                     <td name="gname">
-                                                                        <%=grpname%>
+                                                                        <%=fname%>
                                                                     </td>
                                                                     <td name="grptype">
-                                                                        <%=grptype%>
+                                                                        <%=lname%>
                                                                     </td>
                                                                     <td name="grpstatus">
-                                                                        <%=grpstatus%>
-                                                                    </td>                                                                    
+                                                                        <%=email%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=cno%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=readonly%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=status%>
+                                                                    </td>
                                                                     <td>                            
                                                                     <form action="" method="post">
-                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="groupreg.jsp" formmethod="post" ><br>
-                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="groupreg" formmethod="post">
-                                                                    <input type="hidden" name="dname" value="<%=grpid%>">  
-                                                                    <input type="hidden" name="gname" value="<%=grpname%>">
+                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="Regitration.jsp" formmethod="post" ><br>
+                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="register" formmethod="post">
+                                                                    <input type="hidden" name="dname" value="<%=uid%>">
+                                                                    <input type="hidden" name="gname" value="<%=uname%>">
                                                                     </form>
                                                                     </td>  
                                                                     </tr>
@@ -421,12 +459,12 @@
                                                             }
                                                         }
                                                     }
-                                                        catch(Exception ex){
+                                                        catch(SQLException ex){
                                                             out.println("<script type=\"text/javascript\">");
                                                             out.println("alert('"+ex.getMessage()+"');");
-                                                            out.println("location='doctorv.jsp';");
+                                                            out.println("location='userlookup.jsp';");
                                                             out.println("</script>");
-                                                        }
+                                                        }                                                        
                                                       %>
 						</tbody>
 					  </table>                                                

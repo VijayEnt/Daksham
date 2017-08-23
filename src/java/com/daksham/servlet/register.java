@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.security.Key;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.ServletException;
@@ -293,6 +294,24 @@ public class register extends HttpServlet {
                         }
                     }
                     catch(Exception ex){
+                        ex.printStackTrace(out);
+                    }
+                }
+                else if(request.getParameter("btndeactive")!=null){
+                    try
+                    {
+                    String uid = request.getParameter("dname");
+                    String uname = request.getParameter("gname");
+                    PreparedStatement psts1 = connection.prepareStatement("Update mstuser set isActive = 'N',actionDate=now(),actionUserID=1 where userid='"+uid+"'");
+                    PreparedStatement psts2 = connection.prepareStatement("Update mstlogin set isActive = 'N',actionDate=now(),actionUserID=1 where userid='"+uid+"'");
+                    psts1.executeUpdate();
+                    psts2.executeUpdate();
+                    out.println("<script type=\"text/javascript\">");            
+                    out.println("alert('"+uname+" Deactivated!');");
+                    out.println("location='Registration.jsp';");
+                    out.println("</script>");
+                }
+                    catch(SQLException ex){
                         ex.printStackTrace(out);
                     }
                 }

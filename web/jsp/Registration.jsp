@@ -236,6 +236,21 @@
 			<!----------start form----------->
                         <form class="sign" action="register" method="post">
 				<div class="formtitle">User Enrollment</div>
+                                <%
+                                    String uid = request.getParameter("dname");
+                                    if(uid!=null){
+                                        PreparedStatement ptst=connection.setConnection().prepareStatement("select * from mstuser");
+                                        ResultSet rs= ptst.executeQuery();
+                                        if(rs.next()){                                            
+                                            String uname=rs.getString("username");
+                                            String fname =rs.getString("fname");
+                                            String lname = rs.getString("lNamel");
+                                            String email = rs.getString("emailID");
+                                            String cno = rs.getString("mobileNo");
+                                            String read
+                                        }
+                                    }
+                                    %>
 				<!----------start top_section----------->
 				<div class="top_section">
 					<div class="section">
@@ -244,13 +259,13 @@
 							
 						</div>
 						<div class="input password">
-							<input type="password" name="pass"  placeholder="Password" />
+                                                    <input type="password" name="pass"  placeholder="Password" maxlength="15" />
 						</div>
 						<div class="clear"> </div>
 					</div>
 					<div class="section">
 						<div class="input-sign email">
-                                                    <input type="tel" name="cno" placeholder="Mobile Number" style="border: none;padding:2%" /> 
+                                                    <input type="tel" name="cno" placeholder="Mobile Number" maxlength="15" style="border: none;padding:2%" /> 
 						</div>
 						<div class="input-sign re-email">
 							<input type="email" name="email" placeholder="Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Please enter your email';}"required />
@@ -301,19 +316,19 @@
 					</div>
 					<div class="section">
 						<div class="input-sign details">
-                                                    <input type="text" name="add1" placeholder="Address Line 1" /> 
+                                                    <input type="text" name="add1" maxlength="45" placeholder="Address Line 1" /> 
 						</div>
 						<div class="input-sign details1">
-                                                    <input type="text" name="add2" placeholder="Address Line 2"/>
+                                                    <input type="text" name="add2" maxlength="45" placeholder="Address Line 2"/>
 						</div>
 						<div class="clear"> </div>
 					</div>                                        
 					<div class="section">
 						<div class="input-sign details">
-                                                    <input type="text" name="add3"  placeholder="Address Line 3" /> 
+                                                    <input type="text" name="add3" maxlength="255"  placeholder="Address Line 3" /> 
 						</div>
 						<div class="input-sign details1">
-                                                    <input type="text" name="add4"  placeholder="Address Line 4" /> 
+                                                    <input type="text" name="add4" maxlength="255"  placeholder="Address Line 4" /> 
 						</div>
                                            
                                             </div>
@@ -623,7 +638,7 @@
                                                 <input type="text" name="landmark" placeholder="Landmark" /> 
 						</div>
                                             <div class="input-sign details1">
-                                                <input type="text" name="pincode"  placeholder="Pincode"/>                                                        
+                                                <input type="text" name="pincode" maxlength="11"  placeholder="Pincode"/>                                                        
 						</div>              
                                         </div>
                                         <div class="section-country details">

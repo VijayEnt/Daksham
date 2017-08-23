@@ -8,6 +8,7 @@ package com.daksham.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -100,6 +101,76 @@ public class party extends HttpServlet {
                     String cbal = request.getParameter("pcbal");
                     String entity = request.getParameter("entity");
                     String mark = request.getParameter("pmark");
+                    if(pid.equals("")){
+                            out.println("<script type=\"text/javascript\">");            
+                            out.println("alert('Party code should not be blank!');");
+                            out.println("location='partyreg.jsp';");
+                            out.println("</script>");
+                    }
+                    else if(pname.equals("")){
+                            out.println("<script type=\"text/javascript\">");            
+                            out.println("alert('Party Name should not be blank!');");
+                            out.println("location='partyreg.jsp';");
+                            out.println("</script>");
+                    }
+                    else if(addtype.equals("-1")){
+                        out.println("<script type=\"text/javascript\">");            
+                            out.println("alert('Address should not be blank!');");
+                            out.println("location='partyreg.jsp';");
+                            out.println("</script>");
+                    }
+                    else if(add1.equals("")){
+                        out.println("<script type=\"text/javascript\">");            
+                            out.println("alert('Address should not be blank!');");
+                            out.println("location='partyreg.jsp';");
+                            out.println("</script>");
+                    }
+                    else if(add2.equals("")){
+                        out.println("<script type=\"text/javascript\">");            
+                            out.println("alert('Address should not be blank!');");
+                            out.println("location='partyreg.jsp';");
+                            out.println("</script>");
+                    }
+                    else if(city.equals("-1")){
+                        out.println("<script type=\"text/javascript\">");            
+                            out.println("alert('City should not be blank!');");
+                            out.println("location='partyreg.jsp';");
+                            out.println("</script>");
+                    }
+                    else if(state.equals("-1")){
+                        out.println("<script type=\"text/javascript\">");            
+                            out.println("alert('State should not be blank!');");
+                            out.println("location='partyreg.jsp';");
+                            out.println("</script>");
+                    }
+                    else if(country.equals("-1")){
+                        out.println("<script type=\"text/javascript\">");            
+                            out.println("alert('Country should not be blank!');");
+                            out.println("location='partyreg.jsp';");
+                            out.println("</script>");
+                    }
+                    else if(ptype.equals("")){
+                        out.println("<script type=\"text/javascript\">");            
+                            out.println("alert('Party Type should not be blank!');");
+                            out.println("location='partyreg.jsp';");
+                            out.println("</script>");
+                    }
+                    else if(cno1.equals("")){
+                        out.println("<script type=\"text/javascript\">");            
+                            out.println("alert('At least one contact number required!');");
+                            out.println("location='partyreg.jsp';");
+                            out.println("</script>");
+                    }
+                    else if(doi.equals("")){
+                        out.println("<script type=\"text/javascript\">");            
+                            out.println("alert('Party D.O.I should not be blank!');");
+                            out.println("location='partyreg.jsp';");
+                            out.println("</script>");
+                    }
+                    else{
+                        PreparedStatement ptst1 = connection.prepareStatement("");
+                        PreparedStatement ptst2=connection.prepareStatement("")
+                    }
                 }
                 catch(Exception ex){
                     ex.printStackTrace(out);

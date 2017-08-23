@@ -310,7 +310,7 @@
 					<!----------start country section----------->
 					<div class="section-country">
                                             <select id="country" name="country" onmousedown="if(this.options.length>5)(this.size=10)" onblur="this.size=0" onchange="change_country(this.value)" class="frm-field ">
-		            <option value="null"> Select Country</option>         
+		            <option value="-1"> Select Country</option>         
 		            <option value="AX">Åland Islands</option>
 		            <option value="AF">Afghanistan</option>
 		            <option value="AL">Albania</option>
@@ -573,7 +573,7 @@
                                         </div>                                        
                                         <div class="input">
                                             <input type="text" name="pabb"  placeholder="Party Abbreviatioin"/>
-                                        </div><
+                                        </div>
                                         <div class="input">
                                             <input type="text" name="pmark" placeholder="Party Mark"/>
                                         </div>

@@ -228,9 +228,9 @@
 		</ul>
 	</nav>
         <!----------start member-login----------->
-		<div class="member-login">
+		<div class="sign_up">
 			<!----------star form----------->
-                        <form class="login"  action="#" method="post" style="width: 500px;">
+                        <form class="sign"  action="#" method="post">
 	
 					<div class="formtitle">Transport Enrollment</div>
 					<div class="input">

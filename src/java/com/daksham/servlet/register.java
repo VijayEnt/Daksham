@@ -308,7 +308,25 @@ public class register extends HttpServlet {
                     psts2.executeUpdate();
                     out.println("<script type=\"text/javascript\">");            
                     out.println("alert('"+uname+" Deactivated!');");
-                    out.println("location='Registration.jsp';");
+                    out.println("location='userlookup.jsp';");
+                    out.println("</script>");
+                }
+                    catch(SQLException ex){
+                        ex.printStackTrace(out);
+                    }
+                }
+                else if(request.getParameter("btnactive")!=null){
+                    try
+                    {
+                    String uid = request.getParameter("dname");
+                    String uname = request.getParameter("gname");
+                    PreparedStatement psts1 = connection.prepareStatement("Update mstuser set isActive = 'Y',actionDate=now(),actionUserID=1 where userid='"+uid+"'");
+                    PreparedStatement psts2 = connection.prepareStatement("Update mstlogin set isActive = 'Y',actionDate=now(),actionUserID=1 where userid='"+uid+"'");
+                    psts1.executeUpdate();
+                    psts2.executeUpdate();
+                    out.println("<script type=\"text/javascript\">");            
+                    out.println("alert('"+uname+" Activated!');");
+                    out.println("location='userlookup.jsp';");
                     out.println("</script>");
                 }
                     catch(SQLException ex){

@@ -20,6 +20,10 @@
         <servlet-name>register</servlet-name>
         <servlet-class>com.daksham.servlet.register</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>party</servlet-name>
+        <servlet-class>com.daksham.servlet.party</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>codereg</servlet-name>
         <url-pattern>/jsp/codereg</url-pattern>
@@ -39,6 +43,10 @@
     <servlet-mapping>
         <servlet-name>register</servlet-name>
         <url-pattern>/jsp/register</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>party</servlet-name>
+        <url-pattern>/jsp/party</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

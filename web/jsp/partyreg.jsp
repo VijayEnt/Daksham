@@ -4,6 +4,9 @@
     Author     : Parth
 --%>
 
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.Connection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -228,31 +231,44 @@
 		</ul>
 	</nav>
         <!----------start member-login----------->
-		<div class="member-login">
+		<div class="sign_up">
 			<!----------star form----------->
-                        <form class="login"  action="#" method="post" style="width: 500px;">
+                        <form class="sign"  action="#" method="post">
 	
 					<div class="formtitle">Party Enrollment</div>
 					<div class="input">
-						<input type="text" name="cid" placeholder="Party Code"  required/> 
+						<input type="text" name="cid" placeholder="Party Code"  /> 
 						
 					</div>
 					<div class="input">
-                                            <input type="text" name="cname"  placeholder="Party Name" required/>
+                                            <input type="text" name="cname"  placeholder="Party Name" />
                                         </div>
                                         <!----------start Address section----------->
+                                        <div class="section-country">
+                                            <select id="addtype" name="addtype" onmousemove="if(this.options.length>5){this.size=5}" onchange="this.value()" onblur="this.size=0" class="frm-field">
+                                                <option value="-1">Select Address Type</option>
+                                                <% 
+                                                    Connection connect = com.daksham.connection.connection.setConnection();
+                                                PreparedStatement ptst = connect.prepareStatement("select * from mstcoderegister where codename like '%Address%'");
+                                                ResultSet rs = ptst.executeQuery();
+                                                while(rs.next()){
+                                                    out.println("<option value="+"\""+rs.getString("recid")+"\""+">"+rs.getString("codevalue")+"</option>");
+                                                }
+                                                    %>
+                                            </select>
+                                        </div>
 					<div class="section">
 						<div class="input-sign details">
-                                                    <input type="text" name="add1" placeholder="Address Line 1" required/> 
+                                                    <input type="text" name="add1" maxlength="45" placeholder="Address Line 1" /> 
 						</div>
 						<div class="input-sign details1">
-                                                    <input type="text" name="add2" placeholder="Address Line 2"/>
+                                                    <input type="text" name="add2" maxlength="45" placeholder="Address Line 2"/>
 						</div>
 						<div class="clear"> </div>
 					</div>                                        
 					<div class="section">
 						<div class="input-sign details">
-                                                    <input type="text" name="add3"  placeholder="Address Line 3" required=""/> 
+                                                    <input type="text" name="add3"  placeholder="Address Line 3" /> 
 						</div>
 						<div class="input-sign details1">
                                                     <input type="text" name="add4"  placeholder="Address Line 4" /> 
@@ -262,9 +278,16 @@
                                             <!----------start city section----------->
 					<div class="section">
 						<div class=" section-country">
-							<!--<input type="text"  placeholder="City" required/>--> 
-                                                        <select id="city" name="city" onchange="change_city(this.value)" class="frm-field required">
-                                                            <option value="null">City </option>
+							<!--<input type="text"  placeholder="City" />--> 
+                                                        <select id="city" name="city" onmousedown="if(this.options.length>5){this.size=5}" onchange="change_city(this.value())" onblur="this.size=0" class="frm-field ">
+                                                            <option value="-1">Select City </option>
+                                                            <%
+                                                                PreparedStatement ptstc = connect.prepareStatement("select * from mstcity where isActive='Y'");
+                                                                ResultSet rsc = ptstc.executeQuery();
+                                                                while(rsc.next()){
+                                                                    out.println("<option value="+"\""+rsc.getString("citycode")+"\""+">"+rsc.getString("cityName")+"</option>");
+                                                                }
+                                                                %>
                                                         </select>
 						</div>                                            
 						<div class="clear"> </div>
@@ -272,15 +295,22 @@
 					
 <!--                                        Start State Section-->
                                         <div class="section-country">
-                                            <select id="State" name="state" onchange="change_state(this.value)" class="frm-field required">
-                                                <option value="null">State</option>
+                                            <select id="State" name="state" onmousedown="if(this.options.length>5){this.size=5}" onblur="this.size=0" onchange="change_state(this.value())" class="frm-field ">
+                                                <option value="-1">Select State</option><
+                                                <%
+                                                  PreparedStatement ptsts=connect.prepareStatement("select * from  mststate where isActive='Y'");
+                                                  ResultSet rss =ptsts.executeQuery();
+                                                  while(rss.next()){
+                                                      out.println("<option value="+"\""+rss.getString("statecode")+"\""+">"+rss.getString("stateName")+"</option>");
+                                                  }
+                                                 %>
                                             </select> 
                                         </div>
 										
 					<!----------start country section----------->
 					<div class="section-country">
-						<select id="country" onchange="change_country(this.value)" class="frm-field required">
-		            <option value="null"> Country</option>         
+                                            <select id="country" name="country" onmousedown="if(this.options.length>5)(this.size=10)" onblur="this.size=0" onchange="change_country(this.value)" class="frm-field ">
+		            <option value="null"> Select Country</option>         
 		            <option value="AX">Åland Islands</option>
 		            <option value="AF">Afghanistan</option>
 		            <option value="AL">Albania</option>
@@ -532,36 +562,39 @@
                                             </div>
                                         <div class="section">
                                             <div class="input-sign details">
-							<input type="text" name="landmark" placeholder="Landmark" required/> 
+							<input type="text" name="landmark" placeholder="Landmark" /> 
 						</div>
                                             <div class="input-sign details1">
-                                                <input type="text" name="pincode"  placeholder="Pincode" required/>                                                        
+                                                <input type="text" name="pincode"  placeholder="Pincode" />                                                        
 						</div>              
                                         </div>
                                         <div class="input">
-                                            <input type="text" name="ptype"  placeholder="Party Type" required/>
+                                            <input type="text" name="ptype"  placeholder="Party Type" />
                                         </div>                                        
                                         <div class="input">
                                             <input type="text" name="pabb"  placeholder="Party Abbreviatioin"/>
                                         </div>  
                                         <div class="input">
-                                            <input type="text" name="pgst"  placeholder="Party GSTCODE" required/>
-                                        </div> 
+                                            <input type="text" name="pgst"  placeholder="Party GSTCODE" />
+                                        </div>                                         
                                         <div class="section">
                                             <div class="input-sign details">
-                                                <input type="text" name="cno1" placeholder="Mobile" required/> 
+                                                <input type="text" name="cno1" placeholder="Mobile" /> 
 						</div>
                                             <div class="input-sign details1">
                                                 <input type="text" name="cno2"  placeholder="Contact Number" />                                                        
 						</div>   
                                             <div class="clear"> </div>
                                         </div>
-                                        <div class="input">
+                                        <div class="section">
+                                        <div class="input details">
                                             <input type="email" name="pemail" placeholder="Email" style="border: none;padding:2%;width: 100%"/>
                                         </div> 
-                                          <div class="input">
-                                              <input type="date" name="pdoi"  placeholder="DOI" style="border: none;padding:2%;width: 100%;" required/>
-                                        </div> 
+                                          <div class="input details1">
+                                        <input type="date" name="pdoi"  placeholder="DOI" style="border: none;width: 100%;" />
+                                        </div>
+                                            <div class="clear"> </div>
+                                        </div>
                                         <div class="section">
                                          <div class="input-sign details input">
                                              <input type="number" name="pobal"  placeholder="Opening Balance" style="border: none;padding:2%;width: 100%;"/>
@@ -573,12 +606,12 @@
                                             <div class="section">
                                         <div class="section-country details">
                                             <select id="State" name="transport" onchange="change_transport(this.value)" class="frm-field">
-                                                <option value="null">Transport</option>
+                                                <option value="-1">Transport</option>
                                             </select> 
                                         </div>
                                         <div class=" section section-country details1">
                                             <select id="State" name="entity" onchange="change_entity(this.value)" class="frm-field">
-                                                <option value="null">Entity</option>
+                                                <option value="N">Entity</option>
                                                 <option value="Y">Yes</option>
                                                 <option value="N">No</option>
                                             </select> 
@@ -587,7 +620,7 @@
 					<div class="submit">						
                                             <input class="bluebutton submitbotton" name="ssave" type="submit" value="Save" />
                                             <input class="bluebutton submitbotton" type="reset" value="Reset" />
-                                            <input class="bluebutton submitbotton" name="slook" type="submit" value="Party Lookup" />
+<!--                                            <input class="bluebutton submitbotton" name="slook" type="submit" value="Party Lookup" />-->
 						<div class="clear"> </div>
 					</div>
 		

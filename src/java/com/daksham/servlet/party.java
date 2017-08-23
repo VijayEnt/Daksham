@@ -99,6 +99,7 @@ public class party extends HttpServlet {
                     String obal = request.getParameter("pobal");
                     String cbal = request.getParameter("pcbal");
                     String entity = request.getParameter("entity");
+                    String mark = request.getParameter("pmark");
                 }
                 catch(Exception ex){
                     ex.printStackTrace(out);

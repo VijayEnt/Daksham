@@ -573,7 +573,10 @@
                                         </div>                                        
                                         <div class="input">
                                             <input type="text" name="pabb"  placeholder="Party Abbreviatioin"/>
-                                        </div>  
+                                        </div><
+                                        <div class="input">
+                                            <input type="text" name="pmark" placeholder="Party Mark"/>
+                                        </div>
                                         <div class="input">
                                             <input type="text" name="pgst"  placeholder="Party GSTCODE" />
                                         </div>                                         

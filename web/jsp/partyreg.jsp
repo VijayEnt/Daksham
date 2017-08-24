@@ -46,7 +46,14 @@
 				screenfull.toggle($('#container')[0]);
 			});	
 		});
+                function isNumberKey(evt){
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57))
+        return false;
+    return true;
+}
 		</script>
+                
 
 </head>
     <body class="dashboard-page">
@@ -600,10 +607,10 @@
                                         </div>
                                         <div class="section">
                                          <div class="input-sign details input">
-                                             <input type="number" name="pobal"  placeholder="Opening Balance" style="border: none;padding:2%;width: 100%;"/>
+                                             <input type="text" onkeypress="return isNumberKey(event)" name="pobal"  placeholder="Opening Balance" style="border: none;padding:2%;width: 100%;"/>
                                         </div> 
                                         <div class="input-sign details1 input">
-                                            <input type="number" name="pcbal" placeholder="Closing Balance" style="border: none;padding:2%;width: 100%;"/>
+                                            <input type="number" onkeypress="return isNumberKey(event)" name="pcbal" placeholder="Closing Balance" style="border: none;padding:2%;width: 100%;"/>
                                         </div>
                                             </div>
                                             <div class="section">

@@ -621,7 +621,7 @@
                                             </div>
                                         </div><br><br><br>
 					<div class="submit">						
-                                            <input class="bluebutton submitbotton" name="ssave" type="submit" value="Save" />
+                                            <input class="bluebutton submitbotton" name="ssave" type="submit" value="Save" formaction="party" formmethod="post"/>
                                             <input class="bluebutton submitbotton" type="reset" value="Reset" />
 <!--                                            <input class="bluebutton submitbotton" name="slook" type="submit" value="Party Lookup" />-->
 						<div class="clear"> </div>

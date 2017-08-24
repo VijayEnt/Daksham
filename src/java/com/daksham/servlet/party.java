@@ -81,10 +81,10 @@ public class party extends HttpServlet {
                     String pid = request.getParameter("cid");
                     String pname = request.getParameter("cname");
                     String addtype = request.getParameter("addtype");
-                    String add1=request.getParameter("add1");
-                    String add2 = request.getParameter("add2");
-                    String add3= request.getParameter("add3");
-                    String add4 = request.getParameter("add4");
+                    String addl1=request.getParameter("add1");
+                    String addl2 = request.getParameter("add2");
+                    String addl3= request.getParameter("add3");
+                    String addl4 = request.getParameter("add4");
                     String city = request.getParameter("city");
                     String state = request.getParameter("state");
                     String country = request.getParameter("country");
@@ -101,6 +101,7 @@ public class party extends HttpServlet {
                     String cbal = request.getParameter("pcbal");
                     String entity = request.getParameter("entity");
                     String mark = request.getParameter("pmark");
+                    String transid = request.getParameter("transport");
                     if(pid.equals("")){
                             out.println("<script type=\"text/javascript\">");            
                             out.println("alert('Party code should not be blank!');");
@@ -119,13 +120,13 @@ public class party extends HttpServlet {
                             out.println("location='partyreg.jsp';");
                             out.println("</script>");
                     }
-                    else if(add1.equals("")){
+                    else if(addl1.equals("")){
                         out.println("<script type=\"text/javascript\">");            
                             out.println("alert('Address should not be blank!');");
                             out.println("location='partyreg.jsp';");
                             out.println("</script>");
                     }
-                    else if(add2.equals("")){
+                    else if(addl2.equals("")){
                         out.println("<script type=\"text/javascript\">");            
                             out.println("alert('Address should not be blank!');");
                             out.println("location='partyreg.jsp';");
@@ -167,9 +168,43 @@ public class party extends HttpServlet {
                             out.println("location='partyreg.jsp';");
                             out.println("</script>");
                     }
+                    else if(obal.equals("")){
+                        obal=null;
+                    }
                     else{
-                        PreparedStatement ptst1 = connection.prepareStatement("");
-                        PreparedStatement ptst2=connection.prepareStatement("")
+                        PreparedStatement ptst1 = connection.prepareStatement("insert into mstaddress (addresstypecode,addressline1,addressline2,addressline3,addressline4,landmark,citycode,state,country,pincode,creationDate,ActionDate,actionUserID) values(?,?,?,?,?,?,?,?,?,?,now(),now(),1);");
+                        ptst1.setString(1, addtype);
+                        ptst1.setString(2, addl1);
+                        ptst1.setString(3, addl2);
+                        ptst1.setString(4, addl3);
+                        ptst1.setString(5, addl4);
+                        ptst1.setString(6, landmark);
+                        ptst1.setString(7, city);
+                        ptst1.setString(8, state);
+                        ptst1.setString(9, country);
+                        ptst1.setString(10, pincode);
+                        //ptst1.setString(11, cno);
+                        PreparedStatement ptst2=connection.prepareStatement("insert into mstparty(partyAddressID,partyCode,partyName,partyType,partyAbb,partyGSTCode,partyContactNO1,partyContactNO2,partyemail,partyDOI,partyOpenBal,partyCloseBal,partyMarka,partyTransportID,isEntity,creationDate,actionDate,actionUserID) select address_id ,?,?,?,?,?,?,?,?,?,?,?,?,?,?,now(),now(),1 from mstaddress order by address_id DESC LIMIT 1");
+                        ptst2.setString(1, pid);
+                        ptst2.setString(2, pname);
+                        ptst2.setString(3, ptype);
+                        ptst2.setString(4, pabb);
+                        ptst2.setString(5, pgst);
+                        ptst2.setString(6, cno1);
+                        ptst2.setString(7, cno2);
+                        ptst2.setString(8, email);
+                        ptst2.setString(9, doi);
+                        ptst2.setString(10, obal);
+                        ptst2.setString(11, cbal);
+                        ptst2.setString(12, mark);
+                        ptst2.setString(13, transid);
+                        ptst2.setString(14, entity);
+                        ptst1.executeUpdate();
+                        ptst2.executeUpdate();
+                        out.println("<script type=\"text/javascript\">");            
+                        out.println("alert('"+pname+" Enrolled!');");
+                        out.println("location='partyreg.jsp';");
+                        out.println("</script>");
                     }
                 }
                 catch(Exception ex){

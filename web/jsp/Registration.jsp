@@ -130,7 +130,7 @@
 						</a>
 					</li>
 					<li>
-						<a class="subnav-text" href="#">
+						<a class="subnav-text" href="partylookup.jsp">
 							Party Details
 						</a>
 					</li>					

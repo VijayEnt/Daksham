@@ -174,19 +174,19 @@ public class party extends HttpServlet {
                         ptst1.setString(1, addtype);
                         ptst1.setString(2, addl1);
                         ptst1.setString(3, addl2);
-                        if(addl3!=""){
+                        if(addl3.equals("")){
                             ptst1.setNull(4, Types.VARCHAR);
                         }
                         else{
                         ptst1.setString(4, addl3);
                         }
-                        if(addl4!=""){
+                        if(addl4.equals("")){
                             ptst1.setNull(5, Types.VARCHAR);
                         }
                         else{
                         ptst1.setString(5, addl4);
                         }
-                        if(landmark!=""){
+                        if(landmark.equals("")){
                             ptst1.setNull(6, Types.VARCHAR);
                         }
                         else{
@@ -195,7 +195,7 @@ public class party extends HttpServlet {
                         ptst1.setString(7, city);
                         ptst1.setString(8, state);
                         ptst1.setString(9, country);
-                        if(pincode!=""){
+                        if(pincode.equals("")){
                             ptst1.setNull(10, Types.INTEGER);
                         }
                         else{
@@ -206,40 +206,45 @@ public class party extends HttpServlet {
                         ptst2.setString(1, pid);
                         ptst2.setString(2, pname);
                         ptst2.setString(3, ptype);
-                        if(pabb!=""){
+                        if(pabb.equals("")){
                         ptst2.setNull(4, Types.VARCHAR);    
                         }
                         else{
                             ptst2.setString(4, pabb);
                         }
-                        if(pgst!=""){
-                            ptst2.setNull(4,Types.VARCHAR);
+                        if(pgst.equals("")){
+                            ptst2.setNull(5,Types.VARCHAR);
                         }
                         else{
                         ptst2.setString(5, pgst);
                         }
                         ptst2.setString(6, cno1);
-                        if(cno2!=""){
+                        if(cno2.equals("")){
                             ptst2.setNull(7, Types.VARCHAR);
                         }
                         else{
                         ptst2.setString(7, cno2);                            
                         }
+                        if(email.equals("")){
+                            ptst2.setNull(8,Types.VARCHAR);
+                        }
+                        else{
                         ptst2.setString(8, email);
+                        }
                         ptst2.setString(9, doi);
-                        if(obal!=""){
+                        if(obal.equals("")){
                             ptst2.setNull(10, Types.INTEGER);
                         }
                         else{
                         ptst2.setString(10, obal);
                         }
-                        if(cbal!=null){
+                        if(cbal.equals("")){
                             ptst2.setNull(11, Types.INTEGER);
                         }
                         else{
                         ptst2.setString(11, cbal);
                         }
-                        if(mark!=""){
+                        if(mark.equals("")){
                             ptst2.setNull(12, Types.VARCHAR);
                         }
                         else{

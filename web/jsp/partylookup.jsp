@@ -1,6 +1,6 @@
 <%-- 
-    Document   : userlookup
-    Created on : 22 Aug, 2017, 10:18:01 PM
+    Document   : partylookup
+    Created on : 25 Aug, 2017, 7:10:24 AM
     Author     : Parth
 --%>
 
@@ -282,21 +282,27 @@
 			<div class="agile-grids">	
 				<!-- tables -->				
 				<div class="table-heading">
-                                    <h2>User Enrollment </h2>                                     
+                                    <h2>Party Enrollment </h2>                                     
 				</div>                                
 				<div class="agile-tables">                                   
 					<div class="w3l-table-info">
                                         <table id="table">
 						<thead>
 						  <tr>
-                                                        <th>UserName</th>
-							<th>First Name</th>							
-							<th>Last Type</th>
+                                                        <th>Code</th>
+							<th>Name</th>
+                                                        <th>Type</th>
+<!--							<th>Abbreviation</th>-->
+                                                        <th>GST CODE</th>
+                                                        <th>Contact No 1</th>
+                                                        <th>Contact No 2</th>
                                                         <th>Email-ID</th>
-                                                        <th>Contact Number</th>
-                                                        <th>Read Only</th>
+                                                        <th>D.O.I</th>
+                                                        <th>Opening Bal</th>
+                                                        <th>Closing Bal</th>
+                                                        <th>Marka</th>
+                                                        <th>Entity</th>
 							<th>Status</th>
-<!--							<th>Sequence Order</th>-->
 							<th>Action</th>
 						  </tr>
 						</thead>
@@ -314,45 +320,59 @@
                                                             }
                                                             else{
                                                                 if(request.getParameter("sb")==null){
-                                                                PreparedStatement ptst = connection.prepareStatement("select userid,userName,fName,lNamel,emailID,mobileNo,isReadyOnlyUser,isActive from mstuser");
+                                                                PreparedStatement ptst = connection.prepareStatement("select * from mstparty");
                                                                 ResultSet rs = ptst.executeQuery();
                                                                 while(rs.next()){
-                                                                    String uid= rs.getString("userID");
-                                                                    String uname = rs.getString("userName");
-                                                                    String fname =rs.getString("fName");
-                                                                    String lname= rs.getString("lNamel");
-                                                                    String email = rs.getString("emailID");
-                                                                    String cno = rs.getString("mobileNo"); 
-                                                                    String readonly=rs.getString("isReadyOnlyUser");
+                                                                    String pid = rs.getString("partyID");
+                                                                    String pcode= rs.getString("partyCode");
+                                                                    String pname = rs.getString("partyName");
+                                                                    String type =rs.getString("partyType");
+                                                                    String pabb= rs.getString("partyAbb");
+                                                                    String gstcode=rs.getString("partyGSTCode");
+                                                                    String cno1 = rs.getString("partyContactNO1");
+                                                                    String cno2= rs.getString("partyContactNO2");
+                                                                    String email = rs.getString("partyemail");
+                                                                    String doi = rs.getString("partyDOI"); 
+                                                                    String obal = rs.getString("partyOpenBal");
+                                                                    String cbal = rs.getString("partyCloseBal");
+                                                                    String marka = rs.getString("partyMarka");
+                                                                    String entity=rs.getString("isEntity");
                                                                     String status=rs.getString("isActive");
                                                                     %>
                                                                     <td name="grpcode">
-                                                                        <%=uname%>
+                                                                        <%=pcode%>
                                                                     </td>
                                                                     <td name="gname">
-                                                                        <%=fname%>
+                                                                        <%=pname%>
                                                                     </td>
                                                                     <td name="grptype">
-                                                                        <%=lname%>
+                                                                        <%=type%>
                                                                     </td>
-                                                                    <td name="grpstatus">
-                                                                        <%=email%>
+<!--                                                                    <td name="grpstatus">
+                                                                        <%=pabb%>
+                                                                    </td>-->
+                                                                    <td>
+                                                                        <%=gstcode%>
                                                                     </td>
                                                                     <td>
-                                                                        <%=cno%>
+                                                                        <%=cno1%>
                                                                     </td>
                                                                     <td>
-                                                                        <%=readonly%>
+                                                                        <%=cno2%>
                                                                     </td>
+                                                                    <td><%=email%></td>
+                                                                    <td><%=doi%></td>
+                                                                    <td><%=obal%></td>
+                                                                    <td><%=cbal%></td>
+                                                                    <td><%=marka%></td>
+                                                                    <td><%=entity%></td>
+                                                                    <td><%=status%></td> 
                                                                     <td>
-                                                                        <%=status%>
-                                                                    </td>
-                                                                    <td>                            
                                                                     <form action="" method="post">
-                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="register" formmethod="post" ><br>
-                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="register" formmethod="post">
-                                                                    <input type="hidden" name="dname" value="<%=uid%>">
-                                                                    <input type="hidden" name="gname" value="<%=uname%>">
+                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="#" formmethod="post" ><br>
+                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="party" formmethod="post">
+                                                                    <input type="hidden" name="dname" value="<%=pid%>">
+                                                                    <input type="hidden" name="gname" value="<%=pname%>">
                                                                     </form>
                                                                     </td>  
                                                                     </tr>
@@ -360,45 +380,60 @@
                                                                 }
                                                             }
                                                             else if(request.getParameter("sb")!=null){
-                                                                PreparedStatement ptst = connection.prepareStatement("select userid,userName,fName,lNamel,emailID,mobileNo,isReadyOnlyUser,isActive from mstuser where usersname ='"+sv+"'");
+                                                                PreparedStatement ptst = connection.prepareStatement("select * from mstparty where partyName='"+sv+"'");
                                                                 ResultSet rs = ptst.executeQuery();
                                                                 while(rs.next()){
-                                                                    String uid= rs.getString("userID");
-                                                                    String uname = rs.getString("userName");
-                                                                    String fname =rs.getString("fName");
-                                                                    String lname= rs.getString("lNamel");
-                                                                    String email = rs.getString("emailID");
-                                                                    String cno = rs.getString("mobileNo"); 
-                                                                    String readonly=rs.getString("isReadyOnlyUser");
+                                                                    String pid = rs.getString("partyID");
+                                                                    String pcode= rs.getString("partyCode");
+                                                                    String pname = rs.getString("partyName");
+                                                                    String type =rs.getString("partyType");
+                                                                    String pabb= rs.getString("partyAbb");
+                                                                    String gstcode=rs.getString("partyGSTCode");
+                                                                    String cno1 = rs.getString("partyContactNO1");
+                                                                    String cno2= rs.getString("partyContactNO2");
+                                                                    String email = rs.getString("partyemail");
+                                                                    String doi = rs.getString("partyDOI"); 
+                                                                    String obal = rs.getString("partyOpenBal");
+                                                                    String cbal = rs.getString("partyCloseBal");
+                                                                    String marka = rs.getString("partyMarka");
+                                                                    String entity=rs.getString("isEntity");
                                                                     String status=rs.getString("isActive");
                                                                     %>
+                                                                    <tr>
                                                                     <td name="grpcode">
-                                                                        <%=uname%>
+                                                                        <%=pid%>
                                                                     </td>
                                                                     <td name="gname">
-                                                                        <%=fname%>
+                                                                        <%=pname%>
                                                                     </td>
                                                                     <td name="grptype">
-                                                                        <%=lname%>
+                                                                        <%=type%>
                                                                     </td>
-                                                                    <td name="grpstatus">
-                                                                        <%=email%>
+<!--                                                                    <td name="grpstatus">
+                                                                        <%=pabb%>
+                                                                    </td>-->
+                                                                    <td>
+                                                                        <%=gstcode%>
                                                                     </td>
                                                                     <td>
-                                                                        <%=cno%>
+                                                                        <%=cno1%>
                                                                     </td>
                                                                     <td>
-                                                                        <%=readonly%>
+                                                                        <%=cno2%>
                                                                     </td>
+                                                                    <td><%=email%></td>
+                                                                    <td><%=doi%></td>
+                                                                    <td><%=obal%></td>
+                                                                    <td><%=cbal%></td>
+                                                                    <td><%=marka%></td>
+                                                                    <td><%=entity%></td>
+                                                                    <td><%=status%></td>   
                                                                     <td>
-                                                                        <%=status%>
-                                                                    </td>
-                                                                    <td>                            
                                                                     <form action="" method="post">
-                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="Regitration.jsp" formmethod="post" ><br>
-                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="register" formmethod="post">
-                                                                    <input type="hidden" name="dname" value="<%=uid%>">
-                                                                    <input type="hidden" name="gname" value="<%=uname%>">
+                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="#" formmethod="post" ><br>
+                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="party" formmethod="post">
+                                                                    <input type="hidden" name="dname" value="<%=pid%>">
+                                                                    <input type="hidden" name="gname" value="<%=pname%>">
                                                                     </form>
                                                                     </td>  
                                                                     </tr>
@@ -412,45 +447,60 @@
 //                                                                                }                                                            
                                                             }
                                                                 else if(request.getParameter("refresh")!=null){
-                                                                PreparedStatement ptst = connection.prepareStatement("select userid,userName,fName,lNamel,emailID,mobileNo,isReadyOnlyUser,isActive from mstuser");
+                                                                PreparedStatement ptst = connection.prepareStatement("select * from mstparty");
                                                                 ResultSet rs = ptst.executeQuery();
                                                                 while(rs.next()){
-                                                                    String uid= rs.getString("userID");
-                                                                    String uname = rs.getString("userName");
-                                                                    String fname =rs.getString("fName");
-                                                                    String lname= rs.getString("lNamel");
-                                                                    String email = rs.getString("emailID");
-                                                                    String cno = rs.getString("mobileNo"); 
-                                                                    String readonly=rs.getString("isReadyOnlyUser");
+                                                                    String pid = rs.getString("partyID");
+                                                                    String pcode= rs.getString("partyCode");
+                                                                    String pname = rs.getString("partyName");
+                                                                    String type =rs.getString("partyType");
+                                                                    String pabb= rs.getString("partyAbb");
+                                                                    String gstcode=rs.getString("partyGSTCode");
+                                                                    String cno1 = rs.getString("partyContactNO1");
+                                                                    String cno2= rs.getString("partyContactNO2");
+                                                                    String email = rs.getString("partyemail");
+                                                                    String doi = rs.getString("partyDOI"); 
+                                                                    String obal = rs.getString("partyOpenBal");
+                                                                    String cbal = rs.getString("partyCloseBal");
+                                                                    String marka = rs.getString("partyMarka");
+                                                                    String entity=rs.getString("isEntity");
                                                                     String status=rs.getString("isActive");
                                                                     %>
+                                                                    <tr>
                                                                     <td name="grpcode">
-                                                                        <%=uname%>
+                                                                        <%=pcode%>
                                                                     </td>
                                                                     <td name="gname">
-                                                                        <%=fname%>
+                                                                        <%=pname%>
                                                                     </td>
                                                                     <td name="grptype">
-                                                                        <%=lname%>
+                                                                        <%=type%>
                                                                     </td>
-                                                                    <td name="grpstatus">
-                                                                        <%=email%>
+<!--                                                                    <td name="grpstatus">
+                                                                        <%=pabb%>
+                                                                    </td>-->
+                                                                    <td>
+                                                                        <%=gstcode%>
                                                                     </td>
                                                                     <td>
-                                                                        <%=cno%>
+                                                                        <%=cno1%>
                                                                     </td>
                                                                     <td>
-                                                                        <%=readonly%>
+                                                                        <%=cno2%>
                                                                     </td>
+                                                                    <td><%=email%></td>
+                                                                    <td><%=doi%></td>
+                                                                    <td><%=obal%></td>
+                                                                    <td><%=cbal%></td>
+                                                                    <td><%=marka%></td>
+                                                                    <td><%=entity%></td>
+                                                                    <td><%=status%></td> 
                                                                     <td>
-                                                                        <%=status%>
-                                                                    </td>
-                                                                    <td>                            
                                                                     <form action="" method="post">
-                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="Regitration.jsp" formmethod="post" ><br>
-                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="register" formmethod="post">
-                                                                    <input type="hidden" name="dname" value="<%=uid%>">
-                                                                    <input type="hidden" name="gname" value="<%=uname%>">
+                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="#" formmethod="post" ><br>
+                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="party" formmethod="post">
+                                                                    <input type="hidden" name="dname" value="<%=pid%>">
+                                                                    <input type="hidden" name="gname" value="<%=pname%>">
                                                                     </form>
                                                                     </td>  
                                                                     </tr>

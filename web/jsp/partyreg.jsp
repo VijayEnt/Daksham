@@ -136,7 +136,7 @@
 						</a>
 					</li>
 					<li>
-						<a class="subnav-text" href="#">
+						<a class="subnav-text" href="partylookup.jsp">
 							Party Details
 						</a>
 					</li>					
@@ -244,15 +244,15 @@
 	
 					<div class="formtitle">Party Enrollment</div>
 					<div class="input">
-						<input type="text" name="cid" placeholder="Party Code"  /> 
+                                            <input type="text" name="cid" placeholder="Party Code" required=""  /> 
 						
 					</div>
 					<div class="input">
-                                            <input type="text" name="cname"  placeholder="Party Name" />
+                                            <input type="text" name="cname"  placeholder="Party Name" required=""/>
                                         </div>
                                         <!----------start Address section----------->
                                         <div class="section-country">
-                                            <select id="addtype" name="addtype" onmousemove="if(this.options.length>5){this.size=5}" onchange="this.value()" onblur="this.size=0" class="frm-field">
+                                            <select id="addtype" name="addtype" onmousemove="if(this.options.length>5){this.size=5}" onchange="this.value()" onblur="this.size=0" class="frm-field" required="">
                                                 <option value="-1">Select Address Type</option>
                                                 <% 
                                                     Connection connect = com.daksham.connection.connection.setConnection();
@@ -266,10 +266,10 @@
                                         </div>
 					<div class="section">
 						<div class="input-sign details">
-                                                    <input type="text" name="add1" maxlength="45" placeholder="Address Line 1" /> 
+                                                    <input type="text" name="add1" maxlength="45" placeholder="Address Line 1" required="" /> 
 						</div>
 						<div class="input-sign details1">
-                                                    <input type="text" name="add2" maxlength="45" placeholder="Address Line 2"/>
+                                                    <input type="text" name="add2" maxlength="45" placeholder="Address Line 2" required=""/>
 						</div>
 						<div class="clear"> </div>
 					</div>                                        
@@ -286,7 +286,7 @@
 					<div class="section">
 						<div class=" section-country">
 							<!--<input type="text"  placeholder="City" />--> 
-                                                        <select id="city" name="city" onmousedown="if(this.options.length>5){this.size=5}" onchange="change_city(this.value())" onblur="this.size=0" class="frm-field ">
+                                                        <select id="city" name="city" onmousedown="if(this.options.length>5){this.size=5}" onchange="change_city(this.value())" onblur="this.size=0" class="frm-field " required="">
                                                             <option value="-1">Select City </option>
                                                             <%
                                                                 PreparedStatement ptstc = connect.prepareStatement("select * from mstcity where isActive='Y'");
@@ -302,7 +302,7 @@
 					
 <!--                                        Start State Section-->
                                         <div class="section-country">
-                                            <select id="State" name="state" onmousedown="if(this.options.length>5){this.size=5}" onblur="this.size=0" onchange="change_state(this.value())" class="frm-field ">
+                                            <select id="State" name="state" onmousedown="if(this.options.length>5){this.size=5}" onblur="this.size=0" onchange="change_state(this.value())" class="frm-field " required="">
                                                 <option value="-1">Select State</option><
                                                 <%
                                                   PreparedStatement ptsts=connect.prepareStatement("select * from  mststate where isActive='Y'");
@@ -316,7 +316,7 @@
 										
 					<!----------start country section----------->
 					<div class="section-country">
-                                            <select id="country" name="country" onmousedown="if(this.options.length>5)(this.size=10)" onblur="this.size=0" onchange="change_country(this.value)" class="frm-field ">
+                                            <select id="country" name="country" onmousedown="if(this.options.length>5)(this.size=10)" onblur="this.size=0" onchange="change_country(this.value)" class="frm-field " required="">
 		            <option value="-1"> Select Country</option>         
 		            <option value="AX">Åland Islands</option>
 		            <option value="AF">Afghanistan</option>
@@ -576,7 +576,7 @@
 						</div>              
                                         </div>
                                         <div class="input">
-                                            <input type="text" name="ptype"  placeholder="Party Type" />
+                                            <input type="text" name="ptype"  placeholder="Party Type" required=""/>
                                         </div>                                        
                                         <div class="input">
                                             <input type="text" name="pabb"  placeholder="Party Abbreviatioin"/>
@@ -588,11 +588,11 @@
                                             <input type="text" name="pgst"  placeholder="Party GSTCODE" />
                                         </div>                                         
                                         <div class="section">
-                                            <div class="input-sign details">
-                                                <input type="text" name="cno1" placeholder="Mobile" /> 
+                                            <div class="input-sign details" required="">
+                                                <input type="text" name="cno1" onkeypress="return isNumberKey(event)" placeholder="Mobile" required="" /> 
 						</div>
                                             <div class="input-sign details1">
-                                                <input type="text" name="cno2"  placeholder="Contact Number" />                                                        
+                                                <input type="text" name="cno2" onkeypress="return isNumberKey(event)"  placeholder="Contact Number" />                                                        
 						</div>   
                                             <div class="clear"> </div>
                                         </div>
@@ -601,16 +601,16 @@
                                             <input type="email" name="pemail" placeholder="Email" style="border: none;padding:2%;width: 100%"/>
                                         </div> 
                                           <div class="input details1">
-                                        <input type="date" name="pdoi"  placeholder="DOI" style="border: none;width: 100%;" />
+                                        <input type="date" name="pdoi"  placeholder="DOI" style="border: none;width: 100%;" required="" />
                                         </div>
                                             <div class="clear"> </div>
                                         </div>
                                         <div class="section">
-                                         <div class="input-sign details input">
-                                             <input type="text" onkeypress="return isNumberKey(event)" name="pobal"  placeholder="Opening Balance" style="border: none;padding:2%;width: 100%;"/>
-                                        </div> 
-                                        <div class="input-sign details1 input">
-                                            <input type="number" onkeypress="return isNumberKey(event)" name="pcbal" placeholder="Closing Balance" style="border: none;padding:2%;width: 100%;"/>
+                                            <div class="input-sign details1 input">
+                                            <input type="text" onkeypress="return isNumberKey(event)" name="pcbal" placeholder="Closing Balance" />
+                                        </div>
+                                         <div class="input-sign details1 input">
+                                             <input type="text" onkeypress="return isNumberKey(event)" name="pobal"  placeholder="Opening Balance"/>
                                         </div>
                                             </div>
                                             <div class="section">

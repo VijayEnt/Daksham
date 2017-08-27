@@ -4,6 +4,9 @@
     Author     : Parth
 --%>
 
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.Connection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -241,18 +244,31 @@
                                             <input type="text" name="tname"  placeholder="Transport Name" required/>
                                         </div>
                                         <!----------start Address section----------->
+                                        <div class="section-country">
+                                            <select id="addtype" name="addtype" onmousemove="if(this.options.length>5){this.size=5;}" onchange="this.value()" onblur="this.size=0" class="frm-field" required="">
+                                                <option value="-1">Select Address Type</option>
+                                                <% 
+                                                    Connection connect = com.daksham.connection.connection.setConnection();
+                                                PreparedStatement ptst = connect.prepareStatement("select * from mstcoderegister where codename like '%Address%'");
+                                                ResultSet rs = ptst.executeQuery();
+                                                while(rs.next()){
+                                                    out.println("<option value="+"\""+rs.getString("recid")+"\""+">"+rs.getString("codevalue")+"</option>");
+                                                }
+                                                    %>
+                                            </select>
+                                        </div>
 					<div class="section">
 						<div class="input-sign details">
-                                                    <input type="text" name="add1" placeholder="Address Line 1" required/> 
+                                                    <input type="text" name="add1" placeholder="Address Line 1" required maxlength="45"/> 
 						</div>
 						<div class="input-sign details1">
-                                                    <input type="text" name="add2" placeholder="Address Line 2"/>
+                                                    <input type="text" name="add2" placeholder="Address Line 2" maxlength="45"/>
 						</div>
 						<div class="clear"> </div>
 					</div>                                        
 					<div class="section">
 						<div class="input-sign details">
-                                                    <input type="text" name="add3"  placeholder="Address Line 3" required=""/> 
+                                                    <input type="text" name="add3"  placeholder="Address Line 3"/> 
 						</div>
 						<div class="input-sign details1">
                                                     <input type="text" name="add4"  placeholder="Address Line 4" /> 
@@ -263,23 +279,37 @@
 					<div class="section">
 						<div class=" section-country">
 							<!--<input type="text"  placeholder="City" required/>--> 
-                                                        <select id="city" name="city" onchange="change_city(this.value)" class="frm-field required">
-                                                            <option value="null">City </option>
-                                                        </select>
+                                                        <select id="city" name="city" onmousedown="if(this.options.length>5){this.size=5;}" onchange="this.value()" onblur="this.size=0" class="frm-field required">
+                                                             <option value="-1">Select City </option>
+                                                            <%
+                                                                PreparedStatement ptstc = connect.prepareStatement("select * from mstcity where isActive='Y'");
+                                                                ResultSet rsc = ptstc.executeQuery();
+                                                                while(rsc.next()){
+                                                                    out.println("<option value="+"\""+rsc.getString("citycode")+"\""+">"+rsc.getString("cityName")+"</option>");
+                                                                }
+                                                                %>
+                                                            </select>
 						</div>                                            
 						<div class="clear"> </div>
 					</div>
 					
 <!--                                        Start State Section-->
                                         <div class="section-country">
-                                            <select id="State" name="state" onchange="change_state(this.value)" class="frm-field required">
-                                                <option value="null">State</option>
+                                            <select id="State" name="state" onmousedown="if(this.options.length>5){this.size=5;}" onchange="this.value()" onblur="this.size=0" class="frm-field required">
+                                                <option value="-1">Select State</option>
+                                                <%
+                                                  PreparedStatement ptsts=connect.prepareStatement("select * from  mststate where isActive='Y'");
+                                                  ResultSet rss =ptsts.executeQuery();
+                                                  while(rss.next()){
+                                                      out.println("<option value="+"\""+rss.getString("statecode")+"\""+">"+rss.getString("stateName")+"</option>");
+                                                  }
+                                                 %>
                                             </select> 
                                         </div>
 										
 					<!----------start country section----------->
 					<div class="section-country">
-						<select id="country" onchange="change_country(this.value)" class="frm-field required">
+                                            <select id="country" name="country" onmousedown="if(this.options.length>5){this.size=10;}" onchange="change_country(this.value)" onblur="this.size=0" class="frm-field required">
 		            <option value="null"> Country</option>         
 		            <option value="AX">Åland Islands</option>
 		            <option value="AF">Afghanistan</option>
@@ -532,20 +562,26 @@
                                             </div>
                                         <div class="section">
                                             <div class="input-sign details">
-							<input type="text" name="landmark" placeholder="Landmark" required/> 
+							<input type="text" name="landmark" placeholder="Landmark"/> 
 						</div>
                                             <div class="input-sign details1">
-                                                <input type="text" name="pincode"  placeholder="Pincode" required/>                                                        
+                                                <input type="text" name="pincode"  placeholder="Pincode"/>                                                        
 						</div>              
                                         </div>
+                                        <div class="section-country">
+                                            <select id="State" name="location" onmousedown="if(this.options.length>5){this.size=5;}" onchange="this.value()" onblur="this.size=0" class="frm-field" required=""> 
+                                                <option value="-1">Select Transport Location</option>
+                                                <option value="All India Permit">All India Permit</option>
+                                                <option value="Inter City">Inter City</option>
+                                                <option value="Domestic">Domestic</option>
+                                                <option value="Local">Local</option>
+                                                    </select>
+                                        </div>
                                         <div class="input">
-                                            <input type="text" name="tloc"  placeholder="Transport Location" required/>
-                                        </div>                                        
-                                        <div class="input">
-                                            <input type="text" name="pabb"  placeholder="Transport Abbreviatioin"/>
+                                            <input type="text" name="tabb"  placeholder="Transport Abbreviation"/>
                                         </div>  
                                         <div class="input">
-                                            <input type="text" name="pgst"  placeholder="Transport GSTCODE" required/>
+                                            <input type="text" name="tgst"  placeholder="GSTCODE" />
                                         </div> 
                                         <div class="section">
                                             <div class="input-sign details">
@@ -559,7 +595,7 @@
 					<div class="submit">						
                                             <input class="bluebutton submitbotton" name="ssave" type="submit" value="Save" />
                                             <input class="bluebutton submitbotton" type="reset" value="Reset" />
-                                            <input class="bluebutton submitbotton" name="slook" type="submit" value="Transport Lookup" />
+<!--                                            <input class="bluebutton submitbotton" name="slook" type="submit" value="Transport Lookup" />-->
 						<div class="clear"> </div>
 					</div>
 		

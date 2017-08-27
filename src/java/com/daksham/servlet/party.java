@@ -269,6 +269,194 @@ public class party extends HttpServlet {
                     ex.printStackTrace(out);
                 }
             }
+            else if(request.getParameter("slook")!=null){
+                response.sendRedirect("partylookup.jsp");
+            }
+            else if(request.getParameter("usave")!=null){
+                try{
+                    String pid = request.getParameter("pcode");
+                    String pname = request.getParameter("cname");
+                    String addtype = request.getParameter("uaddtype");
+                    String addl1=request.getParameter("add1");
+                    String addl2 = request.getParameter("add2");
+                    String addl3= request.getParameter("add3");
+                    String addl4 = request.getParameter("add4");
+                    String city = request.getParameter("city");
+                    String state = request.getParameter("state");
+                    String country = request.getParameter("country");
+                    String landmark = request.getParameter("landmark");
+                    String pincode = request.getParameter("pincode");
+                    String ptype = request.getParameter("ptype");
+                    String pabb = request.getParameter("pabb");
+                    String pgst = request.getParameter("pgst");
+                    String cno1 = request.getParameter("cno1");
+                    String cno2 = request.getParameter("cno2");
+                    String email = request.getParameter("pemail");
+                    String doi = request.getParameter("pdoi");
+                    String obal = request.getParameter("pobal");
+                    String cbal = request.getParameter("pcbal");
+                    String entity = request.getParameter("entity");
+                    String mark = request.getParameter("pmark");
+                    String transid = request.getParameter("transport");
+                    String addid = request.getParameter("addid");
+                    if(pid.equals("")){
+                            out.println("<script type=\"text/javascript\">");            
+                            out.println("alert('Party code should not be blank!');");
+                            out.println("location='partyreg.jsp';");
+                            out.println("</script>");
+                    }
+                    else if(pname.equals("")){
+                            out.println("<script type=\"text/javascript\">");            
+                            out.println("alert('Party Name should not be blank!');");
+                            out.println("location='partyreg.jsp';");
+                            out.println("</script>");
+                    }
+//                    else if(addtype.equals("-1")){
+//                        out.println("<script type=\"text/javascript\">");            
+//                            out.println("alert('Address should not be blank!');");
+//                            out.println("location='partyreg.jsp';");
+//                            out.println("</script>");
+//                    }
+                    else if(addl1.equals("")){
+                        out.println("<script type=\"text/javascript\">");            
+                            out.println("alert('Address should not be blank!');");
+                            out.println("location='partyreg.jsp';");
+                            out.println("</script>");
+                    }
+                    else if(addl2.equals("")){
+                        out.println("<script type=\"text/javascript\">");            
+                            out.println("alert('Address should not be blank!');");
+                            out.println("location='partyreg.jsp';");
+                            out.println("</script>");
+                    }
+                    else if(city.equals("-1")){
+                        out.println("<script type=\"text/javascript\">");            
+                            out.println("alert('City should not be blank!');");
+                            out.println("location='partyreg.jsp';");
+                            out.println("</script>");
+                    }
+                    else if(state.equals("-1")){
+                        out.println("<script type=\"text/javascript\">");            
+                            out.println("alert('State should not be blank!');");
+                            out.println("location='partyreg.jsp';");
+                            out.println("</script>");
+                    }
+                    else if(country.equals("-1")){
+                        out.println("<script type=\"text/javascript\">");            
+                            out.println("alert('Country should not be blank!');");
+                            out.println("location='partyreg.jsp';");
+                            out.println("</script>");
+                    }
+                    else if(ptype.equals("")){
+                        out.println("<script type=\"text/javascript\">");            
+                            out.println("alert('Party Type should not be blank!');");
+                            out.println("location='partyreg.jsp';");
+                            out.println("</script>");
+                    }
+                    else if(cno1.equals("")){
+                        out.println("<script type=\"text/javascript\">");            
+                            out.println("alert('At least one contact number required!');");
+                            out.println("location='partyreg.jsp';");
+                            out.println("</script>");
+                    }
+                    else if(doi.equals("")){
+                        out.println("<script type=\"text/javascript\">");            
+                            out.println("alert('Party D.O.I should not be blank!');");
+                            out.println("location='partyreg.jsp';");
+                            out.println("</script>");
+                    }                    
+                PreparedStatement ptst1 = connection.prepareStatement("update mstparty set partyName =?,partyabb=?,partyGSTCode=?,partyContactNO1=?,partyContactNO2=?,partyemail=?,partyOpenBal=?,partyCloseBal=?,partyMarka=?,isEntity=?,isActive='Y',actiondate=now(),actionUserID=1 where  partyID='"+pid+"'");
+                ptst1.setString(1, pname);
+                if(pabb.equals("null")){
+                    ptst1.setNull(2,Types.VARCHAR);
+                }
+                else{
+                ptst1.setString(2, pabb);
+                }
+                ptst1.setString(3, pgst);
+                ptst1.setString(4, cno1);
+                if(cno2.equals("null")){
+                    ptst1.setNull(5, Types.INTEGER);
+                }
+                else{
+                ptst1.setString(5, cno2);
+                }
+                if(email.equals("null")){
+                    ptst1.setNull(6, Types.VARCHAR);
+                }
+                else{
+                    ptst1.setString(6, email);
+                }
+                if(obal.equals("null")){
+                    ptst1.setNull(7, Types.INTEGER);
+                }
+                else{
+                    ptst1.setString(7, obal);
+                }
+                if(cbal.equals("null")){
+                    ptst1.setNull(8, Types.INTEGER);
+                }
+                else{
+                    ptst1.setString(8, cbal);
+                }
+                if(mark.equals("null")){
+                    ptst1.setNull(9, Types.INTEGER);
+                }
+                else{
+                    ptst1.setString(9, mark);
+                }
+                ptst1.setString(10, entity);
+                PreparedStatement ptst2 = connection.prepareStatement("update mstaddress set addressline1=?,addressline2=?,addressline3=?,addressline4=?,landmark=?,citycode=?,state=?,country=?,pincode=?,actiondate=now(),actionuserid=1 where address_id='"+addid+"'");
+                ptst2.setString(1, addl1);
+                ptst2.setString(2, addl2);
+                if(addl3.equals("null")){
+                    ptst2.setNull(3, Types.VARCHAR);
+                }
+                else{
+                    ptst2.setString(3, addl3);
+                }
+                if(addl4.equals("null")){
+                    ptst2.setNull(4, Types.VARCHAR);
+                }
+                else{
+                    ptst2.setString(4, addl4);
+                }
+                if(landmark.equals("null")){
+                    ptst2.setNull(5, Types.VARCHAR);
+                }
+                else{
+                    ptst2.setString(5, landmark);
+                }
+                ptst2.setString(6, city);
+                ptst2.setString(7, state);
+                ptst2.setString(8, country);
+                if(pincode.equals("null")){
+                    ptst2.setNull(9, Types.INTEGER);
+                }
+                else{
+                ptst2.setString(9, pincode);
+                }
+                ptst1.executeUpdate();
+                ptst2.executeUpdate();
+                        out.println("<script type=\"text/javascript\">");            
+                        out.println("alert('"+pname+" Updated!');");
+                        out.println("location='partylookup.jsp';");
+                        out.println("</script>");
+                }
+                catch(Exception ex){
+                    ex.printStackTrace(out);
+                }
+            }
+            else if(request.getParameter("btndeactive")!=null){
+                String pid = request.getParameter("dname");
+                String pname = request.getParameter("gname");
+                PreparedStatement ptst = connection.prepareStatement("update mstparty set isActive = 'N',actionDate=now(),actionUserID=1 where partyID='"+pid+"'");
+                ptst.executeUpdate();
+                out.println("<script type=\"text/javascript\">");            
+                        out.println("alert('"+pname+" Deactivated!');");
+                        out.println("location='partyreg.jsp';");
+                        out.println("</script>");
+            }
             connection.close();
         }
         

@@ -24,6 +24,10 @@
         <servlet-name>party</servlet-name>
         <servlet-class>com.daksham.servlet.party</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>transport</servlet-name>
+        <servlet-class>com.daksham.servlet.transport</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>codereg</servlet-name>
         <url-pattern>/jsp/codereg</url-pattern>
@@ -47,6 +51,10 @@
     <servlet-mapping>
         <servlet-name>party</servlet-name>
         <url-pattern>/jsp/party</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>transport</servlet-name>
+        <url-pattern>/jsp/transport</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

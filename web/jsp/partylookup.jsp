@@ -315,7 +315,7 @@
                                                             if(connection==null){
                                                                 out.println("<script type=\"text/javascript\">");            
                                                                 out.println("alert('Please Check Database Connection!');");
-                                                                out.println("location='userlookup.jsp';");
+                                                                out.println("location='partylookup.jsp';");
                                                                 out.println("</script>");
                                                             }
                                                             else{
@@ -369,7 +369,7 @@
                                                                     <td><%=status%></td> 
                                                                     <td>
                                                                     <form action="" method="post">
-                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="#" formmethod="post" ><br>
+                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="partyreg.jsp" formmethod="post" ><br>
                                                                     <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="party" formmethod="post">
                                                                     <input type="hidden" name="dname" value="<%=pid%>">
                                                                     <input type="hidden" name="gname" value="<%=pname%>">
@@ -430,7 +430,7 @@
                                                                     <td><%=status%></td>   
                                                                     <td>
                                                                     <form action="" method="post">
-                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="#" formmethod="post" ><br>
+                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="partyreg.jsp" formmethod="post" ><br>
                                                                     <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="party" formmethod="post">
                                                                     <input type="hidden" name="dname" value="<%=pid%>">
                                                                     <input type="hidden" name="gname" value="<%=pname%>">
@@ -497,7 +497,7 @@
                                                                     <td><%=status%></td> 
                                                                     <td>
                                                                     <form action="" method="post">
-                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="#" formmethod="post" ><br>
+                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="partyreg.jsp" formmethod="post" ><br>
                                                                     <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="party" formmethod="post">
                                                                     <input type="hidden" name="dname" value="<%=pid%>">
                                                                     <input type="hidden" name="gname" value="<%=pname%>">

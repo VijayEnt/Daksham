@@ -1,9 +1,9 @@
 <%-- 
-    Document   : grouplook
-    Created on : 17 Aug, 2017, 5:30:15 PM
-    Author     : ParthBheda
+    Document   : trptlookup
+    Created on : 28 Aug, 2017, 6:58:37 AM
+    Author     : Parth
 --%>
-
+<%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>
@@ -270,7 +270,7 @@
        <section class="title-bar">						
 			<div class="w3l_search">
                             <form action="#" method="post">
-					<input type="text" name="search" value="Search by Group Name" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}" required="">
+					<input type="text" name="search" value="Search by UserName" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}" required="">
                                         <button class="btn btn-default" name="sb" type="submit" title="Search Code"><i class="fa fa-search" aria-hidden="true"></i></button> <br><br>
                                         <button class="btn btn-default" name="refresh" type="submit" style="margin-left: 50px;" title="Refresh Data"><i class="fa fa-refresh" aria-hidden="true"></i></button>                              
 				</form>            
@@ -281,16 +281,19 @@
 			<div class="agile-grids">	
 				<!-- tables -->				
 				<div class="table-heading">
-                                    <h2>Group Enrollment </h2>                                     
+                                    <h2>Transport Enrollment </h2>                                     
 				</div>                                
 				<div class="agile-tables">                                   
 					<div class="w3l-table-info">
                                         <table id="table">
 						<thead>
 						  <tr>
-                                                        <th>Group Code</th>
-							<th>Group Name</th>							
-							<th>Group Type</th>
+                                                        <th>Code</th>
+							<th>Name</th>							
+							<th>Service Location</th>
+                                                        <th>Abbreviation</th>                                                        
+                                                        <th>Contact Number</th>
+                                                        <th>Contact Number 2</th>
 							<th>Status</th>
 <!--							<th>Sequence Order</th>-->
 							<th>Action</th>
@@ -305,38 +308,50 @@
                                                             if(connection==null){
                                                                 out.println("<script type=\"text/javascript\">");            
                                                                 out.println("alert('Please Check Database Connection!');");
-                                                                out.println("location='grouplookup.jsp';");
+                                                                out.println("location='userlookup.jsp';");
                                                                 out.println("</script>");
                                                             }
                                                             else{
                                                                 if(request.getParameter("sb")==null){
-                                                                PreparedStatement ptst = connection.prepareStatement("select `groupID`, `groupCode`, `groupName`, `groupType`, `isActive` from mstgroup;");
+                                                                PreparedStatement ptst = connection.prepareStatement("select * from msttransport");
                                                                 ResultSet rs = ptst.executeQuery();
                                                                 while(rs.next()){
-                                                                    String grpid = rs.getString("groupID");
-                                                                    String grpcode =rs.getString("groupCode");
-                                                                    String grpname= rs.getString("groupName");
-                                                                    String grptype = rs.getString("groupType");
-                                                                    String grpstatus = rs.getString("isActive");                                                                    
+                                                                    String tid= rs.getString("trptID");
+                                                                    String tcode = rs.getString("trptCode");
+                                                                    String tname = rs.getString("trptName");
+                                                                    String location =rs.getString("trptServiceLocation");
+                                                                    String abb = rs.getString("trptAbb");                                                                    
+                                                                    String cno = rs.getString("trptContactNo1"); 
+                                                                    String cno2 =rs.getString("trptContactNo2");
+                                                                    String status=rs.getString("isActive");
                                                                     %>
                                                                     <td name="grpcode">
-                                                                        <%=grpcode%>
+                                                                        <%=tcode%>
                                                                     </td>
                                                                     <td name="gname">
-                                                                        <%=grpname%>
+                                                                        <%=tname%>
                                                                     </td>
                                                                     <td name="grptype">
-                                                                        <%=grptype%>
+                                                                        <%=location%>
                                                                     </td>
                                                                     <td name="grpstatus">
-                                                                        <%=grpstatus%>
-                                                                    </td>                                                                    
+                                                                        <%=abb%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=cno%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=cno2%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=status%>
+                                                                    </td>
                                                                     <td>                            
                                                                     <form action="" method="post">
-                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="groupreg.jsp" formmethod="post" ><br>
-                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="groupreg" formmethod="post">
-                                                                    <input type="hidden" name="dname" value="<%=grpid%>">
-                                                                    <input type="hidden" name="gname" value="<%=grpname%>">
+                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="transreg.jsp" formmethod="post" ><br>
+                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="transport" formmethod="post">
+                                                                    <input type="hidden" name="dname" value="<%=tid%>">
+                                                                    <input type="hidden" name="gname" value="<%=tname%>">
                                                                     </form>
                                                                     </td>  
                                                                     </tr>
@@ -344,34 +359,45 @@
                                                                 }
                                                             }
                                                             else if(request.getParameter("sb")!=null){
-                                                                PreparedStatement ptst = connection.prepareStatement("select `groupID`, `groupCode`, `groupName`, `groupType`, `isActive` from mstgroup where groupName like '%"+sv+"%';");
+                                                                PreparedStatement ptst = connection.prepareStatement("select * from msttransport where trptname like '%"+sv+"%'");
                                                                 ResultSet rs = ptst.executeQuery();
                                                                 while(rs.next()){
-                                                                    String grpid = rs.getString("groupID");
-                                                                    String grpcode =rs.getString("groupCode");
-                                                                    String grpname= rs.getString("groupName");
-                                                                    String grptype = rs.getString("groupType");
-                                                                    String grpstatus = rs.getString("isActive");
-                                                                %>
-                                                                <tr>
-                                                                <td name="grpcode">
-                                                                        <%=grpcode%>
+                                                                    String tid= rs.getString("trptID");
+                                                                    String tcode = rs.getString("trptCode");
+                                                                    String tname = rs.getString("trptName");
+                                                                    String location =rs.getString("trptServiceLocation");
+                                                                    String abb = rs.getString("trptAbb");                                                                    
+                                                                    String cno = rs.getString("trptContactNo1"); 
+                                                                    String cno2 =rs.getString("trptContactNo2");
+                                                                    String status=rs.getString("isActive");
+                                                                    %>
+                                                                    <td name="grpcode">
+                                                                        <%=tcode%>
                                                                     </td>
                                                                     <td name="gname">
-                                                                        <%=grpname%>
+                                                                        <%=tname%>
                                                                     </td>
                                                                     <td name="grptype">
-                                                                        <%=grptype%>
+                                                                        <%=location%>
                                                                     </td>
                                                                     <td name="grpstatus">
-                                                                        <%=grpstatus%>
-                                                                    </td>                                                                    
+                                                                        <%=abb%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=cno%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=cno2%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=status%>
+                                                                    </td>
                                                                     <td>                            
                                                                     <form action="" method="post">
-                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="groupreg.jsp" formmethod="post" ><br>
-                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="groupreg" formmethod="post">
-                                                                    <input type="hidden" name="dname" value="<%=grpid%>">
-                                                                    <input type="hidden" name="gname" value="<%=grpname%>">
+                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="transreg.jsp" formmethod="post" ><br>
+                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="transport" formmethod="post">
+                                                                    <input type="hidden" name="dname" value="<%=tid%>">
+                                                                    <input type="hidden" name="gname" value="<%=tname%>">
                                                                     </form>
                                                                     </td>  
                                                                     </tr>
@@ -385,34 +411,45 @@
 //                                                                                }                                                            
                                                             }
                                                                 else if(request.getParameter("refresh")!=null){
-                                                                PreparedStatement ptst = connection.prepareStatement("select `groupID`, `groupCode`, `groupName`, `groupType`, `isActive` from mstgroup;");
+                                                                PreparedStatement ptst = connection.prepareStatement("select * from msttransport");
                                                                 ResultSet rs = ptst.executeQuery();
                                                                 while(rs.next()){
-                                                                    String grpid = rs.getString("groupID");
-                                                                    String grpcode =rs.getString("groupCode");
-                                                                    String grpname= rs.getString("groupName");
-                                                                    String grptype = rs.getString("groupType");
-                                                                    String grpstatus = rs.getString("isActive");
+                                                                    String tid= rs.getString("trptID");
+                                                                    String tcode = rs.getString("trptCode");
+                                                                    String tname = rs.getString("trptName");
+                                                                    String location =rs.getString("trptServiceLocation");
+                                                                    String abb = rs.getString("trptAbb");                                                                    
+                                                                    String cno = rs.getString("trptContactNo1"); 
+                                                                    String cno2 =rs.getString("trptContactNo2");
+                                                                    String status=rs.getString("isActive");
                                                                     %>
-                                                                    <tr>
-                                                                <td name="grpcode">
-                                                                        <%=grpcode%>
+                                                                    <td name="grpcode">
+                                                                        <%=tcode%>
                                                                     </td>
                                                                     <td name="gname">
-                                                                        <%=grpname%>
+                                                                        <%=tname%>
                                                                     </td>
                                                                     <td name="grptype">
-                                                                        <%=grptype%>
+                                                                        <%=location%>
                                                                     </td>
                                                                     <td name="grpstatus">
-                                                                        <%=grpstatus%>
-                                                                    </td>                                                                    
+                                                                        <%=abb%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=cno%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=cno2%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=status%>
+                                                                    </td>
                                                                     <td>                            
                                                                     <form action="" method="post">
-                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="groupreg.jsp" formmethod="post" ><br>
-                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="groupreg" formmethod="post">
-                                                                    <input type="hidden" name="dname" value="<%=grpid%>">  
-                                                                    <input type="hidden" name="gname" value="<%=grpname%>">
+                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="transreg.jsp" formmethod="post" ><br>
+                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="transport" formmethod="post">
+                                                                    <input type="hidden" name="dname" value="<%=tid%>">
+                                                                    <input type="hidden" name="gname" value="<%=tname%>">
                                                                     </form>
                                                                     </td>  
                                                                     </tr>
@@ -421,12 +458,12 @@
                                                             }
                                                         }
                                                     }
-                                                        catch(Exception ex){
+                                                        catch(SQLException ex){
                                                             out.println("<script type=\"text/javascript\">");
                                                             out.println("alert('"+ex.getMessage()+"');");
-                                                            out.println("location='doctorv.jsp';");
+                                                            out.println("location='userlookup.jsp';");
                                                             out.println("</script>");
-                                                        }
+                                                        }                                                        
                                                       %>
 						</tbody>
 					  </table>                                                

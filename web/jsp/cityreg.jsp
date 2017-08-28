@@ -149,11 +149,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <ul>
 					<li>
 						<a class="subnav-text" href="transreg.jsp">
-							Tarnsport Enrollment 
+							Transport Enrollment 
 						</a>
 					</li>
 					<li>
-						<a class="subnav-text" href="#">
+						<a class="subnav-text" href="trptlookup.jsp">
 							Transport Details
 						</a>
 					</li>

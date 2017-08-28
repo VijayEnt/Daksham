@@ -9,6 +9,8 @@ import com.daksham.connection.connection;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.Types;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -95,7 +97,72 @@ public class transport extends HttpServlet {
                String tgst = request.getParameter("tgst");
                String cno1 = request.getParameter("cno1");
                String cno2 = request.getParameter("cno2");
-                              
+               if(trptloc.equals("-1")){
+                   
+               }
+               //Address master
+               PreparedStatement ptst1 = connection.prepareStatement("insert into mstaddress (addresstypecode,addressline1,addressline2,addressline3,addressline4,landmark,citycode,state,country,pincode,creationDate,ActionDate,actionUserID) values(?,?,?,?,?,?,?,?,?,?,now(),now(),1);");
+                        ptst1.setString(1, addtype);
+                        ptst1.setString(2, addl1);
+                        ptst1.setString(3, addl2);
+                        if(addl3.equals("")){
+                            ptst1.setNull(4, Types.VARCHAR);
+                        }
+                        else{
+                        ptst1.setString(4, addl3);
+                        }
+                        if(addl4.equals("")){
+                            ptst1.setNull(5, Types.VARCHAR);
+                        }
+                        else{
+                        ptst1.setString(5, addl4);
+                        }
+                        if(landmark.equals("")){
+                            ptst1.setNull(6, Types.VARCHAR);
+                        }
+                        else{
+                        ptst1.setString(6, landmark);
+                        }
+                        ptst1.setString(7, city);
+                        ptst1.setString(8, state);
+                        ptst1.setString(9, country);
+                        if(pincode.equals("")){
+                            ptst1.setNull(10, Types.INTEGER);
+                        }
+                        else{
+                        ptst1.setString(10, pincode);
+                        }
+                        //ptst1.setString(11, cno);
+               //Transport Master
+               PreparedStatement ptst2 = connection.prepareStatement("insert into msttransport (trptAddressID,trptCode,trptName,trptServiceLocation,trptAbb,trptGSTCode,trptContactNo1,trptContactNo2,creationDate,actionDate,actionUserID) Select mstaddress.address_id,?,?,?,?,?,?,?,now(),now(),1 from mstaddress order by mstaddress.address_id desc limit 1");
+               ptst2.setString(1, trptcode);
+               ptst2.setString(2,trptName);
+               ptst2.setString(3, trptloc);
+               if(tabb.equals("")){
+                   ptst2.setNull(4, Types.VARCHAR);
+               }
+               else{
+               ptst2.setString(4,tabb);
+               }
+               if(tgst.equals("")){
+                   ptst2.setNull(5, Types.VARCHAR);
+               }
+               else{
+               ptst2.setString(5,tgst);
+               }
+               ptst2.setString(6, cno1);
+               if(cno2.equals("")){
+                   ptst2.setNull(7, Types.VARCHAR);
+               }
+               else{
+               ptst2.setString(7,cno2);
+               }
+               ptst1.executeUpdate();
+               ptst2.executeUpdate();
+                out.println("<script type=\"text/javascript\">");            
+                out.println("alert('"+trptName+" Enrolled!');");
+                out.println("location='transreg.jsp';");
+                out.println("</script>");
            }
            catch(Exception ex){
                ex.printStackTrace(out);

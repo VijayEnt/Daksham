@@ -168,6 +168,27 @@ public class transport extends HttpServlet {
                ex.printStackTrace(out);
            }
         }
+        else if(request.getParameter("btndeactive")!=null){
+            try{
+            String tid = request.getParameter("dname");
+            String trptName = request.getParameter("gname");
+            PreparedStatement pstst = connection.prepareStatement("update msttransport set isActive='N',actiondate=now(),actionuserID=1 where trptID = '"+tid+"'");
+            pstst.executeUpdate();
+                out.println("<script type=\"text/javascript\">");            
+                out.println("alert('"+trptName+" Enrolled!');");
+                out.println("location='trptlookup.jsp';");
+                out.println("</script>");
+            }
+            catch(Exception ex){
+                ex.printStackTrace(out);
+            }
+        }
+        else if (request.getParameter("slook")!=null){
+            response.sendRedirect("trptlookup.jsp");
+        }
+        else if(request.getParameter("usave")!=null){
+            
+        }
         connection.close();
         }
         catch (Exception ex){

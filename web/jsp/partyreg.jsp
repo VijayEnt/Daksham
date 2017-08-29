@@ -243,13 +243,12 @@
 			<!----------star form----------->
                         <form class="sign"  action="#" method="post">
 	
-					<div class="formtitle">Party Enrollment</div>
-					<div class="input">
+					<div class="formtitle">Party Enrollment</div>					
                                             <%
                                                 String pid = request.getParameter("dname");
                                                 if(pid!=null){
                                                     Connection connection = com.daksham.connection.connection.setConnection();
-                                                    PreparedStatement ptst = connection.prepareStatement("select * from mstparty inner join mstaddress on address_id = mstparty.partyaddressID inner join mstcoderegister on mstaddress.addresstypecode = mstcoderegister.recid inner join mstcity on mstcity.citycode = mstaddress.citycode inner join mststate on mststate.statecode = mstaddress.State where partyID = '"+pid+"'");
+                                                    PreparedStatement ptst = connection.prepareStatement("select * from mstparty inner join mstaddress on address_id = mstparty.partyaddressID inner join mstcoderegister on mstaddress.addresstypecode = mstcoderegister.recid inner join mstcity on mstcity.citycode = mstaddress.citycode inner join mststate on mststate.statecode = mstaddress.State where inner join msttransport on msttransport.trptid = mstparty.partyTransportID partyID = '"+pid+"'");
                                                     ResultSet rs = ptst.executeQuery();
                                                     while (rs.next()){
                                                                     String pcode= rs.getString("partyCode");
@@ -281,7 +280,7 @@
                                                                     String pincode = rs.getString("mstaddress.pincode");
                                                                     String rcid=rs.getString("mstcoderegister.recid");
                                                                     String transcode=rs.getString("partytransportID");
-                                                                    String transname=""; //rs.getString("transname");
+                                                                    String transname=rs.getString("msttransport.transname");
                                                                     String entityval="";
                                                                     if(entity.equals("Y")){
                                                                         entityval="YES";
@@ -290,6 +289,7 @@
                                                                         entityval="NO";
                                                                     }
                                                   %>
+                                                  <div class="input">
                                                   <input type="hidden" name="pcode" value="<%=pid%>"/>
                                                   <input type="hidden" name="addid" value="<%=addid%>"/>
                                                   <input type="text" name="cid" placeholder="Party Code" required="" value="<%=pcode%>" readonly="" /> 
@@ -351,7 +351,7 @@
 					
 <!--                                        Start State Section-->
                                         <div class="section-country">
-                                            <select id="State" name="state" onmousedown="if(this.options.length>5){this.size=5}" onblur="this.size=0" onchange="change_state(this.value())" class="frm-field " required="">
+                                            <select id="State" name="state" onmousedown="if(this.options.length>5){this.size=5;}" onblur="this.size=0" onchange="change_state(this.value())" class="frm-field " required="">
                                                 <option value="<%=statecode%>"><%=state%></option><
                                                 <%
                                                   PreparedStatement ptsts=connect.prepareStatement("select * from  mststate where isActive='Y'");
@@ -688,15 +688,16 @@ else{
 %>
 
 
-                                            <input type="text" name="cid" placeholder="Party Code" required=""  /> 
-						
+                                        <div class="input">
+                                            <input type="text" name="cid" placeholder="Party Code" required=""  /> 					
 					</div>
+<!--    </div>-->
 					<div class="input">
                                             <input type="text" name="cname"  placeholder="Party Name" required=""/>
                                         </div>
                                         <!----------start Address section----------->
                                         <div class="section-country">
-                                            <select id="addtype" name="addtype" onmousemove="if(this.options.length>5){this.size=5}" onchange="this.value()" onblur="this.size=0" class="frm-field" required="">
+                                            <select id="addtype" name="addtype" onmousemove="if(this.options.length>5){this.size=5;}" onchange="this.value()" onblur="this.size=0" class="frm-field" required="">
                                                 <option value="-1">Select Address Type</option>
                                                 <% 
                                                     Connection connect = com.daksham.connection.connection.setConnection();
@@ -1061,6 +1062,13 @@ else{
                                         <div class="section-country details">
                                             <select id="State" name="transport" onchange="change_transport(this.value)" class="frm-field">
                                                 <option value="-1">Transport</option>
+                                                <%                                                    
+                                                    PreparedStatement ptstt = connect.prepareStatement("select * from msttransport where isactive = 'Y'");
+                                                    ResultSet rst = ptstt.executeQuery();
+                                                    while(rst.next()){
+                                                        out.println("<option value="+"\""+rst.getString("trptid")+"\""+">"+rs.getString("trptName")+"</optioin>");
+                                                    }
+                                                    %>
                                             </select> 
                                         </div>
                                         <div class=" section section-country details1">

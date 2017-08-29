@@ -187,7 +187,87 @@ public class transport extends HttpServlet {
             response.sendRedirect("trptlookup.jsp");
         }
         else if(request.getParameter("usave")!=null){
-            
+         try{
+               String trptcode=request.getParameter("tid");
+               String trptName = request.getParameter("tname");
+               String addtype = request.getParameter("trptaddid");
+               String addl1 = request.getParameter("add1");
+               String addl2 = request.getParameter("add2");
+               String addl3 = request.getParameter("add3");
+               String addl4 = request.getParameter("add4");
+               String city = request.getParameter("city");
+               String state = request.getParameter("state");
+               String country = request.getParameter("country");
+               String landmark = request.getParameter("landmark");
+               String pincode = request.getParameter("pincode");
+               String trptloc = request.getParameter("location");
+               String tabb = request.getParameter("tabb");
+               String tgst = request.getParameter("tgst");
+               String cno1 = request.getParameter("cno1");
+               String cno2 = request.getParameter("cno2");
+               String tid = request.getParameter("trptid");
+               PreparedStatement ptst1 = connection.prepareStatement("update msttransport set trptName=?,trptServiceLocation=?,trptAbb=?,trptGSTCode=?,trptContactNo1=?,trptContactNo2=?, isActive='Y',actiondate=now(),actionuserID=1 where trptID = '"+tid+"'");
+               ptst1.setString(1, trptName);
+               ptst1.setString(2, trptloc);
+               if(tabb.equals("null")){
+                   ptst1.setNull(3, Types.VARCHAR);
+               }
+               else{
+               ptst1.setString(3,tabb);
+               }
+               if(tgst.equals("null")){
+                   ptst1.setNull(4,Types.VARCHAR);
+               }
+               else{
+               ptst1.setString(4, tgst);
+               }
+               ptst1.setString(5, cno1);
+               if(cno2.equals("null")){
+                   ptst1.setNull(6, Types.VARCHAR);
+               }
+               else{
+                   ptst1.setString(6, cno2);
+               }
+               PreparedStatement ptst2 = connection.prepareStatement("update mstaddress set addressline1=?,addressline2=?,addressline3=?,addressline4=?,landmark=?,citycode=?,state=?,country=?,pincode=?,actiondate=now(),actionuserid=1 where address_id='"+addtype+"'");
+              ptst2.setString(1, addl1);
+                ptst2.setString(2, addl2);
+                if(addl3.equals("null")){
+                    ptst2.setNull(3, Types.VARCHAR);
+                }
+                else{
+                    ptst2.setString(3, addl3);
+                }
+                if(addl4.equals("null")){
+                    ptst2.setNull(4, Types.VARCHAR);
+                }
+                else{
+                    ptst2.setString(4, addl4);
+                }
+                if(landmark.equals("null")){
+                    ptst2.setNull(5, Types.VARCHAR);
+                }
+                else{
+                    ptst2.setString(5, landmark);
+                }
+                ptst2.setString(6, city);
+                ptst2.setString(7, state);
+                ptst2.setString(8, country);
+                if(pincode.equals("null")){
+                    ptst2.setNull(9, Types.INTEGER);
+                }
+                else{
+                ptst2.setString(9, pincode);
+                }
+                ptst1.executeUpdate();
+                ptst2.executeUpdate();
+                out.println("<script type=\"text/javascript\">");            
+                out.println("alert('"+trptName+" Updated!');");
+                out.println("location='trptlookup.jsp';");
+                out.println("</script>");
+         }   
+         catch(Exception ex){
+             ex.printStackTrace(out);
+         }
         }
         connection.close();
         }

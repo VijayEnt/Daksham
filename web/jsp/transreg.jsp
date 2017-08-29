@@ -268,6 +268,7 @@
                                                     %>
 <div class="input">
     <input type="hidden" value="<%=tid%>" name="trptid"/>
+    <input type="hidden" value="<%=traddid%>" name="trptaddid"/>
     <input type="text" name="tid" placeholder="Transport Code" readonly="" value="<%=tcode%>"  required/> 
 					</div>
 					<div class="input">
@@ -276,7 +277,7 @@
                                         <!----------start Address section----------->
                                         <div class="section-country">
                                             <select id="addtype" name="addtype" disabled="" onmousemove="if(this.options.length>5){this.size=5;}" onchange="this.value()" onblur="this.size=0" class="frm-field" required="">
-                                                <option value="<%=traddid%>"><%=addtype%></option>
+                                                <option value="<%=rcid%>"><%=addtype%></option>
                                                 <% 
                                                     Connection connect = com.daksham.connection.connection.setConnection();
                                                 PreparedStatement ptsta = connect.prepareStatement("select * from mstcoderegister where codename like '%Address%'");

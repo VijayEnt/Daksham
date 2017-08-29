@@ -248,7 +248,7 @@
                                                 String pid = request.getParameter("dname");
                                                 if(pid!=null){
                                                     Connection connection = com.daksham.connection.connection.setConnection();
-                                                    PreparedStatement ptst = connection.prepareStatement("select * from mstparty inner join mstaddress on address_id = mstparty.partyaddressID inner join mstcoderegister on mstaddress.addresstypecode = mstcoderegister.recid inner join mstcity on mstcity.citycode = mstaddress.citycode inner join mststate on mststate.statecode = mstaddress.State where inner join msttransport on msttransport.trptid = mstparty.partyTransportID partyID = '"+pid+"'");
+                                                    PreparedStatement ptst = connection.prepareStatement("select * from mstparty inner join mstaddress on address_id = mstparty.partyaddressID inner join mstcoderegister on mstaddress.addresstypecode = mstcoderegister.recid inner join mstcity on mstcity.citycode = mstaddress.citycode inner join mststate on mststate.statecode = mstaddress.State inner join msttransport on msttransport.trptid = mstparty.partyTransportID where partyID = '"+pid+"'");
                                                     ResultSet rs = ptst.executeQuery();
                                                     while (rs.next()){
                                                                     String pcode= rs.getString("partyCode");
@@ -280,7 +280,7 @@
                                                                     String pincode = rs.getString("mstaddress.pincode");
                                                                     String rcid=rs.getString("mstcoderegister.recid");
                                                                     String transcode=rs.getString("partytransportID");
-                                                                    String transname=rs.getString("msttransport.transname");
+                                                                    String transname=rs.getString("msttransport.trptName");
                                                                     String entityval="";
                                                                     if(entity.equals("Y")){
                                                                         entityval="YES";
@@ -624,8 +624,14 @@
                                                 <input type="text" name="pincode"  placeholder="Pincode" value="<%=pincode%>" />                                                        
 						</div>              
                                         </div>
-                                        <div class="input">
-                                            <input type="text" name="ptype"  placeholder="Party Type" required="" value="<%=type%>" />
+                                        <div class="section-country">
+                                            <select id="State" name="ptype" onmousedown="if(this.options.length>5){this.size=5;}" onchange="this.value()" onblur="this.size=0" class="frm-field" required=""> 
+                                                <option value="<%=type%>"><%=type%></option>
+                                                <option value="Company">Company</option>
+                                                <option value="Retail Shop">Retail Shop</option>
+                                                <option value="Individual">Individual</option>
+                                                <option value="Industry">Industry</option>
+                                                    </select>
                                         </div>                                        
                                         <div class="input">
                                             <input type="text" name="pabb"  placeholder="Party Abbreviatioin" value="<%=pabb%>" />
@@ -1020,8 +1026,16 @@ else{
                                                 <input type="text" name="pincode"  placeholder="Pincode" />                                                        
 						</div>              
                                         </div>
-                                        <div class="input">
-                                            <input type="text" name="ptype"  placeholder="Party Type" required=""/>
+                                        <div class="section-country">
+                                            <select id="State" name="ptype" onmousedown="if(this.options.length>5){this.size=5;}" onchange="this.value()" onblur="this.size=0" class="frm-field" required=""> 
+                                                <option value="-1">Select Party Type</option>
+                                                <option value="Company">Company</option>
+                                                <option value="Retail Shop">Retail Shop</option>
+                                                <option value="Individual">Individual</option>
+                                                <option value="Industry">Industry</option>
+                                                    </select>
+                                        </div>
+                                        
                                         </div>                                        
                                         <div class="input">
                                             <input type="text" name="pabb"  placeholder="Party Abbreviatioin"/>

@@ -151,7 +151,7 @@ public class party extends HttpServlet {
                             out.println("location='partyreg.jsp';");
                             out.println("</script>");
                     }
-                    else if(ptype.equals("")){
+                    else if(ptype.equals("-1")){
                         out.println("<script type=\"text/javascript\">");            
                             out.println("alert('Party Type should not be blank!');");
                             out.println("location='partyreg.jsp';");
@@ -347,7 +347,7 @@ public class party extends HttpServlet {
                             out.println("location='partyreg.jsp';");
                             out.println("</script>");
                     }
-                    else if(ptype.equals("")){
+                    else if(ptype.equals("-1")){
                         out.println("<script type=\"text/javascript\">");            
                             out.println("alert('Party Type should not be blank!');");
                             out.println("location='partyreg.jsp';");

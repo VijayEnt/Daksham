@@ -260,8 +260,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<div class="input">
                                             <input type="text" name="cname"  placeholder="Group Name" value="<%=grpname%>"/>
                                         </div>
-                                        <div class="input">
-                                            <input type="text" name="ckey"  placeholder="Group Type" value="<%=grptype%>"/>
+                                        <div class="section-country">
+                                            <select id="State" name="ckey" onmousedown="if(this.options.length>5){this.size=5;}" onchange="this.value()" onblur="this.size=0" class="frm-field" required=""> 
+                                                <option value="<%=grptype%>"><%=grptype%></option>
+                                                <option value="Party Group">Party Group</option>
+                                                <option value="Item Group">Item Group</option>
+                                                <option value="Transport Group">Transport Group</option>
+                                                    </select>
                                         </div>                                        
 					<div class="submit">						
                                             <input class="bluebutton submitbotton" name="supdate" type="submit" value="Save" formaction="groupreg" formmethod="post" />
@@ -288,8 +293,13 @@ else{
 					<div class="input">
                                             <input type="text" name="cname"  placeholder="Group Name"/>
                                         </div>
-                                        <div class="input">
-                                            <input type="text" name="ckey"  placeholder="Group Type"/>
+                                        <div class="section-country">
+                                            <select id="State" name="ckey" onmousedown="if(this.options.length>5){this.size=5;}" onchange="this.value()" onblur="this.size=0" class="frm-field" required=""> 
+                                                <option value="-1">Select Group Type</option>
+                                                <option value="Party Group">Party Group</option>
+                                                <option value="Item Group">Item Group</option>
+                                                <option value="Transport Group">Transport Group</option>
+                                                    </select>
                                         </div>                                        
 					<div class="submit">						
                                             <input class="bluebutton submitbotton" name="ssave" type="submit" value="Save" formaction="groupreg" formmethod="post" />

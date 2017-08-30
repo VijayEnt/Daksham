@@ -671,8 +671,7 @@ else{
 						</div>
 						<div class="input-sign details1">
                                                     <input type="text" name="add4"  placeholder="Address Line 4" /> 
-						</div>
-                                           
+						</div>                                           
                                             </div>
                                             <!----------start city section----------->
 					<div class="section">

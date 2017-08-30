@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.security.Key;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
@@ -208,6 +209,15 @@ public class register extends HttpServlet {
                             out.println("</script>");
                         }                        
                         else{
+                            PreparedStatement ptstu= connection.prepareStatement("select * from mstuser where username='"+uname+"' ");
+                            ResultSet rs = ptstu.executeQuery();
+                            if(rs.next()){
+                             out.println("<script type=\"text/javascript\">");            
+                            out.println("alert('Username already exsits please try some different username!');");
+                            out.println("location='Registration.jsp';");
+                            out.println("</script>");   
+                            }
+                            else{                             
                             PreparedStatement ptst1 = connection.prepareStatement("insert into mstaddress (addresstypecode,addressline1,addressline2,addressline3,addressline4,landmark,citycode,state,country,pincode,creationDate,ActionDate,actionUserID) values(?,?,?,?,?,?,?,?,?,?,now(),now(),1);");
                             PreparedStatement ptst2 = connection.prepareStatement("insert into mstuser (addressID,userName,fName,lNamel,userkeyvalue,emailID,mobileNo,partyID,secretQuestionID,secretQuestionResponse,creationDate,actionDate,actionUserID,isReadyOnlyUser) select address_id ,?,?,?,?,?,?,?,?,?,now(),now(),1,? from mstaddress order by address_id DESC LIMIT 1");
                             PreparedStatement ptst3 = connection.prepareStatement("insert into mstlogin (userID,loginID,password,lastLogin,creationDate,actionDate,actionUserID) select userID,userName,?,now(),now(),now(),1 from mstuser order by userID desc limit 1");
@@ -234,7 +244,7 @@ public class register extends HttpServlet {
                             ptst2.setString(10, read);
                             ptst3.setString(1, encypass);
                             if(addtype.equals("-1")){
-                            PreparedStatement ptst4 = connection.prepareStatement("insert into mstuser (addressID,userName,fName,lNamel,userkeyvalue,emailID,mobileNo,partyID,secretQuestionID,secretQuestionResponse,creationDate,actionDate,actionUserID,isReadyOnlyUser) values('"+addtype+"',?,?,?,?,?,?,?,?,?,now(),now(),1,?)");
+                            PreparedStatement ptst4 = connection.prepareStatement("insert into mstuser (userName,fName,lNamel,userkeyvalue,emailID,mobileNo,partyID,secretQuestionID,secretQuestionResponse,creationDate,actionDate,actionUserID,isReadyOnlyUser) values(?,?,?,?,?,?,?,?,?,now(),now(),1,?)");
                             ptst4.setString(1, uname);
                             ptst4.setString(2, fname);
                             ptst4.setString(3, lname);
@@ -290,7 +300,7 @@ public class register extends HttpServlet {
                             out.println("alert('"+uname+" Enrolled!');");
                             out.println("location='Registration.jsp';");
                             out.println("</script>");
-                            
+                           }
                         }
                     }
                     catch(Exception ex){

@@ -692,12 +692,9 @@
                                                 }
 else{
 %>
-
-
                                         <div class="input">
                                             <input type="text" name="cid" placeholder="Party Code" required=""  /> 					
-					</div>
-<!--    </div>-->
+					</div>   
 					<div class="input">
                                             <input type="text" name="cname"  placeholder="Party Name" required=""/>
                                         </div>
@@ -730,8 +727,7 @@ else{
 						</div>
 						<div class="input-sign details1">
                                                     <input type="text" name="add4"  placeholder="Address Line 4" /> 
-						</div>
-                                           
+						</div>                                           
                                             </div>
                                             <!----------start city section----------->
 					<div class="section">
@@ -1020,10 +1016,10 @@ else{
                                             </div>
                                         <div class="section">
                                             <div class="input-sign details">
-							<input type="text" name="landmark" placeholder="Landmark" /> 
+                                                <input type="text" name="landmark" placeholder="Landmark"/> 
 						</div>
                                             <div class="input-sign details1">
-                                                <input type="text" name="pincode"  placeholder="Pincode" />                                                        
+                                                <input type="text" name="pincode"  placeholder="Pincode"/>                                                        
 						</div>              
                                         </div>
                                         <div class="section-country">
@@ -1034,14 +1030,12 @@ else{
                                                 <option value="Individual">Individual</option>
                                                 <option value="Industry">Industry</option>
                                                     </select>
-                                        </div>
-                                        
                                         </div>                                        
                                         <div class="input">
-                                            <input type="text" name="pabb"  placeholder="Party Abbreviatioin"/>
+                                            <input type="text" name="pabb"  placeholder="Party Abbreviatioin" />
                                         </div>
                                         <div class="input">
-                                            <input type="text" name="pmark" placeholder="Party Mark"/>
+                                            <input type="text" name="pmark" placeholder="Party Mark" />
                                         </div>
                                         <div class="input">
                                             <input type="text" name="pgst"  placeholder="Party GSTCODE" />
@@ -1060,46 +1054,44 @@ else{
                                             <input type="email" name="pemail" placeholder="Email" style="border: none;padding:2%;width: 100%"/>
                                         </div> 
                                           <div class="input details1">
-                                        <input type="date" name="pdoi"  placeholder="DOI" style="border: none;width: 100%;" required="" />
+                                              <input type="date" name="pdoi"  placeholder="DOI" style="border: none;width: 100%;" required="" readonly="" > 
                                         </div>
                                             <div class="clear"> </div>
                                         </div>
                                         <div class="section">
                                             <div class="input-sign details1 input">
-                                            <input type="text" onkeypress="return isNumberKey(event)" name="pcbal" placeholder="Closing Balance" />
+                                                <input type="text" onkeypress="return isNumberKey(event)" name="pcbal" placeholder="Closing Balance" />
                                         </div>
-                                         <div class="input-sign details1 input">
-                                             <input type="text" onkeypress="return isNumberKey(event)" name="pobal"  placeholder="Opening Balance"/>
+                                         <div class="input-sign details1 input">                                             
+                                             <input type="text" onkeypress="return isNumberKey(event)" name="pobal"  placeholder="Opening Balance" />
                                         </div>
                                             </div>
                                             <div class="section">
                                         <div class="section-country details">
-                                            <select id="State" name="transport" onchange="change_transport(this.value)" class="frm-field">
-                                                <option value="-1">Transport</option>
-                                                <%                                                    
+                                            <select id="State" name="transport" onmousedown="if(this.options.length>5){this.size=5;}" onchange="this.value()" onblur="this.size=0" class="frm-field">
+                                                <option value="-1">Select Transport</option>
+                                                                                                <%                                                    
                                                     PreparedStatement ptstt = connect.prepareStatement("select * from msttransport where isactive = 'Y'");
                                                     ResultSet rst = ptstt.executeQuery();
                                                     while(rst.next()){
-                                                        out.println("<option value="+"\""+rst.getString("trptid")+"\""+">"+rs.getString("trptName")+"</optioin>");
+                                                        out.println("<option value="+"\""+rst.getString("trptid")+"\""+">"+rst.getString("trptName")+"</optioin>");
                                                     }
                                                     %>
                                             </select> 
                                         </div>
                                         <div class=" section section-country details1">
-                                            <select id="State" name="entity" onchange="change_entity(this.value)" class="frm-field">
+                                            <select id="State" name="entity" onchange="change_entity(this.value)" class="frm-field">                                                
                                                 <option value="N">Entity</option>
                                                 <option value="Y">Yes</option>
                                                 <option value="N">No</option>
                                             </select> 
                                             </div>
-                                        </div><br><br><br>
+                                            </div><br><br><br><br>
 					<div class="submit">						
-                                            <input class="bluebutton submitbotton" name="ssave" type="submit" value="Save" formaction="party" formmethod="post"/>
+                                            <input class="bluebutton submitbotton" name="usave" type="submit" value="Save" formaction="party" formmethod="post"/>
                                             <input class="bluebutton submitbotton" type="reset" value="Reset" />
-<!--                                            <input class="bluebutton submitbotton" name="slook" type="submit" value="Party Lookup" />-->
 						<div class="clear"> </div>
-					</div>
-		
+					</div>                                                                                         
 				</form>
                                             <%
                                             }

@@ -644,6 +644,13 @@
                                         <div class="section-country details">
                                           <select id="party" name="party" onchange="change_party(this.value)" class="frm-field required">
                                               <option value="-1">Party Name </option>
+                                              <%                                                    
+                                                    PreparedStatement ptstt = connection.setConnection().prepareStatement("select * from mstparty where isactive = 'Y'");
+                                                    ResultSet rst = ptstt.executeQuery();
+                                                    while(rst.next()){
+                                                        out.println("<option value="+"\""+rst.getString("partyid")+"\""+">"+rst.getString("partyName")+"</optioin>");
+                                                    }
+                                                    %>
                                                         </select>  
                                         </div>
                                         <div class="section-country details1">
@@ -1074,7 +1081,14 @@ else
                                         <div class="section-country details">
                                           <select id="party" name="party" onchange="change_party(this.value)" class="frm-field required">
                                               <option value="-1">Party Name </option>
-                                                        </select>  
+                                              <%                                                    
+                                                    PreparedStatement ptstt = connection.setConnection().prepareStatement("select * from mstparty where isactive = 'Y'");
+                                                    ResultSet rst = ptstt.executeQuery();
+                                                    while(rst.next()){
+                                                        out.println("<option value="+"\""+rst.getString("partyid")+"\""+">"+rst.getString("partyName")+"</optioin>");
+                                                    }
+                                                    %>
+                                            </select>  
                                         </div>
                                         <div class="section-country details1">
                                           <select id="party" name="readonly" onchange="change_read(this.value)" class="frm-field required">

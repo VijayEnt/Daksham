@@ -295,8 +295,8 @@
                                                         <th>Email-ID</th>
                                                         <th>Contact Number</th>
                                                         <th>Read Only</th>
+							<th>Party Name</th>
 							<th>Status</th>
-<!--							<th>Sequence Order</th>-->
 							<th>Action</th>
 						  </tr>
 						</thead>
@@ -314,7 +314,7 @@
                                                             }
                                                             else{
                                                                 if(request.getParameter("sb")==null){
-                                                                PreparedStatement ptst = connection.prepareStatement("select userid,userName,fName,lNamel,emailID,mobileNo,isReadyOnlyUser,isActive from mstuser");
+                                                                PreparedStatement ptst = connection.prepareStatement("select * from mstuser left join mstparty on mstparty.partyID = mstuser.partyid");
                                                                 ResultSet rs = ptst.executeQuery();
                                                                 while(rs.next()){
                                                                     String uid= rs.getString("userID");
@@ -324,6 +324,7 @@
                                                                     String email = rs.getString("emailID");
                                                                     String cno = rs.getString("mobileNo"); 
                                                                     String readonly=rs.getString("isReadyOnlyUser");
+                                                                    String party= rs.getString("mstparty.partyName");
                                                                     String status=rs.getString("isActive");
                                                                     %>
                                                                     <td name="grpcode">
@@ -343,6 +344,9 @@
                                                                     </td>
                                                                     <td>
                                                                         <%=readonly%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=party%>
                                                                     </td>
                                                                     <td>
                                                                         <%=status%>
@@ -360,7 +364,7 @@
                                                                 }
                                                             }
                                                             else if(request.getParameter("sb")!=null){
-                                                                PreparedStatement ptst = connection.prepareStatement("select userid,userName,fName,lNamel,emailID,mobileNo,isReadyOnlyUser,isActive from mstuser where usersname ='"+sv+"'");
+                                                                PreparedStatement ptst = connection.prepareStatement("select * from mstuser left join mstparty on mstparty.partyID = mstuser.partyid where usersname ='"+sv+"'");
                                                                 ResultSet rs = ptst.executeQuery();
                                                                 while(rs.next()){
                                                                     String uid= rs.getString("userID");
@@ -370,6 +374,7 @@
                                                                     String email = rs.getString("emailID");
                                                                     String cno = rs.getString("mobileNo"); 
                                                                     String readonly=rs.getString("isReadyOnlyUser");
+                                                                    String party= rs.getString("mstparty.partyName");
                                                                     String status=rs.getString("isActive");
                                                                     %>
                                                                     <td name="grpcode">
@@ -389,6 +394,9 @@
                                                                     </td>
                                                                     <td>
                                                                         <%=readonly%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=party%>
                                                                     </td>
                                                                     <td>
                                                                         <%=status%>
@@ -412,7 +420,7 @@
 //                                                                                }                                                            
                                                             }
                                                                 else if(request.getParameter("refresh")!=null){
-                                                                PreparedStatement ptst = connection.prepareStatement("select userid,userName,fName,lNamel,emailID,mobileNo,isReadyOnlyUser,isActive from mstuser");
+                                                                PreparedStatement ptst = connection.prepareStatement("select * from mstuser left join mstparty on mstparty.partyID = mstuser.partyid");
                                                                 ResultSet rs = ptst.executeQuery();
                                                                 while(rs.next()){
                                                                     String uid= rs.getString("userID");
@@ -422,6 +430,7 @@
                                                                     String email = rs.getString("emailID");
                                                                     String cno = rs.getString("mobileNo"); 
                                                                     String readonly=rs.getString("isReadyOnlyUser");
+                                                                    String party= rs.getString("mstparty.partyName");
                                                                     String status=rs.getString("isActive");
                                                                     %>
                                                                     <td name="grpcode">
@@ -441,6 +450,9 @@
                                                                     </td>
                                                                     <td>
                                                                         <%=readonly%>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%=party%>
                                                                     </td>
                                                                     <td>
                                                                         <%=status%>

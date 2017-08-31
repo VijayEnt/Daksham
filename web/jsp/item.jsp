@@ -366,24 +366,24 @@ else{
                                                 <option value="Finished Item">Finished Item</option>
                                                     </select>
                                         </div>
-<div class="section">
-                                        <div class="input-sign details">
-                                            <input type="text" name="irate"  placeholder="Rate / Unit"/>
-                                        </div>  
-                                        <div class="input-sign details1">
-                                            <input type="text" name="iunit"  placeholder="Unit / KG" />
-                                        </div> 
-    </div>
                                         <div class="section">
                                             <div class="input-sign details">
-                                                <input type="text" name="iratekg" placeholder="Rate / KG " required/> 
-						</div>
+                                            <input type="text" name="irate"  placeholder="Rate / Unit"/>
+                                        </div>                                              
+                                            <div class="input-sign details" >                                              
+                                            <input type="text" name="iunit"   placeholder="Unit / KG" />
+                                        </div> 
+                                        </div>
+                                        <div class="section">                                            
                                             <div class="input-sign details1">
                                                 <input type="text" name="igst"  placeholder="GST Percentage" />                                                        
 						</div>   
+                                            <div class="input-sign details1">
+                                                <input type="text" name="iratekg" placeholder="Rate / KG " required/> 
+						</div>
                                         </div>
-                                            <div class="section-country">
-                                            <select  name="igtype" onmousedown="if(this.options.length>5){this.size=5;}" onchange="this.value()" onblur="this.size=0" class="frm-field" required=""> 
+                                            <div class="section details">
+                                                <select name="igtype" onmousedown="if(this.options.length>5){this.size=5;}; multiple" onchange="this.value()" onblur="this.size=1" class="frm-field" required=""> 
                                                 <option value="-1">Select Group</option>
                                                 <%
                                                     Connection connection= com.daksham.connection.connection.setConnection();
@@ -393,6 +393,11 @@ else{
                                                          out.println("<option value="+"\""+rs.getString("groupId")+"\""+">"+rs.getString("GroupName")+"</option>");
                                                     }
                                                     %>
+                                                    </select>
+                                        </div>
+                                                    <div class="section details1">
+                                                <select name="igtype1"  onmousedown="if(this.options.length>5){this.size=5;}; multiple" onchange="this.value()" onblur="this.size=1" class="frm-field" required=""> 
+                                                <option value="-1">Select Group</option>                                                
                                                     </select>
                                         </div>
                                             

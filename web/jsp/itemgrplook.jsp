@@ -1,6 +1,6 @@
 <%-- 
-    Document   : itemlookup
-    Created on : 1 Sep, 2017, 3:42:08 PM
+    Document   : itemgrplook
+    Created on : 1 Sep, 2017, 4:50:48 PM
     Author     : ParthBheda
 --%>
 
@@ -283,11 +283,11 @@
 			<div class="agile-grids">	
 				<!-- tables -->				
 				<div class="table-heading">
-                                    <h2>Item Enrollment </h2>   
+                                    <h2>Item Group Enrollment Details </h2>   
                                     <form>
                                     <input type="submit" class="btn btn-default" name="glook" 
                                            style="background: #00bcd4;border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;border-top-left-radius: 5px;border-top-right-radius: 5px;" 
-                                           value="Item Group Lookup" formaction="itemgrplook.jsp" formmethod="post">
+                                           value="Item Lookup" formaction="itemlookup.jsp" formmethod="post">
                                     </form>
 				</div>                                
 				<div class="agile-tables">                                   
@@ -295,15 +295,15 @@
                                         <table id="table">
 						<thead>
 						  <tr>
-                                                        <th>Code</th>
+                                                        <th>Relation ID</th>
 							<th>Name</th>							
-							<th>Type</th>
-                                                        <th>Rate Per Unit</th>                                                        
-                                                        <th>Unit Per KG</th>
-                                                        <th>Rate Per KG</th>
-							<th>GST %</th>
-							<th>Status</th>
-							<th>Action</th>
+							<th>Group</th>
+                                                    <!--<th>Rate Per Unit</th>-->                                                        
+                                                    <!--<th>Unit Per KG</th>-->
+                                                    <!--<th>Rate Per KG</th>-->
+<!--							<th>GST %</th>-->
+<!--							<th>Status</th>-->
+<!--							<th>Action</th>-->
 						  </tr>
 						</thead>
 						<tbody>
@@ -320,18 +320,18 @@
                                                             }
                                                             else{
                                                                 if(request.getParameter("sb")==null){
-                                                                PreparedStatement ptst = connection.prepareStatement("select * from mstitem");
+                                                                PreparedStatement ptst = connection.prepareStatement("select  distinct rig.relationid,mi.itemName,mg.groupname from rel_itemgroup rig inner join mstitem mi on mi.itemId= rig.itemId inner join mstgroup mg on mg.groupID = rig.groupID ");
                                                                 ResultSet rs = ptst.executeQuery();
                                                                 while(rs.next()){
-                                                                    String itid= rs.getString("itemID");
-                                                                    String itcode = rs.getString("ItemCode");
+                                                                    String itid= rs.getString("rig.relationid");
+                                                                    String itcode = rs.getString("mi.itemName");
                                                                     String itname = rs.getString("itemName");
-                                                                    String itype =rs.getString("itemType");
-                                                                    String irate = rs.getString("itemRatePerUnit");                                                                    
-                                                                    String iqty = rs.getString("itemQntyPerKG"); 
-                                                                    String iratekg =rs.getString("itemRatePerKG");
-                                                                    String gst = rs.getString("gstPercent");
-                                                                    String status=rs.getString("isActive");
+                                                                    String itype =rs.getString("mg.groupname");
+//                                                                    String irate = rs.getString("itemRatePerUnit");                                                                    
+//                                                                    String iqty = rs.getString("itemQntyPerKG"); 
+//                                                                    String iratekg =rs.getString("itemRatePerKG");
+//                                                                    String gst = rs.getString("gstPercent");
+//                                                                    String status=rs.getString("isActive");
                                                                     %>
                                                                     <td name="grpcode">
                                                                         <%=itcode%>
@@ -342,29 +342,6 @@
                                                                     <td name="grptype">
                                                                         <%=itype%>
                                                                     </td>
-                                                                    <td name="grpstatus">
-                                                                        <%=irate%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%=iqty%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%=iratekg%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%=gst%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%=status%>
-                                                                    </td>
-                                                                    <td>                            
-                                                                    <form action="" method="post">
-                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="item" formmethod="post" ><br>
-                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="item" formmethod="post">
-                                                                    <input type="hidden" name="dname" value="<%=itid%>">
-                                                                    <input type="hidden" name="gname" value="<%=itname%>">
-                                                                    </form>
-                                                                    </td>  
                                                                     </tr>
                                                                     <%
                                                                 }

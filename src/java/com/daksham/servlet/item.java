@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.Types;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -85,9 +86,44 @@ public class item extends HttpServlet {
                 String iunit = request.getParameter("iunit");
                 String iratekg = request.getParameter("iratekg");
                 String igst = request.getParameter("igst");
-                String igtype = request.getParameter("igtype");
+                String[] igtype = request.getParameterValues("igtype");
+                String igtypev = request.getParameter("igtype");
                 PreparedStatement ptst1 = connection.prepareStatement("insert into mstitem(itemCode,itemName,itemType,itemRatePerUnit,itemQntyPerKG,itemRatePerKG,gstPercent,creationDate,actionDate,actionUserID) values(?,?,?,?,?,?,?,now(),now(),1)");
-                PreparedStatement ptst2 = connection.prepareStatement("")
+                ptst1.setString(1,icode );
+                ptst1.setString(2, iname);
+                ptst1.setString(3, itype);
+                if(irate.equals("")){
+                    ptst1.setNull(4, Types.INTEGER);
+                }
+                else{
+                ptst1.setString(4, irate);
+                }
+                if(iunit.equals("")){
+                    ptst1.setNull(5, Types.INTEGER);
+                }
+                else{
+                ptst1.setString(5, iunit);
+                }
+                ptst1.setString(6, iratekg);
+                ptst1.setString(7, igst);
+                if(igtypev.equals("-1")){
+                    ptst1.executeUpdate();
+                }
+                else{
+                    ptst1.executeUpdate();
+                    String igtypes = " ";
+                    for(int i = 0; i < igtype.length;i++ ){
+                     //igtypes+=igtype[i];  
+                    //}
+                    PreparedStatement ptst2 = connection.prepareStatement("insert into rel_itemgroup (itemID,groupID,creationDate,actionDate,actionUserID) select itemID,?,now(),now(),1 from mstitem order by itemID desc limit 1");
+                    ptst2.setString(1, igtype[i]);                    
+                    ptst2.executeUpdate();
+                    }
+                }
+                out.println("<script type=\"text/javascript\">");            
+                out.println("alert('"+iname+" Enrolled!');");
+                out.println("location='item.jsp';");
+                out.println("</script>");                
             }
             catch(Exception ex){
                 ex.printStackTrace(out);

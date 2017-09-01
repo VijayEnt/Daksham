@@ -1,7 +1,7 @@
 <%-- 
-    Document   : partylookup
-    Created on : 25 Aug, 2017, 7:10:24 AM
-    Author     : Parth
+    Document   : itemlookup
+    Created on : 1 Sep, 2017, 3:42:08 PM
+    Author     : ParthBheda
 --%>
 
 <%@page import="java.sql.SQLException"%>
@@ -282,7 +282,7 @@
 			<div class="agile-grids">	
 				<!-- tables -->				
 				<div class="table-heading">
-                                    <h2>Party Enrollment </h2>                                     
+                                    <h2>Transport Enrollment </h2>                                     
 				</div>                                
 				<div class="agile-tables">                                   
 					<div class="w3l-table-info">
@@ -290,19 +290,13 @@
 						<thead>
 						  <tr>
                                                         <th>Code</th>
-							<th>Name</th>
-                                                        <th>Type</th>
-<!--							<th>Abbreviation</th>-->
-                                                        <th>GST CODE</th>
-                                                        <th>Contact No 1</th>
-                                                        <th>Contact No 2</th>
-                                                        <th>Email-ID</th>
-                                                        <th>D.O.I</th>
-                                                        <th>Opening Bal</th>
-                                                        <th>Closing Bal</th>
-                                                        <th>Marka</th>
-                                                        <th>Entity</th>
+							<th>Name</th>							
+							<th>Service Location</th>
+                                                        <th>Abbreviation</th>                                                        
+                                                        <th>Contact Number</th>
+                                                        <th>Contact Number 2</th>
 							<th>Status</th>
+<!--							<th>Sequence Order</th>-->
 							<th>Action</th>
 						  </tr>
 						</thead>
@@ -315,64 +309,50 @@
                                                             if(connection==null){
                                                                 out.println("<script type=\"text/javascript\">");            
                                                                 out.println("alert('Please Check Database Connection!');");
-                                                                out.println("location='partylookup.jsp';");
+                                                                out.println("location='userlookup.jsp';");
                                                                 out.println("</script>");
                                                             }
                                                             else{
                                                                 if(request.getParameter("sb")==null){
-                                                                PreparedStatement ptst = connection.prepareStatement("select * from mstparty");
+                                                                PreparedStatement ptst = connection.prepareStatement("select * from msttransport");
                                                                 ResultSet rs = ptst.executeQuery();
                                                                 while(rs.next()){
-                                                                    String pid = rs.getString("partyID");
-                                                                    String pcode= rs.getString("partyCode");
-                                                                    String pname = rs.getString("partyName");
-                                                                    String type =rs.getString("partyType");
-                                                                    String pabb= rs.getString("partyAbb");
-                                                                    String gstcode=rs.getString("partyGSTCode");
-                                                                    String cno1 = rs.getString("partyContactNO1");
-                                                                    String cno2= rs.getString("partyContactNO2");
-                                                                    String email = rs.getString("partyemail");
-                                                                    String doi = rs.getString("partyDOI"); 
-                                                                    String obal = rs.getString("partyOpenBal");
-                                                                    String cbal = rs.getString("partyCloseBal");
-                                                                    String marka = rs.getString("partyMarka");
-                                                                    String entity=rs.getString("isEntity");
+                                                                    String tid= rs.getString("trptID");
+                                                                    String tcode = rs.getString("trptCode");
+                                                                    String tname = rs.getString("trptName");
+                                                                    String location =rs.getString("trptServiceLocation");
+                                                                    String abb = rs.getString("trptAbb");                                                                    
+                                                                    String cno = rs.getString("trptContactNo1"); 
+                                                                    String cno2 =rs.getString("trptContactNo2");
                                                                     String status=rs.getString("isActive");
                                                                     %>
                                                                     <td name="grpcode">
-                                                                        <%=pcode%>
+                                                                        <%=tcode%>
                                                                     </td>
                                                                     <td name="gname">
-                                                                        <%=pname%>
+                                                                        <%=tname%>
                                                                     </td>
                                                                     <td name="grptype">
-                                                                        <%=type%>
+                                                                        <%=location%>
                                                                     </td>
-<!--                                                                    <td name="grpstatus">
-                                                                        <%=pabb%>
-                                                                    </td>-->
-                                                                    <td>
-                                                                        <%=gstcode%>
+                                                                    <td name="grpstatus">
+                                                                        <%=abb%>
                                                                     </td>
                                                                     <td>
-                                                                        <%=cno1%>
+                                                                        <%=cno%>
                                                                     </td>
                                                                     <td>
                                                                         <%=cno2%>
                                                                     </td>
-                                                                    <td><%=email%></td>
-                                                                    <td><%=doi%></td>
-                                                                    <td><%=obal%></td>
-                                                                    <td><%=cbal%></td>
-                                                                    <td><%=marka%></td>
-                                                                    <td><%=entity%></td>
-                                                                    <td><%=status%></td> 
                                                                     <td>
+                                                                        <%=status%>
+                                                                    </td>
+                                                                    <td>                            
                                                                     <form action="" method="post">
-                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="partyreg.jsp" formmethod="post" ><br>
-                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="party" formmethod="post">
-                                                                    <input type="hidden" name="dname" value="<%=pid%>">
-                                                                    <input type="hidden" name="gname" value="<%=pname%>">
+                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="transreg.jsp" formmethod="post" ><br>
+                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="transport" formmethod="post">
+                                                                    <input type="hidden" name="dname" value="<%=tid%>">
+                                                                    <input type="hidden" name="gname" value="<%=tname%>">
                                                                     </form>
                                                                     </td>  
                                                                     </tr>
@@ -380,60 +360,45 @@
                                                                 }
                                                             }
                                                             else if(request.getParameter("sb")!=null){
-                                                                PreparedStatement ptst = connection.prepareStatement("select * from mstparty where partyName='"+sv+"'");
+                                                                PreparedStatement ptst = connection.prepareStatement("select * from msttransport where trptname like '%"+sv+"%'");
                                                                 ResultSet rs = ptst.executeQuery();
                                                                 while(rs.next()){
-                                                                    String pid = rs.getString("partyID");
-                                                                    String pcode= rs.getString("partyCode");
-                                                                    String pname = rs.getString("partyName");
-                                                                    String type =rs.getString("partyType");
-                                                                    String pabb= rs.getString("partyAbb");
-                                                                    String gstcode=rs.getString("partyGSTCode");
-                                                                    String cno1 = rs.getString("partyContactNO1");
-                                                                    String cno2= rs.getString("partyContactNO2");
-                                                                    String email = rs.getString("partyemail");
-                                                                    String doi = rs.getString("partyDOI"); 
-                                                                    String obal = rs.getString("partyOpenBal");
-                                                                    String cbal = rs.getString("partyCloseBal");
-                                                                    String marka = rs.getString("partyMarka");
-                                                                    String entity=rs.getString("isEntity");
+                                                                    String tid= rs.getString("trptID");
+                                                                    String tcode = rs.getString("trptCode");
+                                                                    String tname = rs.getString("trptName");
+                                                                    String location =rs.getString("trptServiceLocation");
+                                                                    String abb = rs.getString("trptAbb");                                                                    
+                                                                    String cno = rs.getString("trptContactNo1"); 
+                                                                    String cno2 =rs.getString("trptContactNo2");
                                                                     String status=rs.getString("isActive");
                                                                     %>
-                                                                    <tr>
                                                                     <td name="grpcode">
-                                                                        <%=pid%>
+                                                                        <%=tcode%>
                                                                     </td>
                                                                     <td name="gname">
-                                                                        <%=pname%>
+                                                                        <%=tname%>
                                                                     </td>
                                                                     <td name="grptype">
-                                                                        <%=type%>
+                                                                        <%=location%>
                                                                     </td>
-<!--                                                                    <td name="grpstatus">
-                                                                        <%=pabb%>
-                                                                    </td>-->
-                                                                    <td>
-                                                                        <%=gstcode%>
+                                                                    <td name="grpstatus">
+                                                                        <%=abb%>
                                                                     </td>
                                                                     <td>
-                                                                        <%=cno1%>
+                                                                        <%=cno%>
                                                                     </td>
                                                                     <td>
                                                                         <%=cno2%>
                                                                     </td>
-                                                                    <td><%=email%></td>
-                                                                    <td><%=doi%></td>
-                                                                    <td><%=obal%></td>
-                                                                    <td><%=cbal%></td>
-                                                                    <td><%=marka%></td>
-                                                                    <td><%=entity%></td>
-                                                                    <td><%=status%></td>   
                                                                     <td>
+                                                                        <%=status%>
+                                                                    </td>
+                                                                    <td>                            
                                                                     <form action="" method="post">
-                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="partyreg.jsp" formmethod="post" ><br>
-                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="party" formmethod="post">
-                                                                    <input type="hidden" name="dname" value="<%=pid%>">
-                                                                    <input type="hidden" name="gname" value="<%=pname%>">
+                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="transreg.jsp" formmethod="post" ><br>
+                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="transport" formmethod="post">
+                                                                    <input type="hidden" name="dname" value="<%=tid%>">
+                                                                    <input type="hidden" name="gname" value="<%=tname%>">
                                                                     </form>
                                                                     </td>  
                                                                     </tr>
@@ -447,60 +412,45 @@
 //                                                                                }                                                            
                                                             }
                                                                 else if(request.getParameter("refresh")!=null){
-                                                                PreparedStatement ptst = connection.prepareStatement("select * from mstparty");
+                                                                PreparedStatement ptst = connection.prepareStatement("select * from msttransport");
                                                                 ResultSet rs = ptst.executeQuery();
                                                                 while(rs.next()){
-                                                                    String pid = rs.getString("partyID");
-                                                                    String pcode= rs.getString("partyCode");
-                                                                    String pname = rs.getString("partyName");
-                                                                    String type =rs.getString("partyType");
-                                                                    String pabb= rs.getString("partyAbb");
-                                                                    String gstcode=rs.getString("partyGSTCode");
-                                                                    String cno1 = rs.getString("partyContactNO1");
-                                                                    String cno2= rs.getString("partyContactNO2");
-                                                                    String email = rs.getString("partyemail");
-                                                                    String doi = rs.getString("partyDOI"); 
-                                                                    String obal = rs.getString("partyOpenBal");
-                                                                    String cbal = rs.getString("partyCloseBal");
-                                                                    String marka = rs.getString("partyMarka");
-                                                                    String entity=rs.getString("isEntity");
+                                                                    String tid= rs.getString("trptID");
+                                                                    String tcode = rs.getString("trptCode");
+                                                                    String tname = rs.getString("trptName");
+                                                                    String location =rs.getString("trptServiceLocation");
+                                                                    String abb = rs.getString("trptAbb");                                                                    
+                                                                    String cno = rs.getString("trptContactNo1"); 
+                                                                    String cno2 =rs.getString("trptContactNo2");
                                                                     String status=rs.getString("isActive");
                                                                     %>
-                                                                    <tr>
                                                                     <td name="grpcode">
-                                                                        <%=pcode%>
+                                                                        <%=tcode%>
                                                                     </td>
                                                                     <td name="gname">
-                                                                        <%=pname%>
+                                                                        <%=tname%>
                                                                     </td>
                                                                     <td name="grptype">
-                                                                        <%=type%>
+                                                                        <%=location%>
                                                                     </td>
-<!--                                                                    <td name="grpstatus">
-                                                                        <%=pabb%>
-                                                                    </td>-->
-                                                                    <td>
-                                                                        <%=gstcode%>
+                                                                    <td name="grpstatus">
+                                                                        <%=abb%>
                                                                     </td>
                                                                     <td>
-                                                                        <%=cno1%>
+                                                                        <%=cno%>
                                                                     </td>
                                                                     <td>
                                                                         <%=cno2%>
                                                                     </td>
-                                                                    <td><%=email%></td>
-                                                                    <td><%=doi%></td>
-                                                                    <td><%=obal%></td>
-                                                                    <td><%=cbal%></td>
-                                                                    <td><%=marka%></td>
-                                                                    <td><%=entity%></td>
-                                                                    <td><%=status%></td> 
                                                                     <td>
+                                                                        <%=status%>
+                                                                    </td>
+                                                                    <td>                            
                                                                     <form action="" method="post">
-                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="partyreg.jsp" formmethod="post" ><br>
-                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="party" formmethod="post">
-                                                                    <input type="hidden" name="dname" value="<%=pid%>">
-                                                                    <input type="hidden" name="gname" value="<%=pname%>">
+                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="transreg.jsp" formmethod="post" ><br>
+                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="transport" formmethod="post">
+                                                                    <input type="hidden" name="dname" value="<%=tid%>">
+                                                                    <input type="hidden" name="gname" value="<%=tname%>">
                                                                     </form>
                                                                     </td>  
                                                                     </tr>

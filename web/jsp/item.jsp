@@ -176,12 +176,12 @@
 				</a>
                              <ul>
 					<li>
-						<a class="subnav-text" href="#">
+						<a class="subnav-text" href="item.jsp">
 							Items Enrollment 
 						</a>
 					</li>
 					<li>
-						<a class="subnav-text" href="#">
+						<a class="subnav-text" href="itemlookup.jsp">
 							Items Details
 						</a>
 					</li>
@@ -241,7 +241,7 @@
         <!----------start member-login----------->
 		<div class="sign_up">
 			<!----------star form----------->
-                        <form class="sign"  action="#" method="post">
+                        <form class="sign"  action="item" method="post">
 	
 					<div class="formtitle">Item Enrollment</div>
                                         <%
@@ -392,8 +392,8 @@ else{
 						</div>
                                         </div>
                                             <div class="section-country">
-                                                <select name="igtype" multiple="multiple" size="5" onmousedown="if(this.options.length>5){this.size=5;}" onchange="this.value()" onblur="this.size=5" class="frm-field"> 
-                                                <option value="-1">Select Group</option>
+                                                <select name="igtype"  multiple="multiple" size="5" onmousedown="if(this.options.length>5){this.size=5;}" onchange="this.value()" onblur="this.size=5" class="frm-field"> 
+                                                    <option value="-1"  selected=""><b>Select Group</b></option>
                                                 <%
                                                     Connection connection= com.daksham.connection.connection.setConnection();
                                                     PreparedStatement ptst = connection.prepareStatement("select * from mstgroup where isActive = 'Y' and groupType ='Item Group'");

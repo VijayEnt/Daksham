@@ -4,6 +4,7 @@
     Author     : Parth
 --%>
 
+<%@page import="java.sql.Statement"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>
@@ -46,7 +47,14 @@
 				screenfull.toggle($('#container')[0]);
 			});	
 		});
+                                function isNumberKey(evt){
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57))
+        return false;
+    return true;
+}
 		</script>
+
 
 </head>
     <body class="dashboard-page">
@@ -233,7 +241,7 @@
         <!----------start member-login----------->
 		<div class="sign_up">
 			<!----------star form----------->
-                        <form class="sign"  action="transport" method="post">
+                        <form class="sign"  action="#" method="post">
 	
 					<div class="formtitle">Item Enrollment</div>
                                         <%
@@ -360,30 +368,31 @@ else{
                                             <input type="text" name="tname"  placeholder="Item Name" required/>
                                         </div>					
                                         <div class="section-country">
-                                            <select id="State" name="itype" onmousedown="if(this.options.length>5){this.size=5;}" onchange="this.value()" onblur="this.size=0" class="frm-field" required=""> 
-                                                <option value="-1">Select Item Type</option>
+                                            <select id="State" name="itype"  onmousedown="if(this.options.length>5){this.size=5;}" onchange="this.value()" onblur="this.size=0"
+                                                    class="frm-field" required="required"> 
+                                                <option value="">Select Item Type</option>
                                                 <option value="RAW Item">RAW Item</option>
                                                 <option value="Finished Item">Finished Item</option>
                                                     </select>
                                         </div>
                                         <div class="section">
                                             <div class="input-sign details">
-                                            <input type="text" name="irate"  placeholder="Rate / Unit"/>
+                                            <input type="text" name="irate"  onkeypress="return isNumberKey(event)" placeholder="Rate / Unit"/>
                                         </div>                                              
                                             <div class="input-sign details" >                                              
-                                            <input type="text" name="iunit"   placeholder="Unit / KG" />
+                                            <input type="text" name="iunit" onkeypress="return isNumberKey(event)"  placeholder="Unit / KG" />
                                         </div> 
                                         </div>
                                         <div class="section">                                            
                                             <div class="input-sign details1">
-                                                <input type="text" name="igst"  placeholder="GST Percentage" />                                                        
+                                                <input type="text" name="igst"  placeholder="GST Percentage" onkeypress="return isNumberKey(event)" required="" />                                                        
 						</div>   
                                             <div class="input-sign details1">
-                                                <input type="text" name="iratekg" placeholder="Rate / KG " required/> 
+                                                <input type="text" name="iratekg" onkeypress="return isNumberKey(event)" placeholder="Rate / KG " required/> 
 						</div>
                                         </div>
-                                            <div class="section details">
-                                                <select name="igtype" onmousedown="if(this.options.length>5){this.size=5;}; multiple" onchange="this.value()" onblur="this.size=1" class="frm-field" required=""> 
+                                            <div class="section-country">
+                                                <select name="igtype" multiple="multiple" size="5" onmousedown="if(this.options.length>5){this.size=5;}" onchange="this.value()" onblur="this.size=5" class="frm-field"> 
                                                 <option value="-1">Select Group</option>
                                                 <%
                                                     Connection connection= com.daksham.connection.connection.setConnection();
@@ -395,21 +404,21 @@ else{
                                                     %>
                                                     </select>
                                         </div>
-                                                    <div class="section details1">
+<!--                                                    <div class="section details1">
                                                 <select name="igtype1"  onmousedown="if(this.options.length>5){this.size=5;}; multiple" onchange="this.value()" onblur="this.size=1" class="frm-field" required=""> 
                                                 <option value="-1">Select Group</option>                                                
                                                     </select>
-                                        </div>
+                                        </div>-->
                                             
                                             <div class="clear"> </div>
-                                        </div>                                        
+                                        
 					<div class="submit">						
                                             <input class="bluebutton submitbotton" name="ssave" type="submit" value="Save" />
                                             <input class="bluebutton submitbotton" type="reset" value="Reset" />
 <!--                                            <input class="bluebutton submitbotton" name="slook" type="submit" value="Transport Lookup" />-->
 						<div class="clear"> </div>
 					</div>
-		
+                                                </div>                                        
 				</form>
                                                  <%
                                             }

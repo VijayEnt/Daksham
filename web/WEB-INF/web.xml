@@ -28,6 +28,10 @@
         <servlet-name>transport</servlet-name>
         <servlet-class>com.daksham.servlet.transport</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>item</servlet-name>
+        <servlet-class>com.daksham.servlet.item</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>codereg</servlet-name>
         <url-pattern>/jsp/codereg</url-pattern>
@@ -55,6 +59,10 @@
     <servlet-mapping>
         <servlet-name>transport</servlet-name>
         <url-pattern>/jsp/transport</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>item</servlet-name>
+        <url-pattern>/jsp/item</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

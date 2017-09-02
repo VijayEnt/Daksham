@@ -345,6 +345,13 @@
                                                             else if(request.getParameter("sb")!=null){
                                                                 PreparedStatement ptst = connection.prepareStatement("select citycode,cityname,cityabb,statename,mstcity.isActive from mstcity inner join mststate on mstcity.statecode=mststate.stateCode where cityName like '%"+sv+"%' order by citycode;");
                                                                 ResultSet rs = ptst.executeQuery();
+                                                                if(!rs.isBeforeFirst()){
+                                                                out.println("<script type=\"text/javascript\">");
+                                                                out.println("alert('Code with "+sv+" not found please try again!');");
+                                                                out.println("location='citylookup.jsp';");
+                                                                out.println("</script>");
+                                                                }
+                                                                else{
                                                                 while(rs.next()){                                                                    
                                                                     String ctcode =rs.getString("citycode");
                                                                     String ctname= rs.getString("cityname");
@@ -375,6 +382,7 @@
                                                                     </tr>
                                                                     <%
                                                                         }
+                                                                }
                                                             }
                                                                 else if(request.getParameter("refresh")!=null){
                                                                 PreparedStatement ptst = connection.prepareStatement("select citycode,cityname,cityabb,statename,mstcity.isActive from mstcity inner join mststate on mstcity.statecode=mststate.stateCode order by citycode;");

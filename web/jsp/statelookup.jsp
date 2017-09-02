@@ -341,6 +341,13 @@
                                                             else if(request.getParameter("sb")!=null){
                                                                 PreparedStatement ptst = connection.prepareStatement("select stateCode,stateName,stateAbb,isActive from mststate where stateName like '%"+sv+"%'");
                                                                 ResultSet rs = ptst.executeQuery();
+                                                                if(!rs.isBeforeFirst()){
+                                                                out.println("<script type=\"text/javascript\">");
+                                                                out.println("alert('Code with "+sv+" not found please try again!');");
+                                                                out.println("location='statelookup.jsp';");
+                                                                out.println("</script>");
+                                                                }
+                                                                else{
                                                                 while(rs.next()){
                                                                     String stcode =rs.getString("stateCode");
                                                                     String stname= rs.getString("stateName");
@@ -368,6 +375,7 @@
                                                                     </tr>
                                                                     <%
                                                                         }
+                                                                }        
                                                             }
                                                                 else if(request.getParameter("refresh")!=null){
                                                                 PreparedStatement ptst = connection.prepareStatement("select stateCode,stateName,stateAbb,isActive from mststate;");

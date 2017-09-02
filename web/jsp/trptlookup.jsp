@@ -361,6 +361,13 @@
                                                             else if(request.getParameter("sb")!=null){
                                                                 PreparedStatement ptst = connection.prepareStatement("select * from msttransport where trptname like '%"+sv+"%'");
                                                                 ResultSet rs = ptst.executeQuery();
+                                                                if(!rs.isBeforeFirst()){
+                                                                out.println("<script type=\"text/javascript\">");
+                                                                out.println("alert('Code with "+sv+" not found please try again!');");
+                                                                out.println("location='trptlookup.jsp';");
+                                                                out.println("</script>");
+                                                                }
+                                                                else{
                                                                 while(rs.next()){
                                                                     String tid= rs.getString("trptID");
                                                                     String tcode = rs.getString("trptCode");
@@ -403,12 +410,7 @@
                                                                     </tr>
                                                                     <%
                                                                         }
-//                                                                        else{
-//                                                                                out.println("<script type=\"text/javascript\">");
-//                                                                                out.println("alert('Code with "+sv+" not found please try again!');");
-//                                                                                out.println("location='codelookup.jsp';");
-//                                                                                out.println("</script>");
-//                                                                                }                                                            
+                                                                }                                                            
                                                             }
                                                                 else if(request.getParameter("refresh")!=null){
                                                                 PreparedStatement ptst = connection.prepareStatement("select * from msttransport");

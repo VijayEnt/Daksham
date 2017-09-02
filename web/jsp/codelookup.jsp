@@ -348,14 +348,14 @@
                                                             else if(request.getParameter("sb")!=null){
                                                                 PreparedStatement ptst = connection.prepareStatement("select recid,codeid,codename,codekey,codevalue,codeseqno from mstcoderegister where codename like'%"+sv+"%' order by codeseqno asc");
                                                                 ResultSet rs = ptst.executeQuery();
-                                                                if(!rs.next()){
+                                                                if(!rs.isBeforeFirst()){
                                                                 out.println("<script type=\"text/javascript\">");
                                                                 out.println("alert('Code with "+sv+" not found please try again!');");
                                                                 out.println("location='codelookup.jsp';");
                                                                 out.println("</script>");
                                                                 }
-//(rs.next())
                                                                 else{
+                                                                while(rs.next()){
                                                                     String recid = rs.getString("recid");
                                                                     String codeid =rs.getString("codeid");
                                                                     String codename= rs.getString("codename");
@@ -389,12 +389,7 @@
                                                                     </tr>
                                                                     <%
                                                                         }
-//                                                                        else{
-//                                                                                out.println("<script type=\"text/javascript\">");
-//                                                                                out.println("alert('Code with "+sv+" not found please try again!');");
-//                                                                                out.println("location='codelookup.jsp';");
-//                                                                                out.println("</script>");
-//                                                                                }                                                            
+                                                                }
                                                             }
                                                                 else if(request.getParameter("refresh")!=null){
                                                                 PreparedStatement ptst = connection.prepareStatement("select recid,codeid,codename,codekey,codevalue,codeseqno from mstcoderegister order by codeseqno asc");

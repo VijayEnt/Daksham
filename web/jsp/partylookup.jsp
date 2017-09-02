@@ -382,6 +382,13 @@
                                                             else if(request.getParameter("sb")!=null){
                                                                 PreparedStatement ptst = connection.prepareStatement("select * from mstparty where partyName='"+sv+"'");
                                                                 ResultSet rs = ptst.executeQuery();
+                                                                if(!rs.isBeforeFirst()){
+                                                                out.println("<script type=\"text/javascript\">");
+                                                                out.println("alert('Code with "+sv+" not found please try again!');");
+                                                                out.println("location='partylookup.jsp';");
+                                                                out.println("</script>");
+                                                                }
+                                                                else{
                                                                 while(rs.next()){
                                                                     String pid = rs.getString("partyID");
                                                                     String pcode= rs.getString("partyCode");
@@ -439,12 +446,7 @@
                                                                     </tr>
                                                                     <%
                                                                         }
-//                                                                        else{
-//                                                                                out.println("<script type=\"text/javascript\">");
-//                                                                                out.println("alert('Code with "+sv+" not found please try again!');");
-//                                                                                out.println("location='codelookup.jsp';");
-//                                                                                out.println("</script>");
-//                                                                                }                                                            
+                                                                }                                                            
                                                             }
                                                                 else if(request.getParameter("refresh")!=null){
                                                                 PreparedStatement ptst = connection.prepareStatement("select * from mstparty");

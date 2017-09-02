@@ -372,7 +372,14 @@
                                                             else if(request.getParameter("sb")!=null){
                                                                 PreparedStatement ptst = connection.prepareStatement("select * from mstitem where itemName like '%"+sv+"%'");
                                                                 ResultSet rs = ptst.executeQuery();
-                                                                while(rs.next()){
+                                                                if(!rs.isBeforeFirst()){
+                                                                out.println("<script type=\"text/javascript\">");
+                                                                out.println("alert('Code with "+sv+" not found please try again!');");
+                                                                out.println("location='itemlookup.jsp';");
+                                                                out.println("</script>");
+                                                                    }
+                                                                    else{
+                                                                    while(rs.next()){
                                                                     String itid= rs.getString("itemID");
                                                                     String itcode = rs.getString("ItemCode");
                                                                     String itname = rs.getString("itemName");
@@ -418,12 +425,7 @@
                                                                     </tr>
                                                                     <%
                                                                         }
-//                                                                        else{
-//                                                                                out.println("<script type=\"text/javascript\">");
-//                                                                                out.println("alert('Code with "+sv+" not found please try again!');");
-//                                                                                out.println("location='codelookup.jsp';");
-//                                                                                out.println("</script>");
-//                                                                                }                                                            
+                                                                }                                                            
                                                             }
                                                                 else if(request.getParameter("refresh")!=null){
                                                                 PreparedStatement ptst = connection.prepareStatement("select * from mstitem");

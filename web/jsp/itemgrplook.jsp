@@ -349,9 +349,8 @@
                                                                                 out.println("alert('Code with "+sv+" not found please try again!');");
                                                                                 out.println("location='itemgrplook.jsp';");
                                                                                 out.println("</script>");
-
-}
-else{
+                                                                    }
+                                                                    else{
                                                                     while(rs.next()){                                                                    
                                                                     String itid= rs.getString("rig.relationid");
                                                                     String itcode = rs.getString("mi.itemName");

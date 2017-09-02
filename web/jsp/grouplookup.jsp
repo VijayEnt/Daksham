@@ -346,6 +346,13 @@
                                                             else if(request.getParameter("sb")!=null){
                                                                 PreparedStatement ptst = connection.prepareStatement("select `groupID`, `groupCode`, `groupName`, `groupType`, `isActive` from mstgroup where groupName like '%"+sv+"%';");
                                                                 ResultSet rs = ptst.executeQuery();
+                                                                if(!rs.isBeforeFirst()){
+                                                                out.println("<script type=\"text/javascript\">");
+                                                                out.println("alert('Code with "+sv+" not found please try again!');");
+                                                                out.println("location='grouplookup.jsp';");
+                                                                out.println("</script>");
+                                                                }
+                                                                else{
                                                                 while(rs.next()){
                                                                     String grpid = rs.getString("groupID");
                                                                     String grpcode =rs.getString("groupCode");
@@ -377,12 +384,7 @@
                                                                     </tr>
                                                                     <%
                                                                         }
-//                                                                        else{
-//                                                                                out.println("<script type=\"text/javascript\">");
-//                                                                                out.println("alert('Code with "+sv+" not found please try again!');");
-//                                                                                out.println("location='codelookup.jsp';");
-//                                                                                out.println("</script>");
-//                                                                                }                                                            
+                                                                  }                                                      
                                                             }
                                                                 else if(request.getParameter("refresh")!=null){
                                                                 PreparedStatement ptst = connection.prepareStatement("select `groupID`, `groupCode`, `groupName`, `groupType`, `isActive` from mstgroup;");

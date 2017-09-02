@@ -129,6 +129,21 @@ public class item extends HttpServlet {
                 ex.printStackTrace(out);
             }
         }
+        else if(request.getParameter("btndeactive")!=null){
+            try{
+            String itid = request.getParameter("dname");
+            String iname = request.getParameter("gname");
+            PreparedStatement ptst = connection.prepareStatement("Update mstitem set isActive = 'N',actiondate = now(),actionuserID = 1 where itemid = '"+itid+"'");
+            ptst.executeUpdate();
+            out.println("<script type=\"text/javascript\">");            
+            out.println("alert('"+iname+" Deactivated!');");
+            out.println("location='itemlookup.jsp';");
+            out.println("</script>");                
+            }
+            catch(Exception ex){
+                ex.printStackTrace(out);
+            }
+        }
         
         connection.close();
         }

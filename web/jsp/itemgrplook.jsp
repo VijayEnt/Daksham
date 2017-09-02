@@ -271,7 +271,7 @@
        <section class="title-bar">						
 			<div class="w3l_search">
                             <form action="#" method="post">
-					<input type="text" name="search" value="Search by UserName" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}" required="">
+					<input type="text" name="search" value="Search by Item Name" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}" required="">
                                         <button class="btn btn-default" name="sb" type="submit" title="Search Code"><i class="fa fa-search" aria-hidden="true"></i></button> <br><br>
                                         <button class="btn btn-default" name="refresh" type="submit" style="margin-left: 50px;" title="Refresh Data"><i class="fa fa-refresh" aria-hidden="true"></i></button>  
                                         
@@ -320,18 +320,13 @@
                                                             }
                                                             else{
                                                                 if(request.getParameter("sb")==null){
-                                                                PreparedStatement ptst = connection.prepareStatement("select  distinct rig.relationid,mi.itemName,mg.groupname from rel_itemgroup rig inner join mstitem mi on mi.itemId= rig.itemId inner join mstgroup mg on mg.groupID = rig.groupID ");
+                                                                PreparedStatement ptst = connection.prepareStatement("select  distinct rig.relationid,mi.itemName,mg.groupname from rel_itemgroup rig inner join mstitem mi on mi.itemId= rig.itemId inner join mstgroup mg on mg.groupID = rig.groupID where mi.isactive='Y' ");
                                                                 ResultSet rs = ptst.executeQuery();
                                                                 while(rs.next()){
                                                                     String itid= rs.getString("rig.relationid");
                                                                     String itcode = rs.getString("mi.itemName");
                                                                     String itname = rs.getString("itemName");
                                                                     String itype =rs.getString("mg.groupname");
-//                                                                    String irate = rs.getString("itemRatePerUnit");                                                                    
-//                                                                    String iqty = rs.getString("itemQntyPerKG"); 
-//                                                                    String iratekg =rs.getString("itemRatePerKG");
-//                                                                    String gst = rs.getString("gstPercent");
-//                                                                    String status=rs.getString("isActive");
                                                                     %>
                                                                     <td name="grpcode">
                                                                         <%=itcode%>
@@ -347,19 +342,23 @@
                                                                 }
                                                             }
                                                             else if(request.getParameter("sb")!=null){
-                                                                PreparedStatement ptst = connection.prepareStatement("select * from mstitem where itemName like '%"+sv+"%'");
+                                                                PreparedStatement ptst = connection.prepareStatement("select  distinct rig.relationid,mi.itemName,mg.groupname from rel_itemgroup rig inner join mstitem mi on mi.itemId= rig.itemId inner join mstgroup mg on mg.groupID = rig.groupID where mi.itemName like '%"+sv+"%' and mi.isactive='Y'");
                                                                 ResultSet rs = ptst.executeQuery();
-                                                                while(rs.next()){
-                                                                    String itid= rs.getString("itemID");
-                                                                    String itcode = rs.getString("ItemCode");
+                                                                if(!rs.isBeforeFirst()){
+                                                                                out.println("<script type=\"text/javascript\">");
+                                                                                out.println("alert('Code with "+sv+" not found please try again!');");
+                                                                                out.println("location='itemgrplook.jsp';");
+                                                                                out.println("</script>");
+
+}
+else{
+                                                                    while(rs.next()){                                                                    
+                                                                    String itid= rs.getString("rig.relationid");
+                                                                    String itcode = rs.getString("mi.itemName");
                                                                     String itname = rs.getString("itemName");
-                                                                    String itype =rs.getString("itemType");
-                                                                    String irate = rs.getString("itemRatePerUnit");                                                                    
-                                                                    String iqty = rs.getString("itemQntyPerKG"); 
-                                                                    String iratekg =rs.getString("itemRatePerKG");
-                                                                    String gst = rs.getString("gstPercent");
-                                                                    String status=rs.getString("isActive");
+                                                                    String itype =rs.getString("mg.groupname");                                                                    
                                                                     %>
+                                                                    <tr>
                                                                     <td name="grpcode">
                                                                         <%=itcode%>
                                                                     </td>
@@ -369,32 +368,10 @@
                                                                     <td name="grptype">
                                                                         <%=itype%>
                                                                     </td>
-                                                                    <td name="grpstatus">
-                                                                        <%=irate%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%=iqty%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%=iratekg%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%=gst%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%=status%>
-                                                                    </td>
-                                                                    <td>                            
-                                                                    <form action="" method="post">
-                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="item" formmethod="post" ><br>
-                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="item" formmethod="post">
-                                                                    <input type="hidden" name="dname" value="<%=itid%>">
-                                                                    <input type="hidden" name="gname" value="<%=itname%>">
-                                                                    </form>
-                                                                    </td>  
                                                                     </tr>
                                                                     <%
                                                                         }
+}
 //                                                                        else{
 //                                                                                out.println("<script type=\"text/javascript\">");
 //                                                                                out.println("alert('Code with "+sv+" not found please try again!');");
@@ -403,19 +380,15 @@
 //                                                                                }                                                            
                                                             }
                                                                 else if(request.getParameter("refresh")!=null){
-                                                                PreparedStatement ptst = connection.prepareStatement("select * from mstitem");
+                                                                PreparedStatement ptst = connection.prepareStatement("select  distinct rig.relationid,mi.itemName,mg.groupname from rel_itemgroup rig inner join mstitem mi on mi.itemId= rig.itemId inner join mstgroup mg on mg.groupID = rig.groupID where mi.isactive='Y'");
                                                                 ResultSet rs = ptst.executeQuery();
                                                                 while(rs.next()){
-                                                                    String itid= rs.getString("itemID");
-                                                                    String itcode = rs.getString("ItemCode");
+                                                                    String itid= rs.getString("rig.relationid");
+                                                                    String itcode = rs.getString("mi.itemName");
                                                                     String itname = rs.getString("itemName");
-                                                                    String itype =rs.getString("itemType");
-                                                                    String irate = rs.getString("itemRatePerUnit");                                                                    
-                                                                    String iqty = rs.getString("itemQntyPerKG"); 
-                                                                    String iratekg =rs.getString("itemRatePerKG");
-                                                                    String gst = rs.getString("gstPercent");
-                                                                    String status=rs.getString("isActive");
+                                                                    String itype =rs.getString("mg.groupname");
                                                                     %>
+                                                                    <tr>
                                                                     <td name="grpcode">
                                                                         <%=itcode%>
                                                                     </td>
@@ -425,29 +398,6 @@
                                                                     <td name="grptype">
                                                                         <%=itype%>
                                                                     </td>
-                                                                    <td name="grpstatus">
-                                                                        <%=irate%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%=iqty%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%=iratekg%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%=gst%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%=status%>
-                                                                    </td>
-                                                                    <td>                            
-                                                                    <form action="" method="post">
-                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="item" formmethod="post" ><br>
-                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="item" formmethod="post">
-                                                                    <input type="hidden" name="dname" value="<%=itid%>">
-                                                                    <input type="hidden" name="gname" value="<%=itname%>">
-                                                                    </form>
-                                                                    </td>  
                                                                     </tr>
                                                                     <%
                                                                         }

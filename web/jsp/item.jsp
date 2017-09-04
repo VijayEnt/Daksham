@@ -241,123 +241,172 @@
         <!----------start member-login----------->
 		<div class="sign_up">
 			<!----------star form----------->
-                        <form class="sign"  action="item" method="post">
-	
+                        <form class="sign"  action="item" method="post">	
 					<div class="formtitle">Item Enrollment</div>
                                         <%
-                                            String trptid = request.getParameter("dname");
-                                            if(trptid != null){
+                                            String itid = request.getParameter("dname");
+                                            if(itid != null){
                                                 Connection connection = com.daksham.connection.connection.setConnection();
-                                                PreparedStatement ptst = connection.prepareStatement("select * from msttransport inner join mstaddress on msttransport.trptAddressID = mstaddress.address_ID inner join mstcoderegister on mstaddress.addresstypecode = mstcoderegister.recid inner join mstcity on mstcity.citycode = mstaddress.citycode inner join mststate on mststate.statecode = mstaddress.State where trptID='"+trptid+"'");
+                                                PreparedStatement ptst = connection.prepareStatement("select * from mstitem mi inner join rel_itemgroup rig on mi.itemID = rig.Itemid inner join mstgroup mg on rig.groupID=mg.groupID where mi.itemID ='"+itid+"'");
                                                 ResultSet rs = ptst.executeQuery();
-                                                if(rs.next()){
-                                                    String tid = rs.getString("trptid");
-                                                    String tcode = rs.getString("trptCode");
-                                                    String tname = rs.getString("trptName");
-                                                    String traddid = rs.getString("trptAddressID");
-                                                    String location= rs.getString("trptServiceLocation");
-                                                    String abb = rs.getString("trptAbb");
-                                                    String gstcode = rs.getString("trptGSTCode");
-                                                    String cno1 = rs.getString("trptContactNo1");
-                                                    String cno2 = rs.getString("trptContactNo2");
-                                                    String addtype = rs.getString("mstcoderegister.codevalue");
-                                                    String rcid = rs.getString("mstcoderegister.recid");
-                                                    String add1=rs.getString("mstaddress.addressline1");
-                                                    String add2 = rs.getString("mstaddress.addressline2");
-                                                    String add3 = rs.getString("mstaddress.addressline3");
-                                                    String add4 = rs.getString("mstaddress.addressline4");
-                                                    String landmark = rs.getString("mstaddress.landmark");
-                                                    String pincode = rs.getString("mstaddress.pincode");
-                                                    String citycode = rs.getString("mstaddress.citycode");
-                                                    String city = rs.getString("mstcity.cityName");
-                                                    String statecode = rs.getString("mstaddress.state");
-                                                    String state = rs.getString("mststate.StateName");
-                                                    String country = rs.getString("mstaddress.country");
-                                                    %>
-<div class="input">
-    <input type="hidden" value="<%=tid%>" name="trptid"/>
-    <input type="hidden" value="<%=traddid%>" name="trptaddid"/>
-    <input type="text" name="tid" placeholder="Transport Code" readonly="" value="<%=tcode%>"  required/> 
+                                                if(!rs.isBeforeFirst()){
+                                                    PreparedStatement ptst1 = connection.prepareStatement("select * from mstitem mi where mi.itemID ='"+itid+"'");
+                                                    ResultSet rs1 = ptst1.executeQuery();
+                                                    if(rs1.next()){
+                                                    String tid = rs1.getString("mi.itemid");
+                                                    String itcode = rs1.getString("mi.itemCode");
+                                                    String itname = rs1.getString("mi.itemName");
+                                                    String itemtype = rs1.getString("mi.itemType");
+                                                    String itemrate = rs1.getString("mi.itemRatePerUnit");
+                                                    String itemQtyperKG = rs1.getString("mi.itemQntyPerKG");
+                                                    String igst = rs1.getString("mi.gstPercent");
+                                                    String rate = rs1.getString("mi.itemrateperKG");
+                                                    //String igid = rs1.getString("rig.groupId");
+                                                    //String igname = rs1.getString("mg.GroupName");
+%>
+                                        <div class="input">
+                                                        <input type="text" name="tid" value="<%=itcode%>" placeholder="Item Code"  required readonly=""/>
+                                                        <input type="hidden" value="<%=tid%>" name="trptid"/>
 					</div>
 					<div class="input">
-                                            <input type="text" name="tname" value="<%=tname%>" placeholder="Transport Name" required/>
-                                        </div>
-                                        <!----------start Address section----------->
+                                            <input type="text" name="tname" value="<%=itname%>" placeholder="Item Name" required/>
+                                        </div>					
                                         <div class="section-country">
-                                            <select id="addtype" name="addtype" disabled="" onmousemove="if(this.options.length>5){this.size=5;}" onchange="this.value()" onblur="this.size=0" class="frm-field" required="">
-                                                <option value="<%=rcid%>"><%=addtype%></option>
-                                                <% 
-                                                    Connection connect = com.daksham.connection.connection.setConnection();
-                                                PreparedStatement ptsta = connect.prepareStatement("select * from mstcoderegister where codename like '%Address%'");
-                                                ResultSet rsa = ptsta.executeQuery();
-                                                while(rs.next()){
-                                                    out.println("<option value="+"\""+rs.getString("recid")+"\""+">"+rs.getString("codevalue")+"</option>");
-                                                }
-                                                    %>
-                                            </select>
-                                        </div>
-					<div class="section">
-						<div class="input-sign details">
-                                                    <input type="text" name="add1" value="<%=add1%>" placeholder="Address Line 1" required maxlength="45"/> 
-						</div>
-						<div class="input-sign details1">
-                                                    <input type="text" name="add2" value="<%=add2%>" placeholder="Address Line 2" maxlength="45"/>
-						</div>
-						<div class="clear"> </div>
-					</div>                                        
-					<div class="section">
-						<div class="input-sign details">
-                                                    <input type="text" name="add3" value="<%=add3%>"  placeholder="Address Line 3"/> 
-						</div>
-						<div class="input-sign details1">
-                                                    <input type="text" name="add4" value="<%=add4%>"  placeholder="Address Line 4" /> 
-						</div>
-                                           
-                                            </div>
-                                        										
-
-                                        <div class="section">
-                                            <div class="input-sign details">
-                                                <input type="text" value="<%=landmark%>" name="landmark" placeholder="Landmark"/> 
-						</div>
-                                            <div class="input-sign details1">
-                                                <input type="text" name="pincode" value="<%=pincode%>"  placeholder="Pincode"/>                                                        
-						</div>              
-                                        </div>
-                                        <div class="section-country">
-                                            <select id="State" name="location" onmousedown="if(this.options.length>5){this.size=5;}" onchange="this.value()" onblur="this.size=0" class="frm-field" required=""> 
-                                                <option value="<%=location%>"><%=location%></option>
-                                                <option value="All India Permit">All India Permit</option>
-                                                <option value="Inter City">Inter City</option>
-                                                <option value="Domestic">Domestic</option>
-                                                <option value="Local">Local</option>
+                                            <select id="State" name="itype"  onmousedown="if(this.options.length>5){this.size=5;}" onchange="this.value()" onblur="this.size=0"
+                                                    class="frm-field" required="required"> 
+                                                <option value="<%=itemtype%>"><%=itemtype%></option>
+                                                <option value="RAW Item">RAW Item</option>
+                                                <option value="Finished Item">Finished Item</option>
                                                     </select>
                                         </div>
-                                        <div class="input">
-                                            <input type="text" value="<%=abb%>" name="tabb"  placeholder="Transport Abbreviation"/>
-                                        </div>  
-                                        <div class="input">
-                                            <input type="text" name="tgst" value="<%=gstcode%>"  placeholder="GSTCODE" />
-                                        </div> 
                                         <div class="section">
                                             <div class="input-sign details">
-                                                <input type="text" name="cno1" value="<%=cno1%>" placeholder="Mobile" required/> 
-						</div>
+                                                <input type="text" name="irate"  value="<%=itemrate%>" onkeypress="return isNumberKey(event)" placeholder="Rate / Unit"/>
+                                        </div>                                              
+                                            <div class="input-sign details" >                                              
+                                                <input type="text" name="iunit" value="<%=itemQtyperKG%>" onkeypress="return isNumberKey(event)"  placeholder="Unit / KG" />
+                                        </div> 
+                                        </div>
+                                        <div class="section">                                            
                                             <div class="input-sign details1">
-                                                <input type="text" name="cno2" value="<%=cno2%>"  placeholder="Contact Number" />                                                        
+                                                <input type="text" name="igst" value="<%=igst%>" placeholder="GST Percentage" onkeypress="return isNumberKey(event)" required="" />                                                        
 						</div>   
-                                            <div class="clear"> </div>
-                                        </div>                                        
+                                            <div class="input-sign details1">
+                                                <input type="text" name="iratekg" value="<%=rate%>" onkeypress="return isNumberKey(event)" placeholder="Rate / KG " required/> 
+						</div>
+                                        </div>
+                                                    <div class="section-country">
+                                                <select name="igtype"  multiple="multiple" size="5" onmousedown="if(this.options.length>5){this.size=5;}" onchange="this.value()" onblur="this.size=5" class="frm-field"> 
+                                                    <option value="-1"  selected=""><b>Select Group</b></option>
+                                                <%                                                    
+                                                    PreparedStatement ptstg = connection.prepareStatement("select * from mstgroup where isActive = 'Y' and groupType ='Item Group'");
+                                                    ResultSet rsg = ptstg.executeQuery();
+                                                    while (rsg.next()){
+                                                         out.println("<option value="+"\""+rsg.getString("groupId")+"\""+">"+rsg.getString("GroupName")+"</option>");
+                                                    }
+                                                    %>
+                                                    </select>
+                                                    <div class="clear"> </div>
+                                                    </div>
+<!--                                            <div class="section-country">
+                                                <select name="igtyped" disabled="" multiple="multiple" size="5" onmousedown="if(this.options.length>5){this.size=5;}" onchange="this.value()" onblur="this.size=5" class="frm-field"> 
+                                                    <option value="-1"  selected=""><b>Select Group</b></option>
+                                                <%  
+                                                    while (rsg.next()){
+                                                         out.println("<option value="+"\""+rs.getString("rig.groupId")+"\""+">"+rs.getString("mg.GroupName")+"</option>");
+                                                    }
+                                                    %>
+                                                    </select>
+                                            <div class="clear"> </div>                                        
+                                            </div>-->
 					<div class="submit">						
                                             <input class="bluebutton submitbotton" name="usave" type="submit" value="Save" />
-                                            <input class="bluebutton submitbotton" name="slook" type="submit" value="Transport Lookup" />
+                                            <input class="bluebutton submitbotton" name="slook" type="submit" value="Item Lookup" />
 						<div class="clear"> </div>
-					</div>
-                                                    
-                                                    <%
+					</div>      
+<%
+    }
                                                 }
-                                                
+                                                else{
+                                                    if(rs.next()){
+                                                    String tid = rs.getString("mi.itemid");
+                                                    String itcode = rs.getString("mi.itemCode");
+                                                    String itname = rs.getString("mi.itemName");
+                                                    String itemtype = rs.getString("mi.itemType");
+                                                    String itemrate = rs.getString("mi.itemRatePerUnit");
+                                                    String itemQtyperKG = rs.getString("mi.itemQntyPerKG");
+                                                    String igst = rs.getString("mi.gstPercent");
+                                                    String rate = rs.getString("mi.itemrateperKG");
+                                                    String igid = rs.getString("rig.groupId");
+                                                    String igname = rs.getString("mg.GroupName");
+                                                    %>
+                                                    <div class="input">
+                                                        <input type="text" name="tid" value="<%=itcode%>" placeholder="Item Code"  required readonly=""/>
+                                                        <input type="hidden" value="<%=tid%>" name="trptid"/>
+					</div>
+					<div class="input">
+                                            <input type="text" name="tname" value="<%=itname%>" placeholder="Item Name" required/>
+                                        </div>					
+                                        <div class="section-country">
+                                            <select id="State" name="itype"  onmousedown="if(this.options.length>5){this.size=5;}" onchange="this.value()" onblur="this.size=0"
+                                                    class="frm-field" required="required"> 
+                                                <option value="<%=itemtype%>"><%=itemtype%></option>
+                                                <option value="RAW Item">RAW Item</option>
+                                                <option value="Finished Item">Finished Item</option>
+                                                    </select>
+                                        </div>
+                                        <div class="section">
+                                            <div class="input-sign details">
+                                                <input type="text" name="irate"  value="<%=itemrate%>" onkeypress="return isNumberKey(event)" placeholder="Rate / Unit"/>
+                                        </div>                                              
+                                            <div class="input-sign details" >                                              
+                                                <input type="text" name="iunit" value="<%=itemQtyperKG%>" onkeypress="return isNumberKey(event)"  placeholder="Unit / KG" />
+                                        </div> 
+                                        </div>
+                                        <div class="section">                                            
+                                            <div class="input-sign details1">
+                                                <input type="text" name="igst" value="<%=igst%>" placeholder="GST Percentage" onkeypress="return isNumberKey(event)" required="" />                                                        
+						</div>   
+                                            <div class="input-sign details1">
+                                                <input type="text" name="iratekg" value="<%=rate%>" onkeypress="return isNumberKey(event)" placeholder="Rate / KG " required/> 
+						</div>
+                                        </div>
+                                                    <div class="section-country">
+                                                <select name="igtype"  multiple="multiple" size="5" onmousedown="if(this.options.length>5){this.size=5;}" onchange="this.value()" onblur="this.size=5" class="frm-field"> 
+                                                    <option value="-1"  selected=""><b>Select Group</b></option>
+                                                <%                                                    
+                                                    PreparedStatement ptstg = connection.prepareStatement("select * from mstgroup where isActive = 'Y' and groupType ='Item Group'");
+                                                    ResultSet rsg = ptstg.executeQuery();
+                                                    while (rsg.next()){
+                                                         out.println("<option value="+"\""+rsg.getString("groupId")+"\""+">"+rsg.getString("GroupName")+"</option>");
+                                                    }
+                                                    %>
+                                                    </select>
+                                                    <div class="clear"> </div>
+                                                    </div>
+                                            <div class="section-country">
+                                                <select name="igtyped" multiple="multiple" size="5" onmousedown="if(this.options.length>5){this.size=5;}" onchange="this.value()" onblur="this.size=5" class="frm-field"> 
+                                                    <!--<option value="-1"  selected=""><b>Select Group</b></option>-->                                                    
+                                                    <%
+                                                        while(rs.next()){
+                                                            out.println("<option value="+"\""+rs.getString("rig.groupId")+"\""+">"+rs.getString("mg.GroupName")+"</option>");
+                                                            %>
+                                                            <!--<option value="<%=igid%>"  selected=""><%=igname%></option>-->
+                                                       <% }
+                                                        %>                                                    
+                                                    </select>
+                                            <div class="clear"> </div>                                        
+                                            </div>
+					<div class="submit">						
+                                            <input class="bluebutton submitbotton" name="usave" type="submit" value="Save" />
+                                            <input class="bluebutton submitbotton" name="slook" type="submit" value="Item Lookup" />
+						<div class="clear"> </div>
+					</div>                                                                                            
+                                                <!--</div>-->                                        
+                                                    <%
+                                                }                                                
                                             }
+                                        }   
 else{
 %>
 
@@ -403,25 +452,18 @@ else{
                                                     }
                                                     %>
                                                     </select>
+                                                    <div class="clear"> </div>
                                         </div>
-<!--                                                    <div class="section details1">
-                                                <select name="igtype1"  onmousedown="if(this.options.length>5){this.size=5;}; multiple" onchange="this.value()" onblur="this.size=1" class="frm-field" required=""> 
-                                                <option value="-1">Select Group</option>                                                
-                                                    </select>
-                                        </div>-->
-                                            
-                                            <div class="clear"> </div>
-                                        
-					<div class="submit">						
+                                            <div class="submit">						
                                             <input class="bluebutton submitbotton" name="ssave" type="submit" value="Save" />
                                             <input class="bluebutton submitbotton" type="reset" value="Reset" />
-<!--                                            <input class="bluebutton submitbotton" name="slook" type="submit" value="Transport Lookup" />-->
-						<div class="clear"> </div>
-					</div>
+                                            <div class="clear"> </div>
+                                            </div>
                                                 </div>                                        
 				</form>
                                                  <%
                                             }
+
                                             %>
 				<!----------end form----------->
 		</div>

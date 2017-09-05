@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Types;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -88,6 +89,15 @@ public class item extends HttpServlet {
                 String igst = request.getParameter("igst");
                 String[] igtype = request.getParameterValues("igtype");
                 String igtypev = request.getParameter("igtype");
+                PreparedStatement ptst = connection.prepareStatement("select * from mstitem where itemcode = '"+icode+"'");
+                ResultSet rs = ptst.executeQuery();
+                if(rs.next()){
+                 out.println("<script type=\"text/javascript\">");            
+                 out.println("alert('"+icode+" already exists, please try with different Item Code!');");
+                 out.println("location='item.jsp';");
+                 out.println("</script>");                   
+                }
+                else{
                 PreparedStatement ptst1 = connection.prepareStatement("insert into mstitem(itemCode,itemName,itemType,itemRatePerUnit,itemQntyPerKG,itemRatePerKG,gstPercent,creationDate,actionDate,actionUserID) values(?,?,?,?,?,?,?,now(),now(),1)");
                 ptst1.setString(1,icode );
                 ptst1.setString(2, iname);
@@ -119,6 +129,7 @@ public class item extends HttpServlet {
                     ptst2.setString(1, igtype[i]);                    
                     ptst2.executeUpdate();
                     }
+                }
                 }
                 out.println("<script type=\"text/javascript\">");            
                 out.println("alert('"+iname+" Enrolled!');");

@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -126,6 +127,15 @@ public class codereg extends HttpServlet {
             out.println("</script>");
             }
             else{
+                PreparedStatement psts = connect.prepareStatement("select * from mstcoderegister where codename = '"+codename+"'");
+                ResultSet rs = psts.executeQuery();
+                if(rs.next()){
+                    out.println("<script type=\"text/javascript\">");            
+                    out.println("alert('"+codename+" already exsits please try with different Code Name!');");
+                    out.println("location='Codereg.jsp';");
+                    out.println("</script>");
+                }
+                else{
             PreparedStatement ps = connect.prepareStatement("insert into mstcoderegister (Codename,CodeID,CodeKey,CodeValue,CodeSeqNo,CreationDate,ActionDate,ActionUserID) values (?,?,?,?,?,now(),now(),'1')");
             ps.setString(1, codename);
             ps.setString(2, codeid);
@@ -138,6 +148,7 @@ public class codereg extends HttpServlet {
             out.println("location='Codereg.jsp';");
             out.println("</script>");
             ps.close();
+                }
         }
     }
 //        catch(SQLException  ex){

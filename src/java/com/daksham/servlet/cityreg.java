@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -88,13 +89,22 @@ public class cityreg extends HttpServlet {
             }
             else
             {
-                try{
+                try{                    
                     String cityname = request.getParameter("cname");
                     String cityabb = request.getParameter("cabb");
                     String state = request.getParameter("state");
                     if(cityname.equals("")){
                         out.println("<script type=\"text/javascript\">");
                         out.println("alert('City Name should not be blank!');");
+                        out.println("location='cityreg.jsp';");
+                        out.println("</script>");
+                    }
+                    else{
+                    PreparedStatement psts = connection.prepareStatement("selecy * from mstcity where cityName = '"+cityname+"'");
+                    ResultSet rs = psts.executeQuery();
+                    if(rs.next()){
+                        out.println("<script type=\"text/javascript\">");
+                        out.println("alert('"+cityname+" with same name already Exsits, please try with some different name!');");
                         out.println("location='cityreg.jsp';");
                         out.println("</script>");
                     }
@@ -110,6 +120,7 @@ public class cityreg extends HttpServlet {
                     out.println("</script>");
                     }
                     }
+                }
                 catch(Exception ex){
                     ex.printStackTrace(out);
                 }

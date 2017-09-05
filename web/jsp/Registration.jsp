@@ -180,6 +180,36 @@
 					</li>
 				</ul>
 			</li>
+                        <li>
+				<a href="#">
+					<i class="icon-table nav-icon"></i>
+					<span class="nav-text">
+					Menu Enrollment
+					</span>
+				</a>
+			</li>
+                        <li class="has-subnav">
+				<a href="javascript:;">
+					<i class="fa fa-mail-forward" style="position:relative;display:table-cell;
+			width:60px;text-align:center;vertical-align:middle;font-size:18px;padding:.7em 0;"></i>
+					<span class="nav-text">
+					Mappings
+					</span>
+                                        <i class="icon-angle-right"></i><i class="icon-angle-down"></i>
+				</a>
+                             <ul>
+					<li>
+						<a class="subnav-text" href="#">
+							Party Group Mapping 
+						</a>
+					</li>
+					<li>
+						<a class="subnav-text" href="#">
+							User Roles
+						</a>
+					</li>
+				</ul>
+			</li>			
 <!--			<li>
 				<a href="tables.html">
 					<i class="icon-table nav-icon"></i>

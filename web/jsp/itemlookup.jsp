@@ -359,7 +359,7 @@
                                                                     </td>
                                                                     <td>                            
                                                                     <form action="" method="post">
-                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="item.jsp" formmethod="post" ><br>
+                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="item" formmethod="post" ><br>
                                                                     <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="item" formmethod="post">
                                                                     <input type="hidden" name="dname" value="<%=itid%>">
                                                                     <input type="hidden" name="gname" value="<%=itname%>">

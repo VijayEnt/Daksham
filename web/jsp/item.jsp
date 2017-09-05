@@ -336,9 +336,7 @@
                                                     String itemrate = rs.getString("mi.itemRatePerUnit");
                                                     String itemQtyperKG = rs.getString("mi.itemQntyPerKG");
                                                     String igst = rs.getString("mi.gstPercent");
-                                                    String rate = rs.getString("mi.itemrateperKG");
-                                                    String igid = rs.getString("rig.groupId");
-                                                    String igname = rs.getString("mg.GroupName");
+                                                    String rate = rs.getString("mi.itemrateperKG");                                                    
                                                     %>
                                                     <div class="input">
                                                         <input type="text" name="tid" value="<%=itcode%>" placeholder="Item Code"  required readonly=""/>
@@ -388,10 +386,14 @@
                                                 <select name="igtyped" multiple="multiple" size="5" onmousedown="if(this.options.length>5){this.size=5;}" onchange="this.value()" onblur="this.size=5" class="frm-field"> 
                                                     <!--<option value="-1"  selected=""><b>Select Group</b></option>-->                                                    
                                                     <%
-                                                        while(rs.next()){
-                                                            out.println("<option value="+"\""+rs.getString("rig.groupId")+"\""+">"+rs.getString("mg.GroupName")+"</option>");
+                                                        PreparedStatement ptst1 = connection.prepareStatement("select * from mstitem mi inner join rel_itemgroup rig on mi.itemID = rig.Itemid inner join mstgroup mg on rig.groupID=mg.groupID where mi.itemID ='"+itid+"'");
+                                                        ResultSet rs1 = ptst1.executeQuery();
+//                                                        String igid = rs1.getString("rig.groupId");
+//                                                        String igname = rs1.getString("mg.GroupName");
+                                                        while(rs1.next()){
+                                                            out.println("<option value="+"\""+rs1.getString("rig.groupId")+"\""+">"+rs1.getString("mg.GroupName")+"</option>");
                                                             %>
-                                                            <!--<option value="<%=igid%>"  selected=""><%=igname%></option>-->
+                                                            
                                                        <% }
                                                         %>                                                    
                                                     </select>

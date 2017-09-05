@@ -681,6 +681,15 @@
                                                 <option value="N">No</option>
                                             </select> 
                                             </div>
+                                            <div class="section-country">
+                                            <select id="State" name="reltype" onchange="change_entity(this.value)" class="frm-field" required="">
+                                            <option value="-1">Select Relationship Type</option>
+                                            <option value="Buyer">Buyer</option>
+                                            <option value="Supplier">Supplier</option>
+                                            <option value="Buyer + Supplier">Buyer + Supplier</option>
+                                            <option value="Vendor">Vendor</option>
+                                            </select> 
+                                            </div>
                                             </div><br><br><br><br>
 					<div class="submit">						
                                             <input class="bluebutton submitbotton" name="usave" type="submit" value="Save" formaction="party" formmethod="post"/>
@@ -1084,6 +1093,15 @@ else{
                                                 <option value="N">Entity</option>
                                                 <option value="Y">Yes</option>
                                                 <option value="N">No</option>
+                                            </select> 
+                                            </div>
+                                            <div class="section-country">
+                                                <select id="State" name="reltype" onchange="change_entity(this.value)" class="frm-field" required="">
+                                                <option value="-1">Select Relationship Type</option>
+                                                <option value="Buyer">Buyer</option>
+                                                <option value="Supplier">Supplier</option>
+                                                <option value="Buyer + Supplier">Buyer + Supplier</option>
+                                                <option value="Vendor">Vendor</option>
                                             </select> 
                                             </div>
                                             </div><br><br><br><br>

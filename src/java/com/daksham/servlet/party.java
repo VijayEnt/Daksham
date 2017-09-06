@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Types;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -103,6 +104,7 @@ public class party extends HttpServlet {
                     String entity = request.getParameter("entity");
                     String mark = request.getParameter("pmark");
                     String transid = request.getParameter("transport");
+                    String rtype = request.getParameter("reltype");
                     if(pid.equals("")){
                             out.println("<script type=\"text/javascript\">");            
                             out.println("alert('Party code should not be blank!');");
@@ -164,12 +166,27 @@ public class party extends HttpServlet {
                             out.println("</script>");
                     }
                     else if(doi.equals("")){
-                        out.println("<script type=\"text/javascript\">");            
+                            out.println("<script type=\"text/javascript\">");            
                             out.println("alert('Party D.O.I should not be blank!');");
                             out.println("location='partyreg.jsp';");
                             out.println("</script>");
-                    }                    
+                    }
+                    else if(rtype.equals("-1")){
+                            out.println("<script type=\"text/javascript\">");            
+                            out.println("alert('Please define Party Relation Type!');");
+                            out.println("location='partyreg.jsp';");
+                            out.println("</script>");
+                    }
                     else{
+                        PreparedStatement psts = connection.prepareStatement("Select * from mstparty where partycode = '"+pid+"'");
+                        ResultSet rs = psts.executeQuery();
+                        if(rs.next()){
+                            out.println("<script type=\"text/javascript\">");            
+                            out.println("alert('"+pid+" already exists please try with different party code!');");
+                            out.println("location='partyreg.jsp';");
+                            out.println("</script>");
+                        }
+                        else{
                         PreparedStatement ptst1 = connection.prepareStatement("insert into mstaddress (addresstypecode,addressline1,addressline2,addressline3,addressline4,landmark,citycode,state,country,pincode,creationDate,ActionDate,actionUserID) values(?,?,?,?,?,?,?,?,?,?,now(),now(),1);");
                         ptst1.setString(1, addtype);
                         ptst1.setString(2, addl1);
@@ -202,7 +219,7 @@ public class party extends HttpServlet {
                         ptst1.setString(10, pincode);
                         }
                         //ptst1.setString(11, cno);
-                        PreparedStatement ptst2=connection.prepareStatement("insert into mstparty(partyAddressID,partyCode,partyName,partyType,partyAbb,partyGSTCode,partyContactNO1,partyContactNO2,partyemail,partyDOI,partyOpenBal,partyCloseBal,partyMarka,partyTransportID,isEntity,creationDate,actionDate,actionUserID) select address_id ,?,?,?,?,?,?,?,?,?,?,?,?,?,?,now(),now(),1 from mstaddress order by address_id DESC LIMIT 1");
+                        PreparedStatement ptst2=connection.prepareStatement("insert into mstparty(partyAddressID,partyCode,partyName,partyType,partyAbb,partyGSTCode,partyContactNO1,partyContactNO2,partyemail,partyDOI,partyOpenBal,partyCloseBal,partyMarka,partyTransportID,isEntity,creationDate,actionDate,actionUserID,relationtype) select address_id ,?,?,?,?,?,?,?,?,?,?,?,?,?,?,now(),now(),1,? from mstaddress order by address_id DESC LIMIT 1");
                         ptst2.setString(1, pid);
                         ptst2.setString(2, pname);
                         ptst2.setString(3, ptype);
@@ -257,12 +274,14 @@ public class party extends HttpServlet {
                         ptst2.setString(13, transid);
                         }
                         ptst2.setString(14, entity);
+                        ptst2.setString(15, rtype);
                         ptst1.executeUpdate();
                         ptst2.executeUpdate();
                         out.println("<script type=\"text/javascript\">");            
                         out.println("alert('"+pname+" Enrolled!');");
                         out.println("location='partyreg.jsp';");
                         out.println("</script>");
+                        }
                     }
                 }
                 catch(Exception ex){
@@ -299,6 +318,7 @@ public class party extends HttpServlet {
                     String mark = request.getParameter("pmark");
                     String transid = request.getParameter("transport");
                     String addid = request.getParameter("addid");
+                    String rtype = request.getParameter("reltype");
                     if(pid.equals("")){
                             out.println("<script type=\"text/javascript\">");            
                             out.println("alert('Party code should not be blank!');");
@@ -365,7 +385,8 @@ public class party extends HttpServlet {
                             out.println("location='partyreg.jsp';");
                             out.println("</script>");
                     }                    
-                PreparedStatement ptst1 = connection.prepareStatement("update mstparty set partyName =?,partyabb=?,partyGSTCode=?,partyContactNO1=?,partyContactNO2=?,partyemail=?,partyOpenBal=?,partyCloseBal=?,partyMarka=?,isEntity=?,isActive='Y',actiondate=now(),actionUserID=1 where  partyID='"+pid+"'");
+                else{                
+                PreparedStatement ptst1 = connection.prepareStatement("update mstparty set partyName =?,partyabb=?,partyGSTCode=?,partyContactNO1=?,partyContactNO2=?,partyemail=?,partyOpenBal=?,partyCloseBal=?,partyMarka=?,isEntity=?,isActive='Y',actiondate=now(),actionUserID=1,relationtype=? where  partyID='"+pid+"'");
                 ptst1.setString(1, pname);
                 if(pabb.equals("null")){
                     ptst1.setNull(2,Types.VARCHAR);
@@ -406,6 +427,7 @@ public class party extends HttpServlet {
                     ptst1.setString(9, mark);
                 }
                 ptst1.setString(10, entity);
+                ptst1.setString(11, rtype);
                 PreparedStatement ptst2 = connection.prepareStatement("update mstaddress set addressline1=?,addressline2=?,addressline3=?,addressline4=?,landmark=?,citycode=?,state=?,country=?,pincode=?,actiondate=now(),actionuserid=1 where address_id='"+addid+"'");
                 ptst2.setString(1, addl1);
                 ptst2.setString(2, addl2);
@@ -442,6 +464,7 @@ public class party extends HttpServlet {
                         out.println("alert('"+pname+" Updated!');");
                         out.println("location='partylookup.jsp';");
                         out.println("</script>");
+                }
                 }
                 catch(Exception ex){
                     ex.printStackTrace(out);

@@ -332,6 +332,7 @@
                                                         <th>Closing Bal</th>
                                                         <th>Marka</th>
                                                         <th>Entity</th>
+                                                        <th>Relation Type</th>
 							<th>Status</th>
 							<th>Action</th>
 						  </tr>
@@ -368,6 +369,7 @@
                                                                     String marka = rs.getString("partyMarka");
                                                                     String entity=rs.getString("isEntity");
                                                                     String status=rs.getString("isActive");
+                                                                    String rtype = rs.getString("relationtype");
                                                                     %>
                                                                     <td name="grpcode">
                                                                         <%=pcode%>
@@ -396,6 +398,7 @@
                                                                     <td><%=cbal%></td>
                                                                     <td><%=marka%></td>
                                                                     <td><%=entity%></td>
+                                                                    <td><%=rtype%></td>
                                                                     <td><%=status%></td> 
                                                                     <td>
                                                                     <form action="" method="post">
@@ -435,6 +438,7 @@
                                                                     String marka = rs.getString("partyMarka");
                                                                     String entity=rs.getString("isEntity");
                                                                     String status=rs.getString("isActive");
+                                                                    String rtype = rs.getString("relationtype");
                                                                     %>
                                                                     <tr>
                                                                     <td name="grpcode">
@@ -464,6 +468,7 @@
                                                                     <td><%=cbal%></td>
                                                                     <td><%=marka%></td>
                                                                     <td><%=entity%></td>
+                                                                    <td><%=rtype%></td>
                                                                     <td><%=status%></td>   
                                                                     <td>
                                                                     <form action="" method="post">
@@ -497,6 +502,7 @@
                                                                     String marka = rs.getString("partyMarka");
                                                                     String entity=rs.getString("isEntity");
                                                                     String status=rs.getString("isActive");
+                                                                    String rtype = rs.getString("relationtype");
                                                                     %>
                                                                     <tr>
                                                                     <td name="grpcode">
@@ -526,6 +532,7 @@
                                                                     <td><%=cbal%></td>
                                                                     <td><%=marka%></td>
                                                                     <td><%=entity%></td>
+                                                                    <td><%=rtype%></td>
                                                                     <td><%=status%></td> 
                                                                     <td>
                                                                     <form action="" method="post">

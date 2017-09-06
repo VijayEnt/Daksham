@@ -318,6 +318,7 @@
                                                                     else if(entity.equals("N")){
                                                                         entityval="NO";
                                                                     }
+                                                                    String rtype = rs.getString("relationtype");
                                                   %>
                                                   <div class="input">
                                                   <input type="hidden" name="pcode" value="<%=pid%>"/>
@@ -713,7 +714,7 @@
                                             </div>
                                             <div class="section-country">
                                             <select id="State" name="reltype" onchange="change_entity(this.value)" class="frm-field" required="">
-                                            <option value="-1">Select Relationship Type</option>
+                                            <option value="<%=rtype%>"><%=rtype%></option>
                                             <option value="Buyer">Buyer</option>
                                             <option value="Supplier">Supplier</option>
                                             <option value="Buyer + Supplier">Buyer + Supplier</option>

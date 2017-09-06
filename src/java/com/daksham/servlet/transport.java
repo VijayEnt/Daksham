@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Types;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -79,7 +80,7 @@ public class transport extends HttpServlet {
         try{
         Connection connection = com.daksham.connection.connection.setConnection();
         if(request.getParameter("ssave")!=null){
-           try{
+           try{               
                String trptcode=request.getParameter("tid");
                String trptName = request.getParameter("tname");
                String addtype = request.getParameter("addtype");
@@ -101,6 +102,15 @@ public class transport extends HttpServlet {
                    
                }
                //Address master
+               PreparedStatement psts = connection.prepareStatement("select * from mstransport where trptcode = '"+trptcode+"'");
+               ResultSet rs = psts.executeQuery();
+               if(rs.next()){
+                out.println("<script type=\"text/javascript\">");            
+                out.println("alert('"+trptcode+" already exists, please try with different code!');");
+                out.println("location='transreg.jsp';");
+                out.println("</script>");
+               }
+               else{
                PreparedStatement ptst1 = connection.prepareStatement("insert into mstaddress (addresstypecode,addressline1,addressline2,addressline3,addressline4,landmark,citycode,state,country,pincode,creationDate,ActionDate,actionUserID) values(?,?,?,?,?,?,?,?,?,?,now(),now(),1);");
                         ptst1.setString(1, addtype);
                         ptst1.setString(2, addl1);
@@ -163,6 +173,7 @@ public class transport extends HttpServlet {
                 out.println("alert('"+trptName+" Enrolled!');");
                 out.println("location='transreg.jsp';");
                 out.println("</script>");
+               }
            }
            catch(Exception ex){
                ex.printStackTrace(out);

@@ -127,11 +127,11 @@ public class codereg extends HttpServlet {
             out.println("</script>");
             }
             else{
-                PreparedStatement psts = connect.prepareStatement("select * from mstcoderegister where codename = '"+codename+"'");
+                PreparedStatement psts = connect.prepareStatement("select * from mstcoderegister where codeID = '"+codeid+"'");
                 ResultSet rs = psts.executeQuery();
                 if(rs.next()){
                     out.println("<script type=\"text/javascript\">");            
-                    out.println("alert('"+codename+" already exsits please try with different Code Name!');");
+                    out.println("alert('"+codeid+" already exsits please try with different Code ID!');");
                     out.println("location='Codereg.jsp';");
                     out.println("</script>");
                 }

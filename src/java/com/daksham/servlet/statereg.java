@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -90,6 +91,15 @@ public class statereg extends HttpServlet {
                         out.println("</script>");
                     }
             else{
+            PreparedStatement psts = connection.prepareStatement("select * from mststate where stateName = '"+statename+"'");
+            ResultSet rs = psts.executeQuery();
+            if(rs.next()){
+                        out.println("<script type=\"text/javascript\">");
+                        out.println("alert('"+statename+" already exists please try with different State Name!');");
+                        out.println("location='cityreg.jsp';");
+                        out.println("</script>");
+            }
+            else{
             PreparedStatement ptst = connection.prepareStatement("insert into mststate (stateName,stateAbb,creationDate,actionDate,actionUserID) values (?,?,now(),now(),1)");
             ptst.setString(1, statename);
             ptst.setString(2, stateabb);
@@ -98,6 +108,7 @@ public class statereg extends HttpServlet {
             out.println("alert('State "+statename+" enrolled!');");
             out.println("location='statereg.jsp';");
             out.println("</script>");
+            }
             }
             }
             catch(Exception ex){

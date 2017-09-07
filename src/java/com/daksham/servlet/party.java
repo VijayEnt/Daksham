@@ -480,6 +480,36 @@ public class party extends HttpServlet {
                         out.println("location='partyreg.jsp';");
                         out.println("</script>");
             }
+            else if(request.getParameter("psave")!=null){
+                String party = request.getParameter("party");
+                String[] group = request.getParameterValues("igtype");
+                if(party.equals("-1")){
+                        out.println("<script type=\"text/javascript\">");            
+                        out.println("alert('Please mention at least one party!');");
+                        out.println("location='partygrp.jsp';");
+                        out.println("</script>");
+                }
+                else if(group.equals("-1")){
+                        out.println("<script type=\"text/javascript\">");            
+                        out.println("alert('Please mention at least one group type!');");
+                        out.println("location='partygrp.jsp';");
+                        out.println("</script>");
+                }
+                else{
+                    //PreparedStatement ptst = connection.prepareStatement("insert into rel_partygroup (groupID,partyID,creationDate,actionDate,actionUserID) values(?,?,now(),now(),1)");
+                    PreparedStatement ptst = connection.prepareStatement("insert into rel_partygroup (partyID,groupID,creationDate,actionDate,actionUserID) select partyId,?,now(),now(),1 from mstparty where partyID='"+party+"'");
+                    //ptst.setString(1, party);
+                    for(int i=0; i<group.length;i++){                    
+                    ptst.setString(1, group[i]);
+                    ptst.executeUpdate();
+                }
+                    
+                    out.println("<script type=\"text/javascript\">");            
+                    out.println("alert('Party group enrolled!');");
+                    out.println("location='partygrp.jsp';");
+                    out.println("</script>");
+                }
+            }
             connection.close();
         }
         

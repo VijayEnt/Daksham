@@ -329,6 +329,8 @@ else{
                                                 <option value="Party Group">Party Group</option>
                                                 <option value="Item Group">Item Group</option>
                                                 <option value="Transport Group">Transport Group</option>
+                                                <option value="User Group">User Group</option>
+                                                <option value="Menu Role Group">Menu Role Group</option>
                                                     </select>
                                         </div>                                        
 					<div class="submit">						

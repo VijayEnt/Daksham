@@ -4,12 +4,6 @@
     Author     : ParthBheda
 --%>
 
-<%-- 
-    Document   : partygrp
-    Created on : 6 Sep, 2017, 4:58:33 PM
-    Author     : ParthBheda
---%>
-
 <%@page import="com.daksham.connection.connection"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
@@ -278,10 +272,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<!----------star form----------->
                         <form class="login"  action="transport" method="post" style="width: 500px;">
 	
-					<div class="formtitle">Party Group Mapping</div>                                      
+					<div class="formtitle">Transport Group Mapping</div>                                      
                                       <div class="section-country">
                                             <select id="city" name="transport" onmousedown="if(this.options.length>5){this.size=5;}"  onchange="this.blur()" onblur="this.size=0" class="frm-field required">
-                                                <option value="-1">Select Party</option>
+                                                <option value="-1">Select Transport</option>
                                                 <% 
                                                 try{
                                                     Connection connection =com.daksham.connection.connection.setConnection();
@@ -319,7 +313,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                                     <br>
 					<div class="submit">						
                                             <input class="bluebutton submitbotton" name="tsave" type="submit" value="Save" /> 
-                                            <input class="bluebutton submitbotton" name="tlook" type="submit" value="Party Group Lookup" />
+                                            <input class="bluebutton submitbotton" name="tlook" type="submit" value="Transport Group Lookup" />
 						<div class="clear"> </div>
 					</div>							
 				</form>

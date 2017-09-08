@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Types;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -312,9 +313,12 @@ public class transport extends HttpServlet {
                 ex.printStackTrace(out);
             }
         }
+        else if(request.getParameter("tlook")!=null){
+            response.sendRedirect("trptgrplookup.jsp");
+        }
         connection.close();
         }
-        catch (Exception ex){
+        catch (IOException | SQLException ex){
             ex.printStackTrace(out);
         }
     }

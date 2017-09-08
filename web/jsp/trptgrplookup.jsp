@@ -1,8 +1,9 @@
 <%-- 
-    Document   : trptlookup
-    Created on : 28 Aug, 2017, 6:58:37 AM
+    Document   : trptgrplookup
+    Created on : 8 Sep, 2017, 10:00:50 PM
     Author     : Parth
 --%>
+
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
@@ -305,9 +306,10 @@
        <section class="title-bar">						
 			<div class="w3l_search">
                             <form action="#" method="post">
-					<input type="text" name="search" value="Search by Transport Name" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}" required="">
+					<input type="text" name="search" value="Search by Transort Name" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}" required="">
                                         <button class="btn btn-default" name="sb" type="submit" title="Search Code"><i class="fa fa-search" aria-hidden="true"></i></button> <br><br>
-                                        <button class="btn btn-default" name="refresh" type="submit" style="margin-left: 50px;" title="Refresh Data"><i class="fa fa-refresh" aria-hidden="true"></i></button>                              
+                                        <button class="btn btn-default" name="refresh" type="submit" style="margin-left: 50px;" title="Refresh Data"><i class="fa fa-refresh" aria-hidden="true"></i></button>  
+                                        
 				</form>            
 			</div>			
 			<div class="clearfix"> </div>
@@ -316,11 +318,11 @@
 			<div class="agile-grids">	
 				<!-- tables -->				
 				<div class="table-heading">
-                                    <h2>Transport Enrollment </h2>
+                                    <h2>Transport Group Mapped Details </h2>   
                                     <form>
                                     <input type="submit" class="btn btn-default" name="glook" 
                                            style="background: #00bcd4;border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;border-top-left-radius: 5px;border-top-right-radius: 5px;" 
-                                           value="Transport Group Lookup" formaction="trptgrplookup.jsp" formmethod="post">
+                                           value="Transport Lookup" formaction="trptlookup.jsp" formmethod="post">
                                     </form>
 				</div>                                
 				<div class="agile-tables">                                   
@@ -328,15 +330,10 @@
                                         <table id="table">
 						<thead>
 						  <tr>
-                                                        <th>Code</th>
-							<th>Name</th>							
-							<th>Service Location</th>
-                                                        <th>Abbreviation</th>                                                        
-                                                        <th>Contact Number</th>
-                                                        <th>Contact Number 2</th>
-							<th>Status</th>
-<!--							<th>Sequence Order</th>-->
-							<th>Action</th>
+                                                        <th>Relation ID</th>
+                                                        <th>Name</th>							
+                                                        <th>Code</th>							
+							<th>Group</th>
 						  </tr>
 						</thead>
 						<tbody>
@@ -353,147 +350,93 @@
                                                             }
                                                             else{
                                                                 if(request.getParameter("sb")==null){
-                                                                PreparedStatement ptst = connection.prepareStatement("select * from msttransport");
+                                                                PreparedStatement ptst = connection.prepareStatement("select distinct rtg.relationID,mt.trptName,mt.trptCode,mg.groupName from rel_transportgroup rtg inner join msttransport mt on mt.trptid = rtg.trptid inner join mstgroup mg on mg.groupID = rtg.groupID where mt.isactive='Y'");
                                                                 ResultSet rs = ptst.executeQuery();
                                                                 while(rs.next()){
-                                                                    String tid= rs.getString("trptID");
-                                                                    String tcode = rs.getString("trptCode");
-                                                                    String tname = rs.getString("trptName");
-                                                                    String location =rs.getString("trptServiceLocation");
-                                                                    String abb = rs.getString("trptAbb");                                                                    
-                                                                    String cno = rs.getString("trptContactNo1"); 
-                                                                    String cno2 =rs.getString("trptContactNo2");
-                                                                    String status=rs.getString("isActive");
+                                                                    String itid= rs.getString("rtg.relationid");
+                                                                    String itcode = rs.getString("mt.trptCode");
+                                                                    String itname = rs.getString("mt.trptName");
+                                                                    String itype =rs.getString("mg.groupname");
                                                                     %>
-                                                                    <td name="grpcode">
-                                                                        <%=tcode%>
-                                                                    </td>
+                                                                    <tr>
+                                                                    <td>
+                                                                        <%=itid%>
+                                                                    </td>                                                                                                                                             
                                                                     <td name="gname">
-                                                                        <%=tname%>
+                                                                        <%=itname%>
+                                                                    </td>
+                                                                    <td name="grpcode">
+                                                                        <%=itcode%>
                                                                     </td>
                                                                     <td name="grptype">
-                                                                        <%=location%>
+                                                                        <%=itype%>
                                                                     </td>
-                                                                    <td name="grpstatus">
-                                                                        <%=abb%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%=cno%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%=cno2%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%=status%>
-                                                                    </td>
-                                                                    <td>                            
-                                                                    <form action="" method="post">
-                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="transreg.jsp" formmethod="post" ><br>
-                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="transport" formmethod="post">
-                                                                    <input type="hidden" name="dname" value="<%=tid%>">
-                                                                    <input type="hidden" name="gname" value="<%=tname%>">
-                                                                    </form>
-                                                                    </td>  
                                                                     </tr>
                                                                     <%
                                                                 }
                                                             }
                                                             else if(request.getParameter("sb")!=null){
-                                                                PreparedStatement ptst = connection.prepareStatement("select * from msttransport where trptname like '%"+sv+"%'");
+                                                                PreparedStatement ptst = connection.prepareStatement("select distinct rtg.relationID,mt.trptName,mt.trptCode,mg.groupName from rel_transportgroup rtg inner join msttransport mt on mt.trptid = rtg.trptid inner join mstgroup mg on mg.groupID = rtg.groupID where mt.trptName like '%"+sv+"%' and mt.isactive='Y'");
                                                                 ResultSet rs = ptst.executeQuery();
                                                                 if(!rs.isBeforeFirst()){
-                                                                out.println("<script type=\"text/javascript\">");
-                                                                out.println("alert('Code with "+sv+" not found please try again!');");
-                                                                out.println("location='trptlookup.jsp';");
-                                                                out.println("</script>");
-                                                                }
-                                                                else{
-                                                                while(rs.next()){
-                                                                    String tid= rs.getString("trptID");
-                                                                    String tcode = rs.getString("trptCode");
-                                                                    String tname = rs.getString("trptName");
-                                                                    String location =rs.getString("trptServiceLocation");
-                                                                    String abb = rs.getString("trptAbb");                                                                    
-                                                                    String cno = rs.getString("trptContactNo1"); 
-                                                                    String cno2 =rs.getString("trptContactNo2");
-                                                                    String status=rs.getString("isActive");
+                                                                                out.println("<script type=\"text/javascript\">");
+                                                                                out.println("alert('Code with "+sv+" not found please try again!');");
+                                                                                out.println("location='itemgrplook.jsp';");
+                                                                                out.println("</script>");
+                                                                    }
+                                                                    else{
+                                                                    while(rs.next()){                                                                    
+                                                                    String itid= rs.getString("rtg.relationid");
+                                                                    String itcode = rs.getString("mt.trptcode");
+                                                                    String itname = rs.getString("mt.trptName");
+                                                                    String itype =rs.getString("mg.groupname");                                                                    
                                                                     %>
-                                                                    <td name="grpcode">
-                                                                        <%=tcode%>
-                                                                    </td>
+                                                                    <tr>
+                                                                    <td>
+                                                                        <%=itid%>
+                                                                    </td>                                                                                                                                             
                                                                     <td name="gname">
-                                                                        <%=tname%>
+                                                                        <%=itname%>
+                                                                    </td>
+                                                                    <td name="grpcode">
+                                                                        <%=itcode%>
                                                                     </td>
                                                                     <td name="grptype">
-                                                                        <%=location%>
+                                                                        <%=itype%>
                                                                     </td>
-                                                                    <td name="grpstatus">
-                                                                        <%=abb%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%=cno%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%=cno2%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%=status%>
-                                                                    </td>
-                                                                    <td>                            
-                                                                    <form action="" method="post">
-                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="transreg.jsp" formmethod="post" ><br>
-                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="transport" formmethod="post">
-                                                                    <input type="hidden" name="dname" value="<%=tid%>">
-                                                                    <input type="hidden" name="gname" value="<%=tname%>">
-                                                                    </form>
-                                                                    </td>  
                                                                     </tr>
                                                                     <%
                                                                         }
-                                                                }                                                            
+}
+//                                                                        else{
+//                                                                                out.println("<script type=\"text/javascript\">");
+//                                                                                out.println("alert('Code with "+sv+" not found please try again!');");
+//                                                                                out.println("location='codelookup.jsp';");
+//                                                                                out.println("</script>");
+//                                                                                }                                                            
                                                             }
                                                                 else if(request.getParameter("refresh")!=null){
-                                                                PreparedStatement ptst = connection.prepareStatement("select * from msttransport");
+                                                                PreparedStatement ptst = connection.prepareStatement("select distinct rtg.relationID,mt.trptName,mt.trptCode,mg.groupName from rel_transportgroup rtg inner join msttransport mt on mt.trptid = rtg.trptid inner join mstgroup mg on mg.groupID = rtg.groupID where mi.isactive='Y'");
                                                                 ResultSet rs = ptst.executeQuery();
                                                                 while(rs.next()){
-                                                                    String tid= rs.getString("trptID");
-                                                                    String tcode = rs.getString("trptCode");
-                                                                    String tname = rs.getString("trptName");
-                                                                    String location =rs.getString("trptServiceLocation");
-                                                                    String abb = rs.getString("trptAbb");                                                                    
-                                                                    String cno = rs.getString("trptContactNo1"); 
-                                                                    String cno2 =rs.getString("trptContactNo2");
-                                                                    String status=rs.getString("isActive");
+                                                                    String itid= rs.getString("rtg.relationid");
+                                                                    String itcode = rs.getString("mt.trptCode");
+                                                                    String itname = rs.getString("mt.trptName");
+                                                                    String itype =rs.getString("mg.groupname");
                                                                     %>
-                                                                    <td name="grpcode">
-                                                                        <%=tcode%>
-                                                                    </td>
+                                                                    <tr>
+                                                                    <td>
+                                                                        <%=itid%>
+                                                                    </td>                                                                    
                                                                     <td name="gname">
-                                                                        <%=tname%>
+                                                                        <%=itname%>
+                                                                    </td>
+                                                                    <td name="grpcode">
+                                                                        <%=itcode%>
                                                                     </td>
                                                                     <td name="grptype">
-                                                                        <%=location%>
+                                                                        <%=itype%>
                                                                     </td>
-                                                                    <td name="grpstatus">
-                                                                        <%=abb%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%=cno%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%=cno2%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%=status%>
-                                                                    </td>
-                                                                    <td>                            
-                                                                    <form action="" method="post">
-                                                                    <input type="submit" name="btnactive" class="active fa fa-check text-success text-active" value="✓" title="Update" style="border:none;background: transparent;" formaction="transreg.jsp" formmethod="post" ><br>
-                                                                    <input type="submit" name="btndeactive" class="fa fa-times text-danger text" value="x" Title="Deactivate" style="border:none;background: transparent;" formaction="transport" formmethod="post">
-                                                                    <input type="hidden" name="dname" value="<%=tid%>">
-                                                                    <input type="hidden" name="gname" value="<%=tname%>">
-                                                                    </form>
-                                                                    </td>  
                                                                     </tr>
                                                                     <%
                                                                         }

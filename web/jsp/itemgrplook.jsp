@@ -318,7 +318,7 @@
 			<div class="agile-grids">	
 				<!-- tables -->				
 				<div class="table-heading">
-                                    <h2>Item Group Enrollment Details </h2>   
+                                    <h2>Item Group Mapped Details </h2>   
                                     <form>
                                     <input type="submit" class="btn btn-default" name="glook" 
                                            style="background: #00bcd4;border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;border-top-left-radius: 5px;border-top-right-radius: 5px;" 

@@ -502,13 +502,15 @@ public class party extends HttpServlet {
                     for(int i=0; i<group.length;i++){                    
                     ptst.setString(1, group[i]);
                     ptst.executeUpdate();
-                }
-                    
+                }                    
                     out.println("<script type=\"text/javascript\">");            
                     out.println("alert('Party group enrolled!');");
                     out.println("location='partygrp.jsp';");
                     out.println("</script>");
                 }
+            }
+            else if(request.getParameter("plook")!=null){
+                response.sendRedirect("partygrplookup.jsp");
             }
             connection.close();
         }

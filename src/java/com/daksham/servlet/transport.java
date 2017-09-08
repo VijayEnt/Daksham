@@ -280,6 +280,38 @@ public class transport extends HttpServlet {
              ex.printStackTrace(out);
          }
         }
+        else if(request.getParameter("tsave")!=null){
+            try{
+                String trpt = request.getParameter("transport");
+                String[] group = request.getParameterValues("igtype");
+                if(trpt.equals("-1")){
+                        out.println("<script type=\"text/javascript\">");            
+                        out.println("alert('Please mention at least one tarnsport party!');");
+                        out.println("location='trptgrp.jsp';");
+                        out.println("</script>");
+                }
+                else if(group.equals("-1")){
+                        out.println("<script type=\"text/javascript\">");            
+                        out.println("alert('Please mention at least one group type!');");
+                        out.println("location='partygrp.jsp';");
+                        out.println("</script>");
+                }
+                else{
+                    PreparedStatement ptst = connection.prepareStatement("insert into rel_transportgroup (trptID,groupID,creationDate,actionDate,actionUserID) select trptid,?,now(),now(),1 from msttransport where trptid ='"+trpt+"'");
+                    for(int i =0;i<group.length;i++){
+                        ptst.setString(1, group[i]);
+                        ptst.executeUpdate();
+                            out.println("<script type=\"text/javascript\">");            
+                            out.println("alert('Transport group enrolled!');");
+                            out.println("location='trptgrp.jsp';");
+                            out.println("</script>");
+                    }
+                }
+            }
+            catch(Exception ex){
+                ex.printStackTrace(out);
+            }
+        }
         connection.close();
         }
         catch (Exception ex){

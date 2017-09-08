@@ -238,10 +238,15 @@
 				</a>
                              <ul>
 					<li>
-						<a class="subnav-text" href="#">
+						<a class="subnav-text" href="partygrp.jsp">
 							Party Group Mapping 
 						</a>
 					</li>
+                                        <li>
+                                            <a class="subnav-text" href="trptgrp.jsp">
+                                                Transport Group Mapping
+                                            </a>
+                                        </li>
 					<li>
 						<a class="subnav-text" href="#">
 							User Roles
@@ -305,8 +310,7 @@
                             <form action="#" method="post">
 					<input type="text" name="search" value="Search by Party Name" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}" required="">
                                         <button class="btn btn-default" name="sb" type="submit" title="Search Code"><i class="fa fa-search" aria-hidden="true"></i></button> <br><br>
-                                        <button class="btn btn-default" name="refresh" type="submit" style="margin-left: 50px;" title="Refresh Data"><i class="fa fa-refresh" aria-hidden="true"></i></button>  
-                                        
+                                        <button class="btn btn-default" name="refresh" type="submit" style="margin-left: 50px;" title="Refresh Data"><i class="fa fa-refresh" aria-hidden="true"></i></button>
 				</form>            
 			</div>			
 			<div class="clearfix"> </div>
@@ -357,12 +361,12 @@
                                                                     %>
                                                                     <td>
                                                                         <%=itid%>
+                                                                    </td>                                                                    
+                                                                    <td>
+                                                                        <%=itname%>
                                                                     </td>
                                                                     <td>
                                                                         <%=itcode%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%=itname%>
                                                                     </td>
                                                                     <td>
                                                                         <%=itype%>
@@ -372,59 +376,60 @@
                                                                 }
                                                             }
                                                             else if(request.getParameter("sb")!=null){
-                                                                PreparedStatement ptst = connection.prepareStatement("select  distinct rig.relationid,mi.itemName,mg.groupname from rel_itemgroup rig inner join mstitem mi on mi.itemId= rig.itemId inner join mstgroup mg on mg.groupID = rig.groupID where mi.itemName like '%"+sv+"%' and mi.isactive='Y'");
+                                                                PreparedStatement ptst = connection.prepareStatement("select distinct rpg.relationID,mp.partyName,mp.partyCode,mg.GroupName from rel_partygroup rpg inner join mstparty mp on mp.partyID = rpg.partyID inner join mstgroup mg on rpg.groupID = mg.groupid where mp.partyName like '%"+sv+"%' and mp.isactive='Y'");
                                                                 ResultSet rs = ptst.executeQuery();
                                                                 if(!rs.isBeforeFirst()){
                                                                                 out.println("<script type=\"text/javascript\">");
-                                                                                out.println("alert('Code with "+sv+" not found please try again!');");
-                                                                                out.println("location='itemgrplook.jsp';");
+                                                                                out.println("alert('Party Name with "+sv+" not found please try again!');");
+                                                                                out.println("location='partygrplookup.jsp';");
                                                                                 out.println("</script>");
                                                                     }
                                                                     else{
                                                                     while(rs.next()){                                                                    
-                                                                    String itid= rs.getString("rig.relationid");
-                                                                    String itcode = rs.getString("mi.itemName");
-                                                                    String itname = rs.getString("itemName");
-                                                                    String itype =rs.getString("mg.groupname");                                                                    
+                                                                    String itid= rs.getString("rpg.relationid");
+                                                                    String itcode = rs.getString("mp.partyCode");
+                                                                    String itname = rs.getString("mp.partyName");
+                                                                    String itype =rs.getString("mg.groupname");
                                                                     %>
                                                                     <tr>
-                                                                    <td name="grpcode">
-                                                                        <%=itcode%>
-                                                                    </td>
-                                                                    <td name="gname">
+                                                                    <td>
+                                                                        <%=itid%>
+                                                                    </td>                                                                    
+                                                                    <td>
                                                                         <%=itname%>
                                                                     </td>
-                                                                    <td name="grptype">
+                                                                    <td>
+                                                                        <%=itcode%>
+                                                                    </td>
+                                                                    <td>
                                                                         <%=itype%>
                                                                     </td>
                                                                     </tr>
                                                                     <%
                                                                         }
 }
-//                                                                        else{
-//                                                                                out.println("<script type=\"text/javascript\">");
-//                                                                                out.println("alert('Code with "+sv+" not found please try again!');");
-//                                                                                out.println("location='codelookup.jsp';");
-//                                                                                out.println("</script>");
-//                                                                                }                                                            
+//                                                                                                                                 
                                                             }
                                                                 else if(request.getParameter("refresh")!=null){
-                                                                PreparedStatement ptst = connection.prepareStatement("select  distinct rig.relationid,mi.itemName,mg.groupname from rel_itemgroup rig inner join mstitem mi on mi.itemId= rig.itemId inner join mstgroup mg on mg.groupID = rig.groupID where mi.isactive='Y'");
+                                                                PreparedStatement ptst = connection.prepareStatement("select distinct rpg.relationID,mp.partyName,mp.partyCode,mg.GroupName from rel_partygroup rpg inner join mstparty mp on mp.partyID = rpg.partyID inner join mstgroup mg on rpg.groupID = mg.groupid where mp.isactive='Y'");
                                                                 ResultSet rs = ptst.executeQuery();
                                                                 while(rs.next()){
-                                                                    String itid= rs.getString("rig.relationid");
-                                                                    String itcode = rs.getString("mi.itemName");
-                                                                    String itname = rs.getString("itemName");
+                                                                    String itid= rs.getString("rpg.relationid");
+                                                                    String itcode = rs.getString("mp.partyCode");
+                                                                    String itname = rs.getString("mp.partyName");
                                                                     String itype =rs.getString("mg.groupname");
                                                                     %>
                                                                     <tr>
-                                                                    <td name="grpcode">
-                                                                        <%=itcode%>
-                                                                    </td>
-                                                                    <td name="gname">
+                                                                    <td>
+                                                                        <%=itid%>
+                                                                    </td>                                                                    
+                                                                    <td>
                                                                         <%=itname%>
                                                                     </td>
-                                                                    <td name="grptype">
+                                                                    <td>
+                                                                        <%=itcode%>
+                                                                    </td>
+                                                                    <td>
                                                                         <%=itype%>
                                                                     </td>
                                                                     </tr>

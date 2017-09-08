@@ -200,10 +200,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</a>
                              <ul>
 					<li>
-						<a class="subnav-text" href="#">
+						<a class="subnav-text" href="partygrp.jsp">
 							Party Group Mapping 
 						</a>
 					</li>
+                                        <li>
+                                            <a class="subnav-text" href="trptgrp.jsp">
+                                                Transport Group Mapping
+                                            </a>
+                                        </li>
 					<li>
 						<a class="subnav-text" href="#">
 							User Roles
@@ -308,7 +313,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                                     <br>
 					<div class="submit">						
                                             <input class="bluebutton submitbotton" name="psave" type="submit" value="Save" />                                            
-                                            <input class="bluebutton submitbotton" name="psave" type="submit" value="Party Group Lookup" />
+                                            <input class="bluebutton submitbotton" name="plook" type="submit" value="Party Group Lookup" />
 						<div class="clear"> </div>
 					</div>							
 				</form>

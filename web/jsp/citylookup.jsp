@@ -235,10 +235,15 @@
 				</a>
                              <ul>
 					<li>
-						<a class="subnav-text" href="#">
+						<a class="subnav-text" href="partygrp.jsp">
 							Party Group Mapping 
 						</a>
 					</li>
+                                        <li>
+                                            <a class="subnav-text" href="trptgrp.jsp">
+                                                Transport Group Mapping
+                                            </a>
+                                        </li>
 					<li>
 						<a class="subnav-text" href="#">
 							User Roles

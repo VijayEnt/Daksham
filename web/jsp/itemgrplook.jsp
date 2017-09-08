@@ -236,10 +236,15 @@
 				</a>
                              <ul>
 					<li>
-						<a class="subnav-text" href="#">
+						<a class="subnav-text" href="partygrp.jsp">
 							Party Group Mapping 
 						</a>
 					</li>
+                                        <li>
+                                            <a class="subnav-text" href="trptgrp.jsp">
+                                                Transport Group Mapping
+                                            </a>
+                                        </li>
 					<li>
 						<a class="subnav-text" href="#">
 							User Roles
@@ -326,7 +331,8 @@
 						<thead>
 						  <tr>
                                                         <th>Relation ID</th>
-							<th>Name</th>							
+                                                        <th>Name</th>							
+                                                        <th>Code</th>							
 							<th>Group</th>
                                                     <!--<th>Rate Per Unit</th>-->                                                        
                                                     <!--<th>Unit Per KG</th>-->
@@ -350,19 +356,23 @@
                                                             }
                                                             else{
                                                                 if(request.getParameter("sb")==null){
-                                                                PreparedStatement ptst = connection.prepareStatement("select  distinct rig.relationid,mi.itemName,mg.groupname from rel_itemgroup rig inner join mstitem mi on mi.itemId= rig.itemId inner join mstgroup mg on mg.groupID = rig.groupID where mi.isactive='Y' ");
+                                                                PreparedStatement ptst = connection.prepareStatement("select  distinct rig.relationid,mi.itemCode,mi.itemName,mg.groupname from rel_itemgroup rig inner join mstitem mi on mi.itemId= rig.itemId inner join mstgroup mg on mg.groupID = rig.groupID where mi.isactive='Y' ");
                                                                 ResultSet rs = ptst.executeQuery();
                                                                 while(rs.next()){
                                                                     String itid= rs.getString("rig.relationid");
-                                                                    String itcode = rs.getString("mi.itemName");
+                                                                    String itcode = rs.getString("mi.itemCode");
                                                                     String itname = rs.getString("itemName");
                                                                     String itype =rs.getString("mg.groupname");
                                                                     %>
-                                                                    <td name="grpcode">
-                                                                        <%=itcode%>
-                                                                    </td>
+                                                                    <tr>
+                                                                    <td>
+                                                                        <%=itid%>
+                                                                    </td>                                                                                                                                             
                                                                     <td name="gname">
                                                                         <%=itname%>
+                                                                    </td>
+                                                                    <td name="grpcode">
+                                                                        <%=itcode%>
                                                                     </td>
                                                                     <td name="grptype">
                                                                         <%=itype%>
@@ -372,7 +382,7 @@
                                                                 }
                                                             }
                                                             else if(request.getParameter("sb")!=null){
-                                                                PreparedStatement ptst = connection.prepareStatement("select  distinct rig.relationid,mi.itemName,mg.groupname from rel_itemgroup rig inner join mstitem mi on mi.itemId= rig.itemId inner join mstgroup mg on mg.groupID = rig.groupID where mi.itemName like '%"+sv+"%' and mi.isactive='Y'");
+                                                                PreparedStatement ptst = connection.prepareStatement("select  distinct rig.relationid,mi.itemCode,mi.itemName,mg.groupname from rel_itemgroup rig inner join mstitem mi on mi.itemId= rig.itemId inner join mstgroup mg on mg.groupID = rig.groupID where mi.itemName like '%"+sv+"%' and mi.isactive='Y'");
                                                                 ResultSet rs = ptst.executeQuery();
                                                                 if(!rs.isBeforeFirst()){
                                                                                 out.println("<script type=\"text/javascript\">");
@@ -383,16 +393,19 @@
                                                                     else{
                                                                     while(rs.next()){                                                                    
                                                                     String itid= rs.getString("rig.relationid");
-                                                                    String itcode = rs.getString("mi.itemName");
+                                                                    String itcode = rs.getString("mi.itemcode");
                                                                     String itname = rs.getString("itemName");
                                                                     String itype =rs.getString("mg.groupname");                                                                    
                                                                     %>
                                                                     <tr>
-                                                                    <td name="grpcode">
-                                                                        <%=itcode%>
-                                                                    </td>
+                                                                    <td>
+                                                                        <%=itid%>
+                                                                    </td>                                                                                                                                             
                                                                     <td name="gname">
                                                                         <%=itname%>
+                                                                    </td>
+                                                                    <td name="grpcode">
+                                                                        <%=itcode%>
                                                                     </td>
                                                                     <td name="grptype">
                                                                         <%=itype%>
@@ -409,20 +422,23 @@
 //                                                                                }                                                            
                                                             }
                                                                 else if(request.getParameter("refresh")!=null){
-                                                                PreparedStatement ptst = connection.prepareStatement("select  distinct rig.relationid,mi.itemName,mg.groupname from rel_itemgroup rig inner join mstitem mi on mi.itemId= rig.itemId inner join mstgroup mg on mg.groupID = rig.groupID where mi.isactive='Y'");
+                                                                PreparedStatement ptst = connection.prepareStatement("select  distinct rig.relationid,mi.itemName,mi.itemCode,mg.groupname from rel_itemgroup rig inner join mstitem mi on mi.itemId= rig.itemId inner join mstgroup mg on mg.groupID = rig.groupID where mi.isactive='Y'");
                                                                 ResultSet rs = ptst.executeQuery();
                                                                 while(rs.next()){
                                                                     String itid= rs.getString("rig.relationid");
-                                                                    String itcode = rs.getString("mi.itemName");
+                                                                    String itcode = rs.getString("mi.itemCode");
                                                                     String itname = rs.getString("itemName");
                                                                     String itype =rs.getString("mg.groupname");
                                                                     %>
                                                                     <tr>
-                                                                    <td name="grpcode">
-                                                                        <%=itcode%>
-                                                                    </td>
+                                                                    <td>
+                                                                        <%=itid%>
+                                                                    </td>                                                                    
                                                                     <td name="gname">
                                                                         <%=itname%>
+                                                                    </td>
+                                                                    <td name="grpcode">
+                                                                        <%=itcode%>
                                                                     </td>
                                                                     <td name="grptype">
                                                                         <%=itype%>

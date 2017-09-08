@@ -236,10 +236,15 @@
 				</a>
                              <ul>
 					<li>
-						<a class="subnav-text" href="#">
+						<a class="subnav-text" href="partygrp.jsp">
 							Party Group Mapping 
 						</a>
 					</li>
+                                        <li>
+                                            <a class="subnav-text" href="trptgrp.jsp">
+                                                Transport Group Mapping
+                                            </a>
+                                        </li>
 					<li>
 						<a class="subnav-text" href="#">
 							User Roles
@@ -301,7 +306,7 @@
        <section class="title-bar">						
 			<div class="w3l_search">
                             <form action="#" method="post">
-					<input type="text" name="search" value="Search by UserName" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}" required="">
+					<input type="text" name="search" value="Search by Party Name" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}" required="">
                                         <button class="btn btn-default" name="sb" type="submit" title="Search Code"><i class="fa fa-search" aria-hidden="true"></i></button> <br><br>
                                         <button class="btn btn-default" name="refresh" type="submit" style="margin-left: 50px;" title="Refresh Data"><i class="fa fa-refresh" aria-hidden="true"></i></button>                              
 				</form>            
@@ -312,7 +317,12 @@
 			<div class="agile-grids">	
 				<!-- tables -->				
 				<div class="table-heading">
-                                    <h2>Party Enrollment </h2>                                     
+                                    <h2>Party Enrollment </h2>  
+                                    <form>
+                                    <input type="submit" class="btn btn-default" name="glook" 
+                                           style="background: #00bcd4;border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;border-top-left-radius: 5px;border-top-right-radius: 5px;" 
+                                           value="Party Group Lookup" formaction="partygrplookup.jsp" formmethod="post">
+                                    </form>
 				</div>                                
 				<div class="agile-tables">                                   
 					<div class="w3l-table-info">

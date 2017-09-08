@@ -1,13 +1,19 @@
 <%-- 
-    Document   : groupreg
-    Created on : 3 Aug, 2017, 11:13:50 PM
-    Author     : Parth
+    Document   : trptgrp
+    Created on : 8 Sep, 2017, 4:00:25 PM
+    Author     : ParthBheda
 --%>
 
+<%-- 
+    Document   : partygrp
+    Created on : 6 Sep, 2017, 4:58:33 PM
+    Author     : ParthBheda
+--%>
+
+<%@page import="com.daksham.connection.connection"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>
-<%@page import="com.daksham.connection.connection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -270,87 +276,56 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <!----------start member-login----------->
 		<div class="member-login">
 			<!----------star form----------->
-                        <form class="login"  action="#" method="post" style="width: 500px;">
+                        <form class="login"  action="transport" method="post" style="width: 500px;">
 	
-					<div class="formtitle">Group Register</div>
-                                        <% 
-                                            String grpid = request.getParameter("dname");
-                                            if(grpid!=null){
+					<div class="formtitle">Party Group Mapping</div>                                      
+                                      <div class="section-country">
+                                            <select id="city" name="transport" onmousedown="if(this.options.length>5){this.size=5;}"  onchange="this.blur()" onblur="this.size=0" class="frm-field required">
+                                                <option value="-1">Select Party</option>
+                                                <% 
                                                 try{
-                                                    Connection connection = com.daksham.connection.connection.setConnection();
-                                                    PreparedStatement ptst = connection.prepareStatement("select * from mstgroup where groupID='"+grpid+"'");
-                                                    ResultSet rs = ptst.executeQuery();
-                                                    if(rs.next()){
-//                                                        String grpid = rs.getString("groupID");
-                                                        String grpcode =rs.getString("groupCode");
-                                                        String grpname= rs.getString("groupName");
-                                                        String grptype = rs.getString("groupType");
-                                                        String grpstatus = rs.getString("isActive");   
-                                                    //}
-                                                    %>
-                                                    <input type="hidden" name="gid" value="<%=grpid%>">
-                                                    <div class="input">
-                                                        <input type="text" name="cid" placeholder="Group Code" value="<%= grpcode%>"/> 						
-					</div>
-					<div class="input">
-                                            <input type="text" name="cname"  placeholder="Group Name" value="<%=grpname%>"/>
-                                        </div>
-                                        <div class="section-country">
-                                            <select id="State" name="ckey" onmousedown="if(this.options.length>5){this.size=5;}" onchange="this.value()" onblur="this.size=0" class="frm-field" required=""> 
-                                                <option value="<%=grptype%>"><%=grptype%></option>
-                                                <option value="Party Group">Party Group</option>
-                                                <option value="Item Group">Item Group</option>
-                                                <option value="Transport Group">Transport Group</option>
-                                                    </select>
-                                        </div>                                        
-					<div class="submit">						
-                                            <input class="bluebutton submitbotton" name="supdate" type="submit" value="Save" formaction="groupreg" formmethod="post" />
-                                            <input class="bluebutton submitbotton" name="back" type="submit" value="Group Lookup" formaction="groupreg" formmethod="post" />
-                                            	<div class="clear"> </div>
-					</div>
-                                                    <%
+                                                    Connection connection =com.daksham.connection.connection.setConnection();
+                                                    PreparedStatement ptst = connection.prepareStatement("select * from msttransport where isactive='Y'");
+                                                    ResultSet rs= ptst.executeQuery();
+                                                    while(rs.next()){
+                                                        out.println("<option value="+"\""+rs.getString("trptId")+"\""+">"+rs.getString("trptName")+"</option>");
+                                                    }
+                                                    rs.close();
+                                                    ptst.close();                                                    
                                                 }
-                                        }
                                                 catch(Exception ex){
-                                                        out.println("<script type=\"text/javascript\">");
-                                                        out.println("alert('"+ex.getMessage()+"');");
-                                                        out.println("location='groupreg.jsp';");
-                                                        out.println("</script>");
-//}
-
+                                                    out.println("<script type=\"text/javascript\">");
+                                                    out.println("alert('"+ex.getMessage()+"');");
+                                                    out.println("location='cityreg.jsp';");
+                                                    out.println("</script>");
                                                 }
-                                            }
-else{
-%>
-                                        <div class="input">
-                                            <input type="text" name="cid" placeholder="Group Code"/> 						
-					</div>
-					<div class="input">
-                                            <input type="text" name="cname"  placeholder="Group Name"/>
+                                                %>
+                                            </select>
                                         </div>
-                                        <div class="section-country">
-                                            <select id="State" name="ckey" onmousedown="if(this.options.length>5){this.size=5;}" onchange="this.value()" onblur="this.size=0" class="frm-field" required=""> 
-                                                <option value="-1">Select Group Type</option>
-                                                <option value="Party Group">Party Group</option>
-                                                <option value="Item Group">Item Group</option>
-                                                <option value="Transport Group">Transport Group</option>
-                                                <option value="User Group">User Group</option>
-                                                <option value="Menu Role Group">Menu Role Group</option>
+                                            <br><br><br>
+                                            <div class="section-country" style="border-top: 1px solid #cdcdcd;">
+                                                <select name="igtype" multiple="multiple" size="5" onmousedown="if(this.options.length>5){this.size=5;}" onchange="this.value()" onblur="this.size=5" class="frm-field"> 
+                                                    <option value="-1"  selected="" disabled=""><b>Select Group</b></option>
+                                                <%                                                    
+                                                    PreparedStatement ptstg = connection.setConnection().prepareStatement("select * from mstgroup where isActive = 'Y' and groupType ='Transport Group'");
+                                                    ResultSet rsg = ptstg.executeQuery();
+                                                    while (rsg.next()){
+                                                         out.println("<option value="+"\""+rsg.getString("groupId")+"\""+">"+rsg.getString("GroupName")+"</option>");
+                                                    }
+                                                    %>
                                                     </select>
-                                        </div>                                        
+                                                    <div class="clear"> </div>
+                                                    </div>
+                                                    <br>
 					<div class="submit">						
-                                            <input class="bluebutton submitbotton" name="ssave" type="submit" value="Save" formaction="groupreg" formmethod="post" />
-                                            <input class="bluebutton submitbotton" type="reset" value="Reset" />
-                                            <input class="bluebutton submitbotton" name="slook" type="submit" value="Group Lookup" formaction="groupreg" formmethod="post" />
+                                            <input class="bluebutton submitbotton" name="tsave" type="submit" value="Save" /> 
+                                            <input class="bluebutton submitbotton" name="tlook" type="submit" value="Party Group Lookup" />
 						<div class="clear"> </div>
-					</div>
-<%
-}
-                                            %>
-		
+					</div>							
 				</form>
 				<!----------end form----------->
 		</div>
 		<!----------end member-login----------->
     </body>
 </html>
+

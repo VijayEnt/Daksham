@@ -15,14 +15,12 @@
   <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
 
 
-  <form action="jsp/master.jsp" method="post">
+  <form action="login" method="post">
   <h4> Login Information </h4>
-  <input class="name" type="text" placeholder="Enter Username" required=""/>
-  <input class="pw" type="password" placeholder="Enter Password" required=""/>
-  <li><a href="#">Forgot your password?</a></li>
+  <input class="name" name="uname" type="text" placeholder="Enter Username" required=""/>
+  <input class="pw" name="pass" type="password" placeholder="Enter Password" required=""/>
+  <!--<li><a href="#">Forgot your password?</a></li>-->
   <input class="button" type="submit" value="Log in"/>
-</form>
-  
-  
+</form>  
 </body>
 </html>

@@ -4,6 +4,9 @@
     Author     : Parth
 --%>
 
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.Connection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -54,6 +57,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	        });
 	        if (theme !== 'default') $('body').addClass(theme);
         </script>
+        <%
+            Connection connection = com.daksham.connection.connection.setConnection();
+            PreparedStatement psts = connection.prepareStatement("select * from mstmenu");
+            ResultSet rs = psts.executeQuery();
+            while(rs.next()){
+                Srting 
+            }
+            %>
 	<nav class="main-menu">
 		<ul>
 			<li>
@@ -122,7 +133,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<ul>
 					<li>
 						<a class="subnav-text" href="partyreg.jsp">
-							Party Enrollment 
+<!--							Party Enrollment -->
+<label for
 						</a>
 					</li>
 					<li>

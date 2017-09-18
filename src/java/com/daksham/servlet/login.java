@@ -91,7 +91,8 @@ public class login extends HttpServlet {
         Cipher c = Cipher.getInstance(algorithm);
         c.init(Cipher.ENCRYPT_MODE, key);
         byte[] encVal=c.doFinal(input.getBytes());
-        String encryptedValue = new BASE64Encoder().encode(encVal);
+        String encryptedValue;
+        encryptedValue = new BASE64Encoder().encode(encVal);
         return encryptedValue;
     }
     @Override

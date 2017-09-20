@@ -4,6 +4,7 @@
     Author     : Parth
 --%>
 
+<%@page import="java.util.Iterator"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>
@@ -58,12 +59,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	        if (theme !== 'default') $('body').addClass(theme);
         </script>
         <%
+//            http://www.onjava.com/pub/a/onjava/2003/04/09/dynamic_taglib.html
             Connection connection = com.daksham.connection.connection.setConnection();
             PreparedStatement psts = connection.prepareStatement("select * from mstmenu");
             ResultSet rs = psts.executeQuery();
-            while(rs.next()){
-                Srting 
-            }
+            Iterator it = list.ite     
+//            if(rs.next()){
+//                String lbid = rs.getString("menuLabel");
+            //}
             %>
 	<nav class="main-menu">
 		<ul>
@@ -86,7 +89,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<ul>
 					<li>
 					<a class="subnav-text" href="Codereg.jsp">
-					Code Register
+					<!--Code Register-->
+                                        <%=lbid%>
+                                        <%}%>
 					</a>
 					</li>
 					<li>
